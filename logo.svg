@@ -1,0 +1,11 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NovaLabs">
+  <!-- Transparent NovaLabs mark for dark backgrounds: bold italic N, cyan spark,
+       cyan/blue/indigo speed stripes. N is an outlined path (no font dependency). -->
+  <polygon points="196,42 230,42 214,76 180,76" fill="#38bdf8"/>
+  <g transform="skewX(-13) translate(73.004,176.0) scale(0.089844,-0.089844)"><path d="M188 1493H618L1161 469V1493H1526V0H1096L553 1024V0H188Z" fill="#ffffff"/></g>
+  <g transform="skewX(-13)">
+    <rect x="92" y="196" width="150" height="12" rx="2" fill="#38bdf8"/>
+    <rect x="92" y="212" width="150" height="12" rx="2" fill="#3b82f6"/>
+    <rect x="92" y="228" width="150" height="12" rx="2" fill="#6366f1"/>
+  </g>
+</svg>

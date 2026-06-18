@@ -1,0 +1,14 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NovaLabs">
+  <rect x="8" y="8" width="240" height="240" rx="52" fill="#0a0e27"/>
+  <rect x="9" y="9" width="238" height="238" rx="51" fill="none" stroke="#1e2a4a" stroke-width="2"/>
+  <!-- nova spark accent (top-right), echoes the RPC flag -->
+  <polygon points="196,42 230,42 214,76 180,76" fill="#38bdf8"/>
+  <!-- bold italic N (outlined path) -->
+  <g transform="skewX(-13) translate(73.004,176.0) scale(0.089844,-0.089844)"><path d="M188 1493H618L1161 469V1493H1526V0H1096L553 1024V0H188Z" fill="#ffffff"/></g>
+  <!-- cyan / blue / indigo speed stripes -->
+  <g transform="skewX(-13)">
+    <rect x="92" y="196" width="150" height="12" rx="2" fill="#38bdf8"/>
+    <rect x="92" y="212" width="150" height="12" rx="2" fill="#3b82f6"/>
+    <rect x="92" y="228" width="150" height="12" rx="2" fill="#6366f1"/>
+  </g>
+</svg>

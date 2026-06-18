@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaLabs — hardware &amp; software for makers</title>
+    <meta name="description" content="NovaLabs is an independent hardware and software lab. Home of RPCortex, a real operating system for microcontrollers, and the Nova D1, a build-it-yourself multi-tool that runs it.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <img src="logo.svg" alt="NovaLabs" class="nav-logo-svg">
+                <span class="nav-title">NovaLabs</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#nova-d1" class="nav-link">Nova D1</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="https://rpc.novalabs.app" class="nav-link nav-link-ext" target="_blank" rel="noopener">RPCortex&nbsp;&#8599;</a>
+            </div>
+
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Animated background -->
+    <div class="background">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="stars"></div>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+        <!-- Hero section -->
+        <header class="hero" id="home">
+            <div class="glass-card main-card">
+                <div class="logo-container">
+                    <div class="logo-circle">
+                        <img src="logo.svg" alt="NovaLabs logo" class="logo-svg">
+                    </div>
+                </div>
+                <h1 class="title">
+                    <span class="title-line">NovaLabs</span>
+                </h1>
+                <p class="tagline gradient-text">We build the OS — and the hardware to run it.</p>
+                <p class="subtitle">An independent hardware &amp; software lab. Home of <strong>RPCortex</strong>, a real operating system for microcontrollers, and the <strong>Nova D1</strong>, a build-it-yourself multi-tool that runs it.</p>
+                <div class="hero-actions">
+                    <a href="https://rpc.novalabs.app" class="btn btn-primary" target="_blank" rel="noopener">Explore RPCortex</a>
+                    <a href="#nova-d1" class="btn btn-secondary">Meet the Nova D1</a>
+                </div>
+                <div class="pulse-ring"></div>
+            </div>
+        </header>
+
+        <!-- Projects grid -->
+        <section class="services" id="projects">
+            <h2 class="section-heading">What we build</h2>
+            <div class="services-grid">
+                <!-- RPCortex -->
+                <div class="glass-card service-card" style="--delay: 0.1s">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="4" width="16" height="16" rx="2"/>
+                            <rect x="9" y="9" width="6" height="6"/>
+                            <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
+                            <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
+                            <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>
+                            <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
+                        </svg>
+                    </div>
+                    <div class="service-tag">Operating system</div>
+                    <h3>RPCortex</h3>
+                    <p>A full, multitasking operating system written in MicroPython — a real shell with pipes and scripting, user accounts, a package manager, WiFi, and over-the-air updates, all running in 264&nbsp;KB of RAM. Source-available.</p>
+                    <a href="https://rpc.novalabs.app" target="_blank" rel="noopener" class="service-link">
+                        rpc.novalabs.app
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="arrow"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+
+                <!-- Nova D1 -->
+                <div class="glass-card service-card" style="--delay: 0.2s">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="5" y="2" width="14" height="20" rx="2"/>
+                            <line x1="9" y1="6" x2="15" y2="6"/>
+                            <circle cx="12" cy="14" r="3"/>
+                            <line x1="12" y1="2" x2="12" y2="1"/>
+                        </svg>
+                    </div>
+                    <div class="service-tag">Hardware · In development</div>
+                    <h3>Nova D1</h3>
+                    <p>A DIY cybersecurity &amp; networking multi-tool — a ~$40, build-it-yourself alternative to the Flipper Zero, powered by RPCortex. Off-the-shelf parts, a 3D-printed shell, no custom PCB.</p>
+                    <a href="#nova-d1" class="service-link">
+                        Learn more
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="arrow"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+
+                <!-- ytdl-UI -->
+                <div class="glass-card service-card" style="--delay: 0.3s">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/>
+                        </svg>
+                    </div>
+                    <div class="service-tag">Web app</div>
+                    <h3>ytdl-UI</h3>
+                    <p>Pull video or audio from almost anywhere, privately — no ads, no tracking, no accounts. A clean front-end for grabbing the content you want.</p>
+                    <a href="https://yt.novalabs.app" target="_blank" rel="noopener" class="service-link">
+                        yt.novalabs.app
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="arrow"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nova D1 feature section -->
+        <section class="feature" id="nova-d1">
+            <div class="glass-card feature-card">
+                <div class="feature-eyebrow">Flagship hardware · <span class="status-dot"></span>In active development</div>
+                <h2 class="feature-title">The <span class="gradient-text">Nova D1</span></h2>
+                <p class="feature-lead">A pocket multi-tool for security research, RF tinkering, and hardware exploration — built entirely from off-the-shelf modules in a 3D-printed shell, for around <strong>$40</strong>. No custom PCB, no factory, no $200 price tag.</p>
+                <p class="feature-body">The Nova D1 doesn't run rigid, single-purpose firmware. It boots <strong>RPCortex Vela</strong> — a genuine multitasking OS — and layers a Nova wrapper on top: it auto-installs as a package, flips on autonomy mode (no login), detects the display and hardware, and boots straight into the Nova GUI with its background services running. Over-the-air updates keep it current as RPCortex grows.</p>
+
+                <div class="cap-intro">Everything you'd reach for when exploring the signals and devices around you — for research, learning, and gear you own:</div>
+                <div class="cap-grid">
+                    <div class="cap"><span class="cap-icon">📶</span><div><strong>Sub-1&nbsp;GHz RF</strong><span>Interact with common RF devices (CC1101)</span></div></div>
+                    <div class="cap"><span class="cap-icon">📲</span><div><strong>NFC / RFID</strong><span>Read, write &amp; emulate tags (PN532)</span></div></div>
+                    <div class="cap"><span class="cap-icon">📡</span><div><strong>Infrared</strong><span>Universal remote — clone &amp; broadcast</span></div></div>
+                    <div class="cap"><span class="cap-icon">🛰️</span><div><strong>LoRa &amp; GPS</strong><span>Long-range radio + location / wardriving</span></div></div>
+                    <div class="cap"><span class="cap-icon">⌨️</span><div><strong>BadUSB / HID</strong><span>Scripted keyboard payloads over USB</span></div></div>
+                    <div class="cap"><span class="cap-icon">💾</span><div><strong>MicroSD</strong><span>Scripts, payloads &amp; OS packages</span></div></div>
+                </div>
+
+                <div class="chips">
+                    <span class="chip">~$40 total build</span>
+                    <span class="chip">ESP32-S3 · 16&nbsp;MB</span>
+                    <span class="chip">Powered by RPCortex Vela</span>
+                    <span class="chip">Est. Q1 2027</span>
+                </div>
+
+                <p class="feature-note">Fully buildable from open parts and 3D-printed files: source the modules, print the case, flash RPCortex, install the Nova D1 package. Suggestions, hardware mods, and feature requests are welcome.</p>
+            </div>
+        </section>
+
+        <!-- Stats section -->
+        <section class="stats" id="stats">
+            <div class="glass-card stat-card" style="--delay: 0.1s">
+                <div class="stat-value" data-target="3">0</div>
+                <div class="stat-label">Active projects</div>
+            </div>
+            <div class="glass-card stat-card" style="--delay: 0.2s">
+                <div class="stat-value">v1.0</div>
+                <div class="stat-label">RPCortex · Vela</div>
+            </div>
+            <div class="glass-card stat-card" style="--delay: 0.3s">
+                <div class="stat-value">~$40</div>
+                <div class="stat-label">Nova D1 build</div>
+            </div>
+            <div class="glass-card stat-card" style="--delay: 0.4s">
+                <div class="stat-value">Q1&nbsp;’27</div>
+                <div class="stat-label">Nova D1 launch</div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="about" id="about">
+            <div class="glass-card about-card">
+                <h2 class="section-heading">About NovaLabs</h2>
+                <p>NovaLabs is an independent hardware and software lab — founded and run by <strong>dash</strong>. It started as a 3D-printed homelab and a simple curiosity: how far can a $4 microcontroller really go?</p>
+                <p>The answer became <strong>RPCortex</strong>, a real operating system for tiny chips. The <strong>Nova D1</strong> is where that software meets hardware you can build yourself. Everything here is made to be accessible — low-cost, hackable, and yours to take apart.</p>
+                <p class="about-foot">More projects under the NovaLabs roof are on the way.</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="glass-card footer-card">
+                <div class="footer-brand">
+                    <img src="logo.svg" alt="" class="footer-logo">
+                    <span>NovaLabs</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex</a>
+                    <a href="#nova-d1">Nova D1</a>
+                    <a href="https://github.com/dash1101" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://discord.gg/hcEWwSNDBa" target="_blank" rel="noopener">Discord</a>
+                </div>
+                <p class="footer-subtitle">Built by dash · &copy; 2026 NovaLabs · all rights reserved</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
