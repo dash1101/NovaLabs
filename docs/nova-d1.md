@@ -1,9 +1,9 @@
 # RPC Nova D1
-#### A completely open-source, DIY cybersecurity and networking multi-tool.
+#### An open, DIY cybersecurity &amp; networking multi-tool for security research and hardware exploration — powered by RPCortex.
 
-The RPC Nova D1 is an accessible, low-cost alternative to tools like the Flipper Zero. Designed to be built entirely from off-the-shelf components and housed in a 3D-printed enclosure, the Nova D1 bypasses regional hardware bans and complex manufacturing. You source the parts, wire them up, and the software handles the rest.
+The RPC Nova D1 is an accessible, low-cost alternative to tools like the Flipper Zero. Designed to be built entirely from off-the-shelf components and housed in a 3D-printed enclosure, it skips custom PCBs and complex manufacturing entirely. You source the parts, wire them up, and the software handles the rest — a tool for learning, research, and tinkering with the devices and signals you own.
 
-At its core, the Nova D1 is powered by **RPCortex Vela (v1.0)**. Rather than relying on rigid custom firmware, the Nova D1 operates as a seamless wrapper package on top of a fully functional, multi-tasking operating system. 
+The Nova D1's hardware is open and buildable; it runs on **RPCortex Vela (v1.0)**, NovaLabs' source-available operating system. Rather than relying on rigid custom firmware, the Nova D1 operates as a seamless wrapper package on top of a fully functional, multi-tasking OS. 
 
 ## 🧠 The RPCortex Advantage
 Development of the Nova D1 is officially back in active status, made possible by massive leaps in the RPCortex OS:
