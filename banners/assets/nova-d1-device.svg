@@ -1,0 +1,66 @@
+<svg viewBox="0 0 420 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nova D1 device">
+  <defs>
+    <linearGradient id="body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b2347"/>
+      <stop offset="55%" stop-color="#0e1430"/>
+      <stop offset="100%" stop-color="#080b1e"/>
+    </linearGradient>
+    <linearGradient id="bezel" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a3566"/>
+      <stop offset="100%" stop-color="#141a38"/>
+    </linearGradient>
+    <radialGradient id="knob" cx="38%" cy="32%" r="72%">
+      <stop offset="0%" stop-color="#3a4670"/>
+      <stop offset="100%" stop-color="#10162f"/>
+    </radialGradient>
+    <linearGradient id="screen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06121f"/>
+      <stop offset="100%" stop-color="#020810"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- antenna -->
+  <line x1="210" y1="58" x2="210" y2="18" stroke="#38bdf8" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="210" cy="14" r="7" fill="#38bdf8" filter="url(#glow)"/>
+
+  <!-- body -->
+  <rect x="64" y="56" width="292" height="556" rx="40" fill="url(#body)" stroke="#33407a" stroke-width="2"/>
+  <rect x="64" y="56" width="292" height="556" rx="40" fill="none" stroke="rgba(56,189,248,0.25)" stroke-width="1"/>
+
+  <!-- screen bezel + OLED -->
+  <rect x="92" y="92" width="236" height="190" rx="16" fill="url(#bezel)"/>
+  <rect x="104" y="104" width="212" height="166" rx="10" fill="url(#screen)" stroke="rgba(56,189,248,0.55)" stroke-width="2"/>
+  <!-- mini UI on screen -->
+  <text x="118" y="130" font-family="Verdana, sans-serif" font-size="15" font-weight="bold" fill="#38bdf8" letter-spacing="1">NOVA&#160;D1</text>
+  <rect x="116" y="140" width="188" height="2" fill="rgba(56,189,248,0.35)"/>
+  <rect x="116" y="154" width="188" height="26" rx="5" fill="rgba(56,189,248,0.18)" stroke="rgba(56,189,248,0.5)" stroke-width="1"/>
+  <text x="128" y="172" font-family="Verdana, sans-serif" font-size="13" font-weight="bold" fill="#dbeafe">Sub-GHz RF</text>
+  <text x="118" y="198" font-family="Verdana, sans-serif" font-size="13" fill="#7f9bd6">NFC / RFID</text>
+  <text x="118" y="220" font-family="Verdana, sans-serif" font-size="13" fill="#7f9bd6">Infrared</text>
+  <text x="118" y="242" font-family="Verdana, sans-serif" font-size="13" fill="#7f9bd6">LoRa &#183; GPS</text>
+
+  <!-- rotary encoder -->
+  <circle cx="210" cy="372" r="62" fill="url(#knob)" stroke="#46538f" stroke-width="2"/>
+  <circle cx="210" cy="372" r="50" fill="none" stroke="rgba(56,189,248,0.5)" stroke-width="2"/>
+  <rect x="206" y="324" width="8" height="20" rx="4" fill="#38bdf8" filter="url(#glow)"/>
+
+  <!-- buttons -->
+  <circle cx="120" cy="486" r="26" fill="#141a38" stroke="#46538f" stroke-width="2"/>
+  <circle cx="120" cy="486" r="26" fill="none" stroke="rgba(56,189,248,0.35)" stroke-width="1"/>
+  <circle cx="300" cy="486" r="26" fill="#141a38" stroke="#46538f" stroke-width="2"/>
+  <circle cx="300" cy="486" r="26" fill="none" stroke="rgba(99,102,241,0.45)" stroke-width="1"/>
+
+  <!-- module status row -->
+  <rect x="120" y="545" width="180" height="34" rx="10" fill="#0c1230" stroke="#2a3566" stroke-width="1.5"/>
+  <circle cx="142" cy="562" r="5" fill="#38bdf8"/>
+  <circle cx="166" cy="562" r="5" fill="#3b82f6"/>
+  <circle cx="190" cy="562" r="5" fill="#6366f1"/>
+  <circle cx="214" cy="562" r="5" fill="#334066"/>
+  <circle cx="238" cy="562" r="5" fill="#334066"/>
+  <circle cx="262" cy="562" r="5" fill="#334066"/>
+  <circle cx="286" cy="562" r="5" fill="#334066"/>
+</svg>

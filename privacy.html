@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaLabs — Privacy</title>
+    <meta name="description" content="NovaLabs privacy policy — what we collect (almost nothing), what your devices keep locally, and how to reach us.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo.svg" alt="NovaLabs" class="nav-logo-svg">
+                <span class="nav-title">NovaLabs</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="index.html#projects" class="nav-link">Projects</a>
+                <a href="index.html#nova-d1" class="nav-link">Nova D1</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="https://rpc.novalabs.app" class="nav-link nav-link-ext" target="_blank" rel="noopener">RPCortex&nbsp;&#8599;</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation"><span class="hamburger"></span></button>
+        </div>
+    </nav>
+
+    <div class="background">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="stars"></div>
+    </div>
+
+    <div class="container">
+        <header class="page-hero">
+            <h1><span class="gradient-text">Privacy</span></h1>
+            <p class="page-sub">The short version: NovaLabs doesn't track you, doesn't run ads, and doesn't sell anything about you. Here's the longer version.</p>
+        </header>
+
+        <article class="glass-card legal-card">
+            <p class="legal-updated">Last updated: June 2026</p>
+
+            <h2>Who we are</h2>
+            <p>NovaLabs is an independent hardware and software lab run by <strong>dash</strong>, based in the United States. This policy covers the NovaLabs website (<code>novalabs.app</code> and its pages), the small web tools we host, and the RPCortex operating system you flash onto your own hardware.</p>
+
+            <h2>The website</h2>
+            <ul>
+                <li><strong>No analytics, no cookies, no tracking pixels.</strong> The site is static — there's nothing watching what you click.</li>
+                <li><strong>Standard server logs.</strong> Like any website, the server that delivers these pages may record routine request data (such as your IP address and browser type) for security and reliability. We don't build profiles from it.</li>
+                <li><strong>Links out.</strong> Some buttons take you to GitHub, Instagram, or Discord. Once you're there, those companies' own privacy policies apply.</li>
+            </ul>
+
+            <h2>The tools we host</h2>
+            <p><strong>ytdl-UI</strong> (<code>yt.novalabs.app</code>) takes a link you paste and fetches that media for you to download. It doesn't require an account, and it isn't built to keep a history of what you grab. Please only use it for content you have the right to download.</p>
+
+            <h2>RPCortex &amp; the Nova D1</h2>
+            <p>RPCortex runs entirely on <strong>your</strong> device. Things like your account, password hash, and saved WiFi credentials are stored <strong>locally on the device's own flash</strong> — none of it is sent to NovaLabs. A couple of honest notes for owners:</p>
+            <ul>
+                <li><strong>WiFi passwords are stored in plaintext on-device.</strong> Microcontrollers generally have no secure enclave, so treat the device like a key — anyone with physical access can read its flash.</li>
+                <li><strong>Network features reach out only when you use them.</strong> Commands like <code>wget</code>, <code>ntp sync</code>, or <code>pkg install</code> connect directly to the service you point them at; NovaLabs isn't in the middle.</li>
+                <li><strong>OTA updates</strong> fetch release files from NovaLabs' servers when you run them. That's a normal web request — no device identifiers are required.</li>
+            </ul>
+
+            <h2>Children</h2>
+            <p>NovaLabs' projects aren't directed at children under 13, and we don't knowingly collect information from them.</p>
+
+            <h2>Changes</h2>
+            <p>If this policy changes, the date above changes with it. Material changes will be noted on this page.</p>
+
+            <h2>Contact</h2>
+            <p>Questions about privacy? Email <a href="mailto:support@novalabs.app">support@novalabs.app</a> or see the <a href="contact.html">contact page</a>.</p>
+        </article>
+
+        <footer class="footer">
+            <div class="glass-card footer-card">
+                <div class="footer-brand"><img src="logo.svg" alt="" class="footer-logo"><span>NovaLabs</span></div>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="privacy.html">Privacy</a>
+                </div>
+                <p class="footer-subtitle">Built by dash · &copy; 2026 NovaLabs · all rights reserved</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

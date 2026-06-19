@@ -1,0 +1,158 @@
+/* NovaLabs Instagram banners — 3:4 (1080×1440) cinematic "poster" system.
+   Static; built to screenshot. Shares the NovaLabs palette + space theme. */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg-dark: #0a0e27;
+    --bg-darker: #050818;
+    --cyan: #38bdf8;
+    --blue: #3b82f6;
+    --indigo: #6366f1;
+    --text: #ffffff;
+    --muted: #93a4c8;
+    --line: rgba(255,255,255,0.12);
+    --nova: linear-gradient(135deg, var(--cyan), var(--blue), var(--indigo));
+}
+
+html, body { background: #05060f; }
+
+.poster {
+    position: relative;
+    width: 1080px;
+    height: 1440px;            /* 3:4 */
+    overflow: hidden;
+    background:
+        radial-gradient(1200px 800px at 78% -8%, rgba(56,189,248,0.22), transparent 60%),
+        radial-gradient(1000px 900px at 12% 108%, rgba(99,102,241,0.22), transparent 60%),
+        linear-gradient(160deg, #0a0e27 0%, #070a1c 55%, #04060f 100%);
+    color: var(--text);
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---- space backdrop ---- */
+.stars, .stars2 {
+    position: absolute; inset: 0; pointer-events: none;
+    background-repeat: repeat;
+}
+.stars {
+    background-image:
+        radial-gradient(1.4px 1.4px at 40px 60px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1.2px 1.2px at 130px 180px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1.6px 1.6px at 230px 90px, rgba(255,255,255,0.85), transparent),
+        radial-gradient(1.1px 1.1px at 320px 250px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1.3px 1.3px at 90px 300px, rgba(200,225,255,0.7), transparent);
+    background-size: 360px 360px;
+    opacity: 0.7;
+}
+.stars2 {
+    background-image:
+        radial-gradient(2px 2px at 200px 120px, rgba(180,210,255,0.9), transparent),
+        radial-gradient(1.8px 1.8px at 60px 240px, rgba(255,255,255,0.8), transparent);
+    background-size: 520px 520px;
+    opacity: 0.5;
+}
+/* a soft orbital arc, top-right */
+.orbit {
+    position: absolute; top: -360px; right: -260px;
+    width: 900px; height: 900px; border-radius: 50%;
+    border: 1px solid rgba(56,189,248,0.16);
+    box-shadow: inset 0 0 120px rgba(56,189,248,0.06);
+}
+.orbit::after {
+    content: ""; position: absolute; inset: 90px; border-radius: 50%;
+    border: 1px solid rgba(99,102,241,0.12);
+}
+
+/* ---- frame ---- */
+.frame {
+    position: absolute; inset: 40px; border: 1.5px solid var(--line);
+    border-radius: 26px; pointer-events: none; z-index: 5;
+}
+
+/* ---- content shell ---- */
+.content {
+    position: relative; z-index: 6;
+    height: 100%;
+    display: flex; flex-direction: column;
+    padding: 96px 92px;
+}
+
+/* eyebrow / kicker */
+.kicker {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 20px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--muted);
+}
+.kicker .dot { width: 10px; height: 10px; border-radius: 50%; background: #34d399;
+    box-shadow: 0 0 14px rgba(52,211,153,0.8); }
+
+/* ghosted display title (the car-poster signature) */
+.ghost {
+    position: absolute; left: 0; right: 0;
+    font-weight: 900; text-transform: uppercase; text-align: center;
+    letter-spacing: -2px; line-height: 0.84;
+    color: transparent; -webkit-text-stroke: 2px rgba(255,255,255,0.10);
+    z-index: 1; user-select: none; white-space: nowrap;
+}
+
+/* solid headline */
+.headline { font-weight: 900; letter-spacing: -2px; line-height: 0.92; text-transform: uppercase; }
+.grad { background: var(--nova); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lead { color: #cdd8f2; font-weight: 500; line-height: 1.45; }
+.muted { color: var(--muted); }
+
+/* device / subject */
+.subject { display: flex; align-items: center; justify-content: center; flex: 1; position: relative; }
+.subject img { filter: drop-shadow(0 30px 70px rgba(0,0,0,0.55)) drop-shadow(0 0 60px rgba(56,189,248,0.18)); }
+
+/* chips */
+.chips { display: flex; flex-wrap: wrap; gap: 14px; }
+.chip {
+    padding: 12px 22px; border-radius: 999px; font-size: 22px; font-weight: 700;
+    background: rgba(99,102,241,0.14); border: 1px solid rgba(99,102,241,0.34); color: #c7d2fe;
+}
+
+/* spec strip (bottom data row) */
+.spec-strip {
+    display: flex; border-top: 1.5px solid var(--line); padding-top: 30px; gap: 8px;
+}
+.spec { flex: 1; padding: 0 8px; position: relative; }
+.spec + .spec::before {
+    content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 1px; background: var(--line);
+}
+.spec .k { font-size: 17px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.spec .v { font-size: 27px; font-weight: 800; }
+.spec .v.sm { font-size: 22px; }
+
+/* brand bar */
+.brandbar { display: flex; align-items: center; justify-content: space-between; }
+.brandmark { display: flex; align-items: center; gap: 16px; font-size: 30px; font-weight: 800; letter-spacing: 0.5px; }
+.brandmark img { width: 52px; height: 52px; }
+.handle { font-size: 24px; color: var(--muted); font-weight: 600; }
+.handle .at { color: var(--cyan); }
+
+/* feature list */
+.flist { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px; }
+.fitem { display: flex; gap: 14px; align-items: flex-start; }
+.fitem .b { width: 12px; height: 12px; border-radius: 3px; margin-top: 8px; flex: none; background: var(--nova); }
+.fitem .ft { font-size: 27px; font-weight: 700; }
+.fitem .fs { display:block; font-size: 19px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+/* terminal mock (RPCortex) */
+.term {
+    width: 100%; border-radius: 18px; overflow: hidden;
+    background: #020810; border: 1px solid rgba(56,189,248,0.25);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.5), 0 0 60px rgba(56,189,248,0.12);
+    font-family: "DejaVu Sans Mono", "Consolas", monospace;
+}
+.term-bar { display: flex; align-items: center; gap: 10px; padding: 16px 20px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.term-bar i { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+.term-bar .r { background: #ff5f57; } .term-bar .y { background: #febc2e; } .term-bar .g { background: #28c840; }
+.term-bar span { margin-left: 10px; font-size: 18px; color: var(--muted); }
+.term-body { padding: 28px 30px; font-size: 24px; line-height: 1.7; }
+.term-body .p { color: var(--cyan); }
+.term-body .o { color: #cdd8f2; }
+.term-body .dim { color: #5f6f97; }
+.term-body .ok { color: #34d399; }

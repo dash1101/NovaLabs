@@ -777,7 +777,30 @@ html {
 }
 .footer-links a:hover { color: var(--cyan); }
 
+/* ===== Sub-pages (Contact / Privacy) ===== */
+.page-hero { text-align: center; padding: 2.5rem 1rem 2.5rem; animation: fadeInUp 0.8s ease-out; }
+.page-hero h1 { font-size: clamp(2.5rem, 7vw, 4.5rem); font-weight: 800; margin-bottom: 1rem; }
+.page-sub { color: var(--text-secondary); font-size: 1.15rem; max-width: 620px; margin: 0 auto; line-height: 1.6; }
+
+/* contact cards are whole-card links */
+.contact-card { display: block; text-decoration: none; color: inherit; }
+.contact-card .service-link { cursor: pointer; }
+
+/* legal / prose */
+.legal-card { padding: 2.5rem 2.75rem; max-width: 860px; margin: 0 auto 4rem; animation: fadeInUp 0.8s ease-out; }
+.legal-updated { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 2rem; }
+.legal-card h2 { font-size: 1.4rem; margin: 2rem 0 0.75rem; }
+.legal-card h2:first-of-type { margin-top: 0; }
+.legal-card p { color: var(--text-secondary); line-height: 1.75; margin-bottom: 1rem; }
+.legal-card ul { color: var(--text-secondary); line-height: 1.75; margin: 0 0 1rem 1.25rem; }
+.legal-card li { margin-bottom: 0.5rem; }
+.legal-card strong { color: var(--text-primary); }
+.legal-card a { color: var(--cyan); text-decoration: none; }
+.legal-card a:hover { text-decoration: underline; }
+.legal-card code { background: rgba(255,255,255,0.08); padding: 0.1rem 0.4rem; border-radius: 6px; font-size: 0.9em; }
+
 @media (max-width: 768px) {
     .feature-card, .about-card { padding: 2rem 1.5rem; }
     .cap-grid { grid-template-columns: 1fr; }
+    .legal-card { padding: 1.75rem 1.5rem; }
 }
