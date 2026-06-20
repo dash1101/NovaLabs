@@ -348,3 +348,10 @@ document.querySelectorAll('.service-link:not(.disabled)').forEach(link => {
 
 console.log('%c⚡ NovaLabs ', 'background: linear-gradient(135deg, #38bdf8, #6366f1); color: white; font-size: 24px; padding: 10px 20px; border-radius: 8px;');
 console.log('%cBuilt by dash · novalabs.app', 'color: #38bdf8; font-size: 14px;');
+
+// Modular announcement popup (loads on every page since script.js is universal).
+(function () {
+    var ann = document.createElement('script');
+    ann.src = 'announce.js';
+    document.head.appendChild(ann);
+})();
