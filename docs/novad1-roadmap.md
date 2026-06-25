@@ -28,21 +28,34 @@ Cross-cutting infrastructure that several features below depend on.
 - 🗺 **LoRa Messages**: real text send/receive, background listener, notify on RX,
   synced to the web UI (compose on the phone keyboard). *Now unblocked by 0x12.*
 - 🗺 **GPS live**: live coordinates/altitude/speed, save a waypoint to SD.
-- 🗺 **NFC read/save**: read a tag, save its UID/data; (emulate where the PN532 can).
+- 🗺 **NFC read/save**: read a tag, save its UID/data.
+- 🗺 **NFC write / emulate**: write a saved UID/record to a tag (where PN532 allows).
 - 🗺 **IR record/replay**: learn a remote code, store a library, replay it.
 - 🗺 **Sub-GHz capture/replay** (CC1101 OOK): the Flipper-style headline (own devices).
+- 🗺 **LoRa mesh (Meshtastic-style)**: nodes relay messages across hops.
+- 🗺 **Encrypted LoRa / P2P**: AES (pre-shared key) over the novamesh payload, so
+  two D1s talk privately. (Feasible — ESP32 has hardware AES via ucryptolib.)
 
 ## CATEGORY 4 — Scripting & extensibility
-- 🗺 **Python script API** (`nova.*`): scripts call gps/nfc/ir/lora/etc.
+- 🗺 **Python script API** (`nova.*`): scripts call ir/lora/gps/nfc/notify/run/etc.
 - 🗺 **Button-grid script apps**: data-driven UI (an IR remote of saved codes, a
-  LoRa-button panel). *Depends on Cat 3 drivers being verified — that's why it waits.*
+  LoRa-button panel).
+- 🗺 **Background event scripts**: a script runs in the bg and reacts — e.g. on a
+  specific IR code → push a notification → send a sub-GHz command.
+- 🗺 **Flipper script conversion**: parse Flipper's formats/scripts (sub-GHz `.sub`,
+  IR `.ir` ✅, etc.) into Nova scripts — "be able to run Flipper stuff."
 - 🗺 **Downloadable Nova-UI apps**: an app repo / install script-apps.
 
 ## CATEGORY 5 — Remote control
-- 🟡 **Web panel**: status/apps/shell/WiFi GUI (done); deepen with app-sync (Cat 2).
+- 🟡 **Web panel**: status/apps/shell/WiFi/codes (done); **app-ify** it — Msg/Codes/
+  Shell become real app UIs under one launcher, not separate shell-ish tabs.
+- 🗺 **Secure control (not raw root-over-WiFi)**: today the web shell is full root on
+  any joined network (PIN-gated). Move privileged settings behind a **BT pairing**
+  channel + a dedicated **Android (later iOS) app** — the proper secure path.
 - 🗺 **Web-Bluetooth bridge**: device BLE command service + an Android-Chrome page
-  (works with WiFi down; the deliverable path vs a native APK).
-- 🗺 **Native Android app**: later, if web-Bluetooth isn't enough.
+  (works with WiFi down).
+- 🗺 **Native Android app**: pair over BT (no WiFi/IP needed). Android Studio
+  workspace coming from dash.
 
 ## CATEGORY 6 — Hardware-gated  (need a new module first)
 - 🔧 **125 kHz LF RFID** scanning/cloning (RDM6300 / T5577 + coil) — Flipper-style fobs.
@@ -61,6 +74,8 @@ mode switch / composite device, so they're a later workstream:
 
 ---
 
-**Recommended path:** finish Cat 1 (your testing) → build Cat 2 (framework) →
-then Cat 3 real apps land fast because the plumbing + verified drivers are ready.
-Starting now with **Cat 2: notifications** (foundation + the icon you asked for).
+**Progress:** Cat 1 ✅ (all modules hardware-verified) · Cat 2 ✅ (notifications) ·
+Cat 3 mostly ✅ (LoRa Messages, GPS live, NFC read, **IR record/replay + Flipper
+.ir incl. parsed NEC** all working on hardware). **Now building Cat 4 (scripting:
+nova.* API + button-grid apps + bg event scripts)**, then encrypted LoRa, web
+app-ification, and Cat 7 polish.
