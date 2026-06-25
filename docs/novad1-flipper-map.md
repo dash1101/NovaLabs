@@ -25,13 +25,13 @@ Legend: ✅ working · 🟡 partial / device-pending · 🔧 needs hardware · �
 | Save / emulate a card | 🟡 | PN532 can emulate some types (UID); full MIFARE clone is limited vs Flipper's dedicated chip. |
 | MIFARE key cracking | 🗺 | Possible but heavy on MCU. |
 
-## Infrared
+## Infrared  (Flipper `.ir` compatible)
 | Flipper | Nova D1 | Notes |
 |---|---|---|
-| Receive a remote signal | ✅ | IR receive app works (edge capture). |
-| Send a signal | ✅ | IR send works (38 kHz burst). |
-| Universal remote + saved IR library | 🗺 (script-UI) | The button-grid script app (a "remote" of saved IR codes) is the planned vehicle for this. |
-| Learn → store → replay a specific code | 🗺 | Needs full IR decode/encode (NEC/RC5/etc.), then save to SD. |
+| Receive a remote signal | ✅ | Raw mark/space capture; saved as a Flipper `.ir` file. |
+| Send a signal | ✅ | 38 kHz, ~33% duty, frames repeated (real-remote behaviour). |
+| Universal remote + saved IR library | ✅ | The IR app is a `.ir` file library — a file = a remote of named buttons. |
+| Learn → store → replay a specific code | ✅ | Record → `.ir` → replay; **Flipper `.ir` files interoperate both ways**. |
 
 ## GPIO / hardware
 | Flipper | Nova D1 | Notes |
