@@ -45,8 +45,15 @@ Cross-cutting infrastructure that several features below depend on.
 - 🗺 **Native Android app**: later, if web-Bluetooth isn't enough.
 
 ## CATEGORY 6 — Hardware-gated  (need a new module first)
-- 🔧 **125 kHz LF RFID** (RDM6300 / T5577 + coil) — to match Flipper's fob cloning.
+- 🔧 **125 kHz LF RFID** scanning/cloning (RDM6300 / T5577 + coil) — Flipper-style fobs.
 - 🔧 **iButton** reader, extra sensors, etc.
+
+## CATEGORY 8 — USB & HID  (rides the ESP32-S3 native USB; later)
+The S3's native USB currently serves the serial console (CDC). These need a USB
+mode switch / composite device, so they're a later workstream:
+- 🗺 **HID controller** — act as a USB keyboard / mouse.
+- 🗺 **BadUSB** — scripted keystroke payloads (own/authorized machines only).
+- 🗺 **U2F** — act as a FIDO/U2F security key.
 
 ## CATEGORY 7 — Power & polish  (continuous)
 - ✅ screen-off, dynamic idle, fast boot
