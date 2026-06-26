@@ -35,6 +35,16 @@ Cross-cutting infrastructure that several features below depend on.
 - 🗺 **LoRa mesh (Meshtastic-style)**: nodes relay messages across hops.
 - 🗺 **Encrypted LoRa / P2P**: AES (pre-shared key) over the novamesh payload, so
   two D1s talk privately. (Feasible — ESP32 has hardware AES via ucryptolib.)
+- 🗺 **WiFi packet capture → pcap (Wireshark)**: put the radio in **promiscuous /
+  monitor mode**, capture 802.11 frames, write a standard **`.pcap`** (or pcapng)
+  to SD so they open in Wireshark for offline review. *Feasibility:* **ESP32-target**
+  — the ESP-IDF exposes `esp_wifi_set_promiscuous` + a sniffer callback, and pcap
+  is just a 24-byte global header + per-packet headers we can write ourselves; the
+  question is whether THIS MicroPython firmware surfaces the promiscuous callback
+  (may need a custom build / C binding). **RP2 (CYW43) likely can't** do monitor
+  mode, so scope this to the S3. Pairs with a live channel-hopper + a top "frames/s"
+  readout. Honest: capture is passive/legal on your own networks; deauth/injection
+  is a separate, regulated thing — capture first.
 - 🗺 **BLE scanner & interact** (S3 has BLE built in — `bluetooth` / `aioble`):
   scan nearby BLE devices (name, MAC, RSSI, advertised services), connect to a
   GATT peripheral, read/write characteristics, subscribe to notifications. The
