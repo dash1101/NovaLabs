@@ -125,6 +125,14 @@ Cross-cutting infrastructure that several features below depend on.
   plan = PN532 stays on I2C, LF reader on a spare UART/ADC. The possible RP2350 board
   (8 MB flash + companion 5 GHz radio) would re-open the pin budget for ST25R3916 + a
   full LF frontend.
+- 🔧 **Mifare Classic / Crypto1 — splits in two.** (1) **Known/default keys = doable
+  on the PN532 NOW**: authenticate (0x60/0x61) + read blocks with a default-key
+  dictionary (FFFFFFFFFFFF, A0A1.., etc.) — this is the planned "Classic dump"
+  increment and covers many cards. (2) **Cracking UNKNOWN keys** (nested / darkside
+  attacks) needs raw timing the PN532 firmware hides → requires better HF hardware
+  (ST25R3916 / a Proxmark-class frontend), so it's a future-hardware item, not
+  software. So "get Crypto1" = ship the known-key dump now; key-recovery waits on the
+  HF hardware rev.
 - 🔧 **iButton** reader, extra sensors, etc.
 
 ## CATEGORY 8 — USB & HID  (rides the ESP32-S3 native USB; later)
