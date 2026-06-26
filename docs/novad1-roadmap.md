@@ -119,6 +119,11 @@ mode switch / composite device, so they're a later workstream:
   binds on the D1 hardware, so spend RAM to cut latency. *Verify PSRAM is enabled
   in the firmware build first (`gc.mem_free()` should show megabytes).*
 - 🗺 deeper power tuning, animation polish, more QoL.
+- 🗺 **Possible future hardware: an RP2350-based board** (Pico-2W-class) with **8 MB
+  flash** + **5 GHz WiFi**. Note: the RP2350 has NO built-in WiFi (the Pico 2 W's
+  CYW43439 is 2.4 GHz-only), so 5 GHz means pairing it with a separate 5 GHz-capable
+  radio module. Keep the portable base portable so Nova can target it later; pcap
+  (promiscuous mode) might be easier to reach on a different WiFi chip than the S3.
 
 ---
 
