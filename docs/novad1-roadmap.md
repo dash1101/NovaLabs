@@ -28,8 +28,16 @@ Cross-cutting infrastructure that several features below depend on.
 - 🗺 **LoRa Messages**: real text send/receive, background listener, notify on RX,
   synced to the web UI (compose on the phone keyboard). *Now unblocked by 0x12.*
 - 🗺 **GPS live**: live coordinates/altitude/speed, save a waypoint to SD.
-- 🗺 **NFC read/save**: read a tag, save its UID/data.
-- 🗺 **NFC write / emulate**: write a saved UID/record to a tag (where PN532 allows).
+- 🟢 **NFC read/save**: read a tag -> save a file. DONE for UID/ATQA/SAK + **full
+  NTAG/Ultralight memory dump** (v0.31.0). Mifare Classic block dump (auth + default
+  keys) next. Strategy (user, 2026-06-26): **match Flipper in FEATURES, format is
+  ours** — we ship full **Flipper `.nfc` v4 read/write as a free interop layer**
+  (drop a Flipper dump in, export to one) but aren't constrained by it.
+- 🗺 **NFC write / emulate**: write-to-magic-card clone (Gen1a/Gen2), then live
+  UID/Ultralight emulate (TgInitAsTarget). Honest PN532 ceiling: no Crypto1, so
+  secured Mifare Classic won't fully read (needs keys) or emulate.
+- 🗺 **nova.* NFC script API**: nfc_read/nfc_save/nfc_emulate so scripts do NFC like
+  a Flipper (the "run the commands/scripts a Flipper can" goal).
 - 🗺 **IR record/replay**: learn a remote code, store a library, replay it.
 - 🗺 **Sub-GHz capture/replay** (CC1101 OOK): the Flipper-style headline (own devices).
 - 🗺 **LoRa mesh (Meshtastic-style)**: nodes relay messages across hops.
