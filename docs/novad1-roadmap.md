@@ -104,7 +104,27 @@ Cross-cutting infrastructure that several features below depend on.
   workspace coming from dash.
 
 ## CATEGORY 6 — Hardware-gated  (need a new module first)
-- 🔧 **125 kHz LF RFID** scanning/cloning (RDM6300 / T5577 + coil) — Flipper-style fobs.
+- 🔧 **125 kHz LF RFID — the real gap vs Flipper.** The PN532 is **13.56 MHz HF
+  only** and physically CANNOT do 125 kHz, so today Nova has **zero** LF RFID
+  (read/clone/emulate). This is the biggest missing-vs-Flipper item and it's a
+  HARDWARE gap, not software. Path (ADD, don't replace the PN532):
+  • **LF read + save** (achievable, pin-cheap): an EM4100 reader — **RDM6300**
+    (UART, ~$2, read-only) or an **EM4095**-based module — reads EM4100/EM4102 fobs;
+    save as our format + Flipper **`.rfid`** interop (EM4100/HID/Indala). 1 UART/ADC
+    pin.
+  • **LF clone/emulate** (harder, analog): writing **T5577** blank fobs + emulating
+    needs a real 125 kHz analog frontend (carrier PWM + read), like the Flipper's
+    custom circuit — a later, deliberate hardware addition.
+- 🔧 **HF capability ceiling (PN532 vs Flipper's ST25R3916).** Flipper's HF chip is
+  the **ST25R3916** — far more capable (full card emulation, ISO15693, FeliCa,
+  better Mifare). PN532 = no Crypto1, weak emulation, no ISO15693. **Recommendation:
+  KEEP the PN532** (I2C = 0 extra pins, covers UID/NTAG/Ultralight + basic Classic),
+  and only swap to an **ST25R3916** (SPI: needs CS+IRQ + shares the bus) as a future
+  "pro" hardware rev if we want true HF parity. **GPIO reality on the S3-N16R8:**
+  pins are tight (PSRAM reserves 26-37; strapping/USB/UART used), so the pin-frugal
+  plan = PN532 stays on I2C, LF reader on a spare UART/ADC. The possible RP2350 board
+  (8 MB flash + companion 5 GHz radio) would re-open the pin budget for ST25R3916 + a
+  full LF frontend.
 - 🔧 **iButton** reader, extra sensors, etc.
 
 ## CATEGORY 8 — USB & HID  (rides the ESP32-S3 native USB; later)
