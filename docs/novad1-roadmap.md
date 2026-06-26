@@ -35,6 +35,34 @@ Cross-cutting infrastructure that several features below depend on.
 - 🗺 **LoRa mesh (Meshtastic-style)**: nodes relay messages across hops.
 - 🗺 **Encrypted LoRa / P2P**: AES (pre-shared key) over the novamesh payload, so
   two D1s talk privately. (Feasible — ESP32 has hardware AES via ucryptolib.)
+- 🗺 **BLE scanner & interact** (S3 has BLE built in — `bluetooth` / `aioble`):
+  scan nearby BLE devices (name, MAC, RSSI, advertised services), connect to a
+  GATT peripheral, read/write characteristics, subscribe to notifications. The
+  base for a Nova "BLE app" + a `nova.ble.*` script API. *Feasible on-device.*
+- 🗺 **BLE proximity ping ("headphones nearby")**: BROADCAST a BLE advertisement
+  so a nearby phone shows a popup — the Apple-AirPods-open effect. *Feasible:*
+  it's a known ESP32 trick (advertise an Apple "Continuity" proximity-pairing
+  packet → iOS shows the pairing card). It SPOOFS the advertisement; it does not
+  touch real earbuds. *NOT feasible:* jamming or taking over already-paired
+  earbuds — BLE audio is encrypted/paired, and RF jamming is illegal. Scope this
+  as a fun "advertise a beacon" demo, not an audio attack.
+- 🗺 **Garage door opener** (needs the CC1101 sub-GHz module — Cat 6): goal is a
+  one-remote-household backup opener. *Honest reality, two cases:*
+  • **Fixed-code openers** (older, ~300–433 MHz OOK / DIP-switch / simple PT2262):
+    CAN be captured and replayed — this is the realistic, achievable feature and
+    falls straight out of Sub-GHz capture/replay above. Likely covers an older
+    garage.
+  • **Rolling-code openers** (KeeLoq, Chamberlain Security+ / Security+ 2.0):
+    by design a captured code is single-use and invalid on replay; the next code
+    is derived from a secret manufacturer key + a counter. Brute-forcing the
+    keyspace (KeeLoq ~2^64, Security+2.0 ~2^66) is computationally infeasible to
+    "just open it." Known real attacks (RollJam = capture-while-jamming a fresh
+    code; KeeLoq manufacturer-key recovery) are sophisticated, hardware-specific,
+    and legally sensitive — **research/your-own-device only.**
+  *Recommended legit path:* clone your own fixed-code remote, OR use the opener
+  unit's built-in "learn/add a remote" button (if you can reach the motor head),
+  OR a programmable universal remote. Implement capture/replay + the rolling-code
+  math/notes; be upfront that rolling-code replay won't work by design.
 
 ## CATEGORY 4 — Scripting & extensibility
 - 🗺 **Python script API** (`nova.*`): scripts call ir/lora/gps/nfc/notify/run/etc.
@@ -70,6 +98,16 @@ mode switch / composite device, so they're a later workstream:
 
 ## CATEGORY 7 — Power & polish  (continuous)
 - ✅ screen-off, dynamic idle, fast boot
+- ✅ **native framebuf canvas** (v0.28.0) — C-accelerated draw, ~10-50x faster
+  redraw; killed the ~4fps OLED + the "shell echoes in chunks" loop starvation.
+- ✅ **tiered screen timeout** (v0.28.0) — dim → off → auto-lock (PIN), all via
+  contrast (never power-off, so no screen-off brick).
+- 🗺 **Use the 8 MB PSRAM** (target HW is ESP32-S3-N16R8 = 8 MB PSRAM, 16 MB
+  flash): cache for performance — glyph/icon bitmap caches, a parsed-code cache
+  (decoded .ir/.sub libraries kept in RAM), prerendered screen buffers, larger
+  HTTP/LoRa buffers, an in-RAM request/log ring. The RP2040 RAM budget no longer
+  binds on the D1 hardware, so spend RAM to cut latency. *Verify PSRAM is enabled
+  in the firmware build first (`gc.mem_free()` should show megabytes).*
 - 🗺 deeper power tuning, animation polish, more QoL.
 
 ---
