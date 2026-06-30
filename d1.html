@@ -22,6 +22,11 @@
             border-top:1px solid rgba(255,255,255,.06);font-size:.95rem}
         .feat .badge{margin-left:auto}
         .progress-note{font-size:.82rem;color:#9aa3c0;margin-top:.4rem}
+        .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:.5rem}
+        .shot figure{margin:0}
+        .shot img{width:100%;border-radius:10px;border:1px solid rgba(120,180,255,.18);
+            background:#01040a;image-rendering:pixelated;display:block}
+        .shot figcaption{font-size:.82rem;color:#9aa3c0;margin-top:.45rem;text-align:center}
     </style>
 </head>
 <body>
@@ -56,12 +61,35 @@
                 <p class="tagline gradient-text">A multi-tool you build yourself.</p>
                 <p class="subtitle">An ESP32-S3 pocket multi-tool that runs <strong>RPCortex</strong>: a 1.3" OLED UI driven by a rotary + buttons, LoRa messaging, NFC, GPS, sub-GHz, infrared, WiFi/BLE, and a phone web control panel — all from off-the-shelf modules. This page tracks the build live.</p>
                 <div class="hero-actions">
-                    <a href="https://rpc.novalabs.app" class="btn btn-primary" target="_blank" rel="noopener">The OS it runs</a>
+                    <a href="d1-sim.html" class="btn btn-primary">Try the simulator</a>
+                    <a href="#interface" class="btn btn-secondary">See the UI</a>
                     <a href="#progress" class="btn btn-secondary">Build progress</a>
                 </div>
                 <div class="pulse-ring"></div>
             </div>
         </header>
+
+        <section class="services" id="interface">
+            <h2 class="section-heading">The interface</h2>
+            <p style="text-align:center;color:#9aa3c0;margin:-0.5rem auto 1.5rem;max-width:660px">
+                The 1.3&quot; OLED, driven by a rotary encoder and three buttons. These are real renders of
+                the actual UI &mdash; and you can
+                <a href="d1-sim.html" style="color:#9fc6ff">drive it yourself in the browser</a>.
+            </p>
+            <div class="glass-card">
+                <div class="shots">
+                    <div class="shot"><figure><img src="img/d1/home.png" alt="Nova D1 home screen — icon gallery"><figcaption>Home &mdash; an animated icon gallery</figcaption></figure></div>
+                    <div class="shot"><figure><img src="img/d1/app_nfc.png" alt="NFC app"><figcaption>NFC &mdash; scan &amp; save cards (Flipper .nfc)</figcaption></figure></div>
+                    <div class="shot"><figure><img src="img/d1/app_subghz.png" alt="Sub-GHz app"><figcaption>Sub-GHz &mdash; save &amp; replay codes (Flipper .sub)</figcaption></figure></div>
+                    <div class="shot"><figure><img src="img/d1/app_ble.png" alt="BLE app"><figcaption>BLE &mdash; scan &amp; ping nearby devices</figcaption></figure></div>
+                    <div class="shot"><figure><img src="img/d1/app_msg.png" alt="LoRa messages app"><figcaption>Messages &mdash; encrypted LoRa P2P</figcaption></figure></div>
+                    <div class="shot"><figure><img src="img/d1/app_settings.png" alt="Settings"><figcaption>Settings &mdash; grouped, on-device</figcaption></figure></div>
+                </div>
+                <p class="progress-note" style="text-align:center;margin-top:1.2rem">
+                    <a href="d1-sim.html" style="color:#9fc6ff">▶ Open the live simulator</a>
+                </p>
+            </div>
+        </section>
 
         <section class="services" id="progress">
             <h2 class="section-heading">Build progress</h2>
