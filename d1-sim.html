@@ -1,54 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>Nova D1 Simulator</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova D1 — Simulator | NovaLabs</title>
+<meta name="description" content="Try the Nova D1 in your browser — the real OLED UI running live, no hardware needed. Drive it with the on-screen encoder and buttons.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
 <style>
-  :root{--bg:#070b16;--fg:#dbe8ff;--accel:#7fd1ff;--card:#0e1830;--edge:#24406e;--on:#8fe3ff}
-  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 -apple-system,Segoe UI,Roboto,sans-serif;text-align:center}
-  .wrap{max-width:560px;margin:0 auto;padding:16px}
-  h1{font-size:20px;letter-spacing:2px;background:linear-gradient(90deg,#7fd1ff,#a98bff);-webkit-background-clip:text;background-clip:text;color:transparent;margin:6px 0 2px}
-  .sub{color:#8aa0c4;font-size:12px;margin-bottom:14px}
-  #screen{background:#02060e;border:1px solid var(--edge);border-radius:12px;padding:12px;display:inline-block}
-  canvas{display:block;image-rendering:pixelated;border-radius:4px;width:100%;max-width:512px;height:auto}
-  #status{color:#8aa0c4;font-size:12px;margin:8px 0}
-  .pad{margin:14px auto 0;max-width:300px}
-  .row{display:flex;gap:10px;justify-content:center;margin:8px 0}
-  button{background:var(--card);color:var(--fg);border:1px solid var(--edge);border-radius:12px;padding:16px;font-size:16px;flex:1;cursor:pointer;user-select:none}
-  button:active{background:#1a2c52}
-  .ok{background:#13233f;border-color:#3a6ea5}
-  .hint{color:#6f86ab;font-size:12px;margin-top:14px;line-height:1.5}
-  #err{color:#ff9b9b;font-size:13px;white-space:pre-wrap;text-align:left;background:#1a0e12;border:1px solid #5a2330;border-radius:10px;padding:10px;margin-top:12px;display:none}
-  a{color:var(--accel)}
+  /* --- simulator-specific, built on the NovaLabs design tokens --- */
+  .sim-wrap{max-width:760px;margin:0 auto}
+  .device{display:flex;flex-direction:column;align-items:center;gap:.5rem;
+    padding:1.5rem;border-radius:22px;
+    background:linear-gradient(160deg,rgba(20,28,54,.9),rgba(8,12,28,.95));
+    border:1px solid var(--glass-border);box-shadow:var(--shadow),inset 0 0 40px rgba(0,0,0,.5)}
+  .bezel{padding:14px;border-radius:14px;background:#01040a;
+    border:1px solid rgba(120,180,255,.18);box-shadow:inset 0 0 24px rgba(56,189,248,.08)}
+  #oled{display:block;image-rendering:pixelated;border-radius:6px;
+    width:100%;max-width:640px;height:auto;aspect-ratio:2/1}
+  #status{color:var(--text-secondary);font-size:.85rem;margin:.3rem 0 0;min-height:1.2em}
+  .controls{display:flex;flex-direction:column;gap:.7rem;margin-top:1.4rem;width:100%;max-width:480px}
+  .crow{display:flex;gap:.7rem;justify-content:center}
+  .ctl{flex:1;background:var(--glass-bg);color:var(--text-primary);
+    border:1px solid var(--glass-border);border-radius:14px;padding:1rem .5rem;
+    font-size:1rem;font-weight:600;cursor:pointer;transition:transform .1s,background .15s;
+    -webkit-tap-highlight-color:transparent;user-select:none}
+  .ctl:hover{background:rgba(255,255,255,.09)}
+  .ctl:active{transform:scale(.96);background:rgba(56,189,248,.18)}
+  .ctl small{display:block;font-weight:400;font-size:.7rem;color:var(--text-secondary);margin-top:.15rem}
+  .ctl-sel{background:linear-gradient(135deg,rgba(56,189,248,.22),rgba(99,102,241,.22));
+    border-color:rgba(96,165,250,.5)}
+  .ctl-turn{font-size:1.3rem}
+  .simhint{color:var(--text-secondary);font-size:.82rem;line-height:1.6;margin-top:1.4rem;text-align:center}
+  #err{color:#ff9f88;font-size:.85rem;white-space:pre-wrap;text-align:left;
+    background:rgba(255,140,120,.08);border:1px solid rgba(255,140,120,.4);
+    border-radius:12px;padding:1rem;margin-top:1.2rem;display:none}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>NOVA D1 — SIMULATOR</h1>
-  <div class="sub">the real Nova D1 GUI, running in your browser. no hardware needed.</div>
-  <div id="screen"><canvas id="oled" width="128" height="64"></canvas></div>
-  <div id="status">loading Python runtime…</div>
-
-  <div class="pad">
-    <div class="row"><button onclick="K('ccw')">▲ turn ‹</button><button onclick="K('cw')">turn › ▼</button></div>
-    <div class="row">
-      <button onclick="K('back')">‹ Back</button>
-      <button class="ok" onclick="K('select')">● Select</button>
-      <button onclick="K('home')">Home</button>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+            <img src="logo.svg" alt="NovaLabs" class="nav-logo-svg">
+            <span class="nav-title">NovaLabs</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="index.html#projects" class="nav-link">Projects</a>
+            <a href="d1.html" class="nav-link active">Nova D1</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="https://rpc.novalabs.app" class="nav-link nav-link-ext" target="_blank" rel="noopener">RPCortex&nbsp;&#8599;</a>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle navigation"><span class="hamburger"></span></button>
     </div>
-  </div>
+</nav>
 
-  <div class="hint">
-    Keyboard: ↑/↓ or ←/→ = encoder · Enter = select · Backspace = back · h = home<br>
-    Hardware apps (NFC/GPS/Sub-GHz/BLE…) open but show “not found” — there are no real
-    chips in a browser. You’re testing the UI, menus and flows.<br>
-    Runs the live code from the repo, so it’s always current.
-  </div>
-  <div id="err"></div>
+<div class="background">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="stars"></div>
 </div>
 
+<div class="container">
+    <header class="hero" id="home">
+        <div class="glass-card main-card">
+            <h1 class="title"><span class="title-line">Nova D1 Simulator</span></h1>
+            <p class="tagline gradient-text">The real UI, in your browser.</p>
+            <p class="subtitle">This runs the <strong>actual</strong> Nova D1 interface — the same code that
+                drives the device — live from the repo. No hardware needed. Turn the encoder and press the
+                buttons to explore every menu and app. Hardware features show “not found” (there are no real
+                chips in a browser); everything else is the genuine experience.</p>
+        </div>
+    </header>
+
+    <section class="services">
+        <div class="glass-card sim-wrap">
+            <div class="device">
+                <div class="bezel"><canvas id="oled" width="128" height="64"></canvas></div>
+                <div id="status">loading Python runtime…</div>
+
+                <div class="controls">
+                    <div class="crow">
+                        <button class="ctl ctl-turn" onclick="K('ccw')">⟲<small>turn left</small></button>
+                        <button class="ctl ctl-turn" onclick="K('cw')">⟳<small>turn right</small></button>
+                    </div>
+                    <div class="crow">
+                        <button class="ctl" onclick="K('back')">‹ Back</button>
+                        <button class="ctl ctl-sel" onclick="K('select')">● Select</button>
+                        <button class="ctl" onclick="K('home')">⌂ Home</button>
+                    </div>
+                </div>
+
+                <div class="simhint">
+                    Keyboard: ↑/↓ or ←/→ = encoder · Enter = Select · Backspace = Back · h = Home<br>
+                    Always runs the live code from the repo, so it tracks the device as features ship.
+                </div>
+                <div id="err"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="glass-card footer-card">
+            <div class="footer-brand">
+                <img src="logo.svg" alt="" class="footer-logo">
+                <span>NovaLabs</span>
+            </div>
+            <div class="footer-links">
+                <a href="d1.html">Nova D1</a>
+                <a href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex</a>
+                <a href="contact.html">Contact</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="https://github.com/dash1101" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <p class="footer-subtitle">Built by dash · &copy; 2026 NovaLabs · all rights reserved</p>
+        </div>
+    </footer>
+</div>
+
+<script src="script.js"></script>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
 <script>
 const REPO = 'https://raw.githubusercontent.com/dash1101/RPCortex-repo/main/repo/packages/novad1/';
@@ -129,7 +200,7 @@ function draw(){
   for(let y=0;y<64;y++) for(let x=0;x<128;x++){
     const on = buf[(y>>3)*128+x] & (1<<(y&7));
     const i=(y*128+x)*4;
-    img.data[i]   = on?143:7;
+    img.data[i]   = on?143:6;
     img.data[i+1] = on?227:11;
     img.data[i+2] = on?255:22;
     img.data[i+3] = 255;
@@ -160,7 +231,7 @@ document.addEventListener('keydown',e=>{
     statusEl.textContent='starting GUI…';
     py.runPython(BOOT);
     pyKey=py.globals.get('key'); pyTick=py.globals.get('tick'); pyFrame=py.globals.get('frame');
-    statusEl.textContent='Nova D1 ready — use the buttons or your keyboard';
+    statusEl.textContent='Nova D1 ready — use the controls or your keyboard';
     draw(); loop();
   }catch(e){ fail(''+(e && e.message || e)); }
 })();
