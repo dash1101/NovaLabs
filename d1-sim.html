@@ -34,6 +34,12 @@
   .ctl-sel{background:linear-gradient(135deg,rgba(56,189,248,.22),rgba(99,102,241,.22));
     border-color:rgba(96,165,250,.5)}
   .ctl-turn{font-size:1.3rem}
+  .filebtn{display:inline-block;margin-top:1.2rem;padding:.7rem 1.2rem;border-radius:12px;
+    cursor:pointer;font-size:.85rem;font-weight:600;color:var(--text-primary);
+    background:var(--glass-bg);border:1px dashed rgba(96,165,250,.5);transition:background .15s,border-color .15s}
+  .filebtn:hover{background:rgba(56,189,248,.14);border-color:rgba(96,165,250,.8)}
+  .device.drag{outline:2px dashed rgba(96,165,250,.9);outline-offset:6px}
+  .device.drag .bezel{box-shadow:inset 0 0 30px rgba(56,189,248,.35)}
   .simhint{color:var(--text-secondary);font-size:.82rem;line-height:1.6;margin-top:1.4rem;text-align:center}
   #err{color:#ff9f88;font-size:.85rem;white-space:pre-wrap;text-align:left;
     background:rgba(255,140,120,.08);border:1px solid rgba(255,140,120,.4);
@@ -73,7 +79,9 @@
             <p class="subtitle">This runs the <strong>actual</strong> Nova D1 interface — the same code that
                 drives the device — live from the repo. No hardware needed. Turn the encoder and press the
                 buttons to explore every menu and app. Hardware features show “not found” (there are no real
-                chips in a browser); everything else is the genuine experience.</p>
+                chips in a browser); everything else is the genuine experience. <strong>Drop a real Flipper
+                Zero <code>.ir</code>, <code>.sub</code> or <code>.nfc</code> file on the device</strong> and watch
+                the same codecs the hardware uses parse it and show it on the screen.</p>
         </div>
     </header>
 
@@ -95,8 +103,14 @@
                     </div>
                 </div>
 
+                <label class="filebtn">Drop or open a Flipper file (.ir / .sub / .nfc)
+                    <input type="file" accept=".ir,.sub,.nfc" onchange="loadFlipperFile(this.files[0])" hidden>
+                </label>
+
                 <div class="simhint">
                     Keyboard: ↑/↓ or ←/→ = encoder · Enter = Select · Backspace = Back · h = Home<br>
+                    Drop a real Flipper <strong>.ir</strong>, <strong>.sub</strong> or <strong>.nfc</strong> file on the
+                    device — it's parsed by the same codecs the hardware uses and shown on the screen.<br>
                     Always runs the live code from the repo, so it tracks the device as features ship.
                 </div>
                 <div id="err"></div>
@@ -185,9 +199,47 @@ def tick():
     _ui.render()
 def frame():
     return bytes(_mk.last)
+def _push(scr):
+    _ui.stack.append(scr); _ui.render()
+def _info(title, lines):
+    return novagui.TextScreen(title, lines)
+def load_file(fname, text):
+    # Parse a real Flipper .ir / .sub / .nfc with the SAME codecs the device uses,
+    # then show it on the virtual screen — proof the interop is real, in a browser.
+    low = (fname or '').lower()
+    try:
+        if low.endswith('.ir'):
+            import novair
+            sigs = novair.parse_flipper(text)
+            if not sigs:
+                _push(_info('IR', ['(no signals parsed)'])); return 'IR: no signals found'
+            _push(novagui.IRSignalsScreen(fname[:14], sigs))
+            return 'IR remote loaded: {} button(s) - Select fires'.format(len(sigs))
+        if low.endswith('.sub'):
+            import novacc
+            d = novacc.parse_flipper(text)
+            lines = ['Freq {:.2f} MHz'.format(d.get('freq_mhz') or 0),
+                     'Proto: ' + str(d.get('protocol', '?'))[:15]]
+            if 'key' in d:
+                lines.append('Key ' + str(d.get('key', ''))[:15])
+                lines.append('Bits {}  TE {}'.format(d.get('bit'), d.get('te')))
+            elif 'raw' in d:
+                lines.append('RAW {} edges'.format(len(d.get('raw') or [])))
+            _push(_info('Sub-GHz', lines)); return 'Sub-GHz code parsed'
+        if low.endswith('.nfc'):
+            import novanfc
+            card = novanfc.parse(text)
+            dt, sub = novanfc.identify(card.sak(), card.atqa())
+            _push(_info('NFC', ['Type: ' + str(sub or dt)[:15],
+                                'UID ' + novanfc.hexs(card.uid()),
+                                'SAK {:02X}'.format(card.sak())]))
+            return 'NFC tag parsed: ' + str(sub or dt)
+        return 'drop a .ir, .sub or .nfc file'
+    except Exception as e:
+        return 'parse error: ' + str(e)
 `;
 
-let py=null, pyKey=null, pyTick=null, pyFrame=null;
+let py=null, pyKey=null, pyTick=null, pyFrame=null, pyLoad=null;
 const cv=document.getElementById('oled'), ctx=cv.getContext('2d');
 const statusEl=document.getElementById('status'), errEl=document.getElementById('err');
 
@@ -213,6 +265,20 @@ function draw(){
 function K(name){ if(!pyKey)return; try{ pyKey(name); }catch(e){ fail(''+e); } draw(); }
 window.K=K;
 
+function loadFlipperFile(file){
+  if(!file) return;
+  if(!pyLoad){ statusEl.textContent='still loading — try again in a second'; return; }
+  const rd=new FileReader();
+  rd.onload=()=>{
+    let msg;
+    try{ msg=pyLoad(file.name, rd.result); }catch(e){ msg='error: '+e; }
+    statusEl.textContent = ''+(msg||'loaded');
+    draw();
+  };
+  rd.readAsText(file);
+}
+window.loadFlipperFile=loadFlipperFile;
+
 function loop(){ if(pyTick){ try{ pyTick(); }catch(e){} draw(); } requestAnimationFrame(loop); }
 
 document.addEventListener('keydown',e=>{
@@ -220,6 +286,14 @@ document.addEventListener('keydown',e=>{
            'Enter':'select','Backspace':'back','h':'home'};
   if(m[e.key]!==undefined){ e.preventDefault(); K(m[e.key]); }
 });
+
+// Drag-and-drop a real Flipper .ir/.sub/.nfc onto the device -> it parses with the
+// live codecs and shows on the virtual screen.
+const dev=document.querySelector('.device');
+['dragover','dragenter'].forEach(n=>dev.addEventListener(n,e=>{e.preventDefault(); dev.classList.add('drag');}));
+['dragleave','dragend'].forEach(n=>dev.addEventListener(n,e=>{e.preventDefault(); dev.classList.remove('drag');}));
+dev.addEventListener('drop',e=>{ e.preventDefault(); dev.classList.remove('drag');
+  const f=e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if(f) loadFlipperFile(f); });
 
 (async()=>{
   try{
@@ -234,6 +308,7 @@ document.addEventListener('keydown',e=>{
     statusEl.textContent='starting GUI…';
     py.runPython(BOOT);
     pyKey=py.globals.get('key'); pyTick=py.globals.get('tick'); pyFrame=py.globals.get('frame');
+    pyLoad=py.globals.get('load_file');
     statusEl.textContent='Nova D1 ready — use the controls or your keyboard';
     draw(); loop();
   }catch(e){ fail(''+(e && e.message || e)); }
