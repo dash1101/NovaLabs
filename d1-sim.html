@@ -244,7 +244,7 @@ const cv=document.getElementById('oled'), ctx=cv.getContext('2d');
 const statusEl=document.getElementById('status'), errEl=document.getElementById('err');
 
 function fail(msg){ errEl.style.display='block'; errEl.textContent='Simulator error:\\n'+msg+
-  '\\n\\n(report it on GitHub)'; statusEl.textContent='failed to start'; }
+  '\\n\\nReport it at github.com/dash1101/NovaLabs/issues'; statusEl.textContent='failed to start'; }
 
 function draw(){
   if(!pyFrame) return;
