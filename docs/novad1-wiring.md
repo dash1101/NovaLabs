@@ -21,7 +21,7 @@ The N16R8 has 16 MB flash + **8 MB octal PSRAM**, which reserves extra GPIOs:
 | **I2C** (OLED SH1106 + PN532) | SDA **8**, SCL **9** | shared bus; OLED @ 0x3C, PN532 @ 0x24 |
 | **SPI** (CC1101 + SX1276 + SD) | SCK **12**, MOSI **11**, MISO **13** | one shared bus, separate CS each |
 | CC1101 | CS **10**, GDO0 **14** | sub-GHz (SPI) |
-| SX1276 LoRa | CS **21**, RST **47**, DIO0 **48** | 915 MHz (SPI) |
+| SX1276 LoRa | CS **21**, RST **47** | 915 MHz (SPI). DIO0 not wired — the driver polls |
 | SD card | CS **15** | SPI |
 | **GPS** NEO-M8N | ESP TX **17** → GPS RX, ESP RX **18** ← GPS TX | UART1, 9600 baud |
 | **Encoder** EC11 | A **4**, B **5**, SW **6** | SW = the "Select" button |
@@ -30,7 +30,7 @@ The N16R8 has 16 MB flash + **8 MB octal PSRAM**, which reserves extra GPIOs:
 | IR emitter | **39** | PWM 38 kHz |
 | Buzzer | **40** | PWM tone |
 | Vibration motor | **41** | via transistor |
-| Status LED | **42** | (or your board's onboard LED) |
+| Status LED | **48** | onboard WS2812 RGB on most S3 devkits |
 | DHT11 | **2** | 1-wire-ish (firmware `dht`) |
 | iButton (1-Wire) | **1** | DS1990 etc. |
 | Battery sense | **3?** → use an **ADC1** pin | ADC1 = GPIO 1–10; pick a free one |
@@ -48,7 +48,8 @@ The N16R8 has 16 MB flash + **8 MB octal PSRAM**, which reserves extra GPIOs:
 - **CC1101 (8-pin SPI):** VCC→3V3, GND→GND, SCK→12, MOSI(SI)→11, MISO(SO)→13,
   CSN→10, GDO0→14, GDO2→(unused).
 - **SX1276 LoRa (SPI):** VCC→3V3, GND→GND, SCK→12, MOSI→11, MISO→13, NSS→21,
-  RST→47, DIO0→48. **Antenna required before TX.**
+  RST→47. DIO0 can stay unconnected — the driver polls status over SPI rather than
+  using an interrupt line. **Antenna required before TX.**
 - **SD module (6-pin SPI):** VCC→**5V** (most modules have a regulator), GND→GND,
   SCK→12, MOSI→11, MISO→13, CS→15.
 - **NEO-M8N GPS (4-pin):** VCC→3V3/5V, GND→GND, RX→17 (ESP TX), TX→18 (ESP RX).
@@ -56,7 +57,7 @@ The N16R8 has 16 MB flash + **8 MB octal PSRAM**, which reserves extra GPIOs:
 - **IR emitter (3-pin module):** VCC→3V3, GND→GND, IN→39.
 - **DHT11 (3-pin):** VCC→3V3, GND→GND, DATA→2 (10k pull-up to 3V3).
 - **iButton reader:** data→1 (4.7k pull-up to 3V3), GND→GND.
-- **Buzzer / vibration / LED:** signal→40/41/42, GND→GND (use a transistor for the
+- **Buzzer / vibration / LED:** signal→40/41/48, GND→GND (use a transistor for the
   motor; small active buzzer can be driven directly).
 - **Battery:** Li-Po → TP4056 → a **voltage divider** (e.g. 100k/100k) → an ADC1
   pin (do **not** feed raw battery voltage to a GPIO).
@@ -65,10 +66,16 @@ The N16R8 has 16 MB flash + **8 MB octal PSRAM**, which reserves extra GPIOs:
 module usually wants 5V (it regulates). Double-check each module's silkscreen.
 
 ## Set pins in software (if your wiring differs)
+
+Pins are per-board and edited from the shell — no registry editing:
+
 ```
-novad1 status                      # see the current map
-reg set Apps.NovaD1_SDA 8
-reg set Apps.NovaD1_PIN_enc_a 4
-reg set Apps.NovaD1_SPI_sck 12
-... etc, then: novad1 scan
+d1 pins                    # every pin, its value, and where that value came from
+d1 pins set enc_a 4        # change one
+d1 pins clear enc_a        # back to the board default
+d1 pins check              # is this map physically possible?
+d1 scan                    # what answers on I2C
 ```
+
+The table above is the `esp32s3` board profile, which is what `d1 pins` shows when
+nothing is overridden. Full walkthrough: `SETUP.md` in the package.
