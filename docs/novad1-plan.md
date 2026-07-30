@@ -35,17 +35,19 @@ Consequences that shape the plan:
 - **Stream, don't slurp** — the lesson from the install fix applies everywhere: capture
   buffers, file reads, framebuffers.
 - **Reclaim before HTTPS** — already wired; keep it.
-- If a feature genuinely can't fit, it's a **Rev 2** (Pico Plus 2 W, 8 MB PSRAM) feature,
-  not a Pico 2 W one. That's an honest cutoff, not a failure.
+- If a feature genuinely can't fit, it's a **Nova D2** feature (see
+  [`novad2.md`](novad2.md)), not a Pico 2 W one. That's an honest cutoff, not a failure.
 
 ## Board decision (settled)
 
 **Reference build: Raspberry Pi Pico 2 W ($7).** It has the full RP2350 PIO, WiFi + BLE,
-and leaves ~$50 of the $60 budget for radios. **Nova D1 Rev 2: Pimoroni Pico Plus 2 W** —
-identical header (code drops in) plus PSRAM/flash/GPIO, for anyone who wants headroom or
-the features the Pico 2 W can't fit. ESP32-S3 is legacy (no PIO). pcap/monitor mode is
-impossible on the CYW43439 (same radio on both Pico boards) — parked unless we build
-custom firmware, which would be a Rev-2-only, single-device decision.
+and leaves ~$50 of the $60 budget for radios. The **Pimoroni Pico Plus 2 W** is the
+optional headroom board — identical header (code drops in) plus PSRAM/flash/GPIO — and its
+PSRAM is where the next-gen **Nova D2** builds from. ESP32-S3 is legacy (no PIO).
+**pcap/monitor mode is impossible on the CYW43439** (same radio on both Pico boards) — so
+it moves to **D2**, which adds a dedicated ESP32-C5 co-processor (dual-band WiFi + pcap)
+rather than compromising D1. Switching D1 back to an ESP32-S3 to gain pcap would cost PIO,
+which drives the radio timing — a bad trade, correctly rejected.
 
 ---
 
@@ -67,7 +69,7 @@ custom firmware, which would be a Rev-2-only, single-device decision.
   below** (frozen modules free the whole ~79 KB), so the interim refactor is deliberately
   deferred, not done.
 
-### The custom-firmware endgame (v1.0-stable / Rev 2) — the big unlock
+### The custom-firmware endgame (v1.0-stable → Nova D2) — the big unlock
 A from-source RP2350 MicroPython build ("Nova firmware") solves three things at once:
 - **pcap** — patch the `cyw43-driver` for CYW43439 monitor mode + a Python hook for raw
   frames (community-proven on the Pico W; not in stock MicroPython). This is the *only*
@@ -111,26 +113,38 @@ Move timing-critical work off CPU loops into PIO state machines:
 - **Sub-GHz** edge capture/replay → PIO, so it stays accurate under load. (De-risk test:
   capture a known signal idle vs. with services running; if it degrades, PIO is
   mandatory — this is the test that proves the RP2350 was the right call.)
-- **125 kHz LF carrier** → PIO (feeds Phase D).
 
-### Phase D — LF RFID (the standout feature)
-- **Read now:** RDM6300 (~$3–6, UART) reads EM4100 fobs. Drop-in, low effort.
-- **Read + emulate (the selling point):** a 125 kHz coil front-end (coil + driver +
-  envelope detector, ~$3–5) driven by PIO — one antenna reads, clones *and* emulates.
-  The Flipper does exactly this, so it's proven-doable, not a moonshot. Needs the coil
-  tuned on real hardware; RDM6300 covers reading until then.
+### Phase D — the Nova mesh standard (shared with D2)
+Nova devices already speak a compact LoRa mesh (`novamesh`: addressed packets, TTL,
+managed-flood relay, dedup) with AES-128 payload encryption (`novamsg`/`novacrypt`).
+Formalize two explicit modes so the whole Nova D lineup interoperates:
+- **Open broadcast** — an explicit unencrypted send, for pushing a plaintext LoRa
+  message to any nearby Nova device (works today as the no-key path; make it a real
+  choice even when a key is set).
+- **Encrypted channels** — named channels each with a pre-shared key (Meshtastic-style);
+  only devices on that channel can read. Have the AES; add named, selectable channels.
+- Mesh enhancements alongside: node table, named nodes, ack/retry.
+- *True Meshtastic interop* (real Meshtastic hardware) is a D2-era stretch — protobuf +
+  AES-256-CTR channel PSKs are heavy for MicroPython. Nova is "Meshtastic in spirit."
 
 ### Phase E — features on top
 - **Rolling-code analyzer** — capture several, identify the scheme, predict the next
   code *where the scheme is predictable* (weak/counter-based); honest that crypto rolling
   codes can't be predicted without the key.
-- **Mesh enhancements** — node table, named nodes, ack/retry on top of the existing
-  managed-flood routing.
+- **LF RFID read** (optional) — RDM6300 (~$3–6, UART) reads EM4100 fobs. Low effort; the
+  one D1 LF capability. (LF *emulate* is a **D2** feature — see below.)
 - More **apps** on the app framework (the plumbing already ships).
 
-### Phase F — Rev 2 (Pimoroni Pico Plus 2 W)
-Only what the Pico 2 W genuinely can't do: big capture buffers in PSRAM, every module
-resident at once, and the pcap-via-custom-firmware question if we ever pursue it.
+### Moved to Nova D2 — see [`novad2.md`](novad2.md)
+To keep D1 focused and finishable, the things D1's hardware can't do (or can't fit) are
+now the **next device**, not a D1 revision:
+- **WiFi pcap / Wireshark** — the CYW43439 can't do promiscuous mode; D2 adds an
+  ESP32-C5 co-processor (dual-band WiFi *and* pcap) for it.
+- **125 kHz LF RFID *emulate*** — the PIO coil front-end, with D2's RAM/pins to host it.
+- **Dual-band networking, PSRAM headroom, richer UI, multi-threading** — all D2.
+
+This is why D1 development gets *faster* from here: the hard, hardware-blocked items are
+D2's problem now. D1 finishes as a focused, shippable multi-tool.
 
 ---
 
@@ -145,7 +159,7 @@ resident at once, and the pcap-via-custom-firmware question if we ever pursue it
   never recall. Silent-failure bugs (a wrong display init, a wrong IR layout) give no
   error at all.
 - **Budget memory per feature.** Before adding a driver, know its resident cost and
-  where it fits in the ~100 KB. If it doesn't, it's Rev 2.
+  where it fits in the ~100 KB. If it doesn't, it's Nova D2.
 - **One board profile, generated docs.** Pins come from `novaboard`; the wiring tables
   are generated, so they can't drift.
 
@@ -192,28 +206,31 @@ Status keys: **✅ done** · **🔬 hardware-verified** · **💻 code done, nee
 ### PIO — the RP2350 payoff
 - ⬜ IR TX timing → PIO
 - ⬜ Sub-GHz capture/replay → PIO
-- ⬜ 125 kHz LF carrier → PIO
 - ⬜ Capture-under-load de-risk test (idle vs. services running)
 
-### LF RFID
-- ⬜ Read via RDM6300 (module, read-only) — the quick win
-- ⬜ Read + **emulate** via a 125 kHz coil front-end driven by PIO — the standout feature
+### Nova mesh standard
+- ✅ LoRa mesh routing (managed flood + TTL + dedup) + AES-128 payload encryption — code done
+- ⬜ **Open broadcast** — explicit unencrypted send (plaintext to any nearby Nova device)
+- ⬜ **Encrypted channels** — named channels with pre-shared keys (Meshtastic-style)
+- ⬜ Mesh enhancements: node table, named nodes, ack/retry
 
 ### Features on top
-- ✅ LoRa mesh routing (managed flood + TTL + dedup) — code done
-- ⬜ Mesh enhancements: node table, named nodes, ack/retry
 - ⬜ Rolling-code analyzer (capture, decode, predict where the scheme allows)
+- ⬜ LF RFID **read** via RDM6300 (optional; the one D1 LF capability)
 - ⬜ More apps
-- ⏸ WiFi pcap — impossible on the CYW43439; Rev 2 + custom firmware only
 
 ### Networking (Tier-2 async I/O)
 - 💻 Async `ping`/`wget`/`curl` + async httpd (`--bg`) — code done, DEVICE-PENDING
 - 🔬 BLE scan (works; reliable under a background service)
 
 ### Hardware & product
-- ⬜ GPIO expander (PCF8574 / 74HC165) — unblocks buttons + iButton + LF
+- ⬜ GPIO expander (PCF8574 / 74HC165) — unblocks buttons + iButton + LF read
 - ⬜ Case (3D-printed / laser-cut)
-- ⬜ **Nova D1 Rev 2** — Pimoroni Pico Plus 2 W (PSRAM headroom, pcap possibility)
+- ⬜ Optional headroom board: Pimoroni Pico Plus 2 W (drop-in, PSRAM)
+
+### → Nova D2 (next device — see [`novad2.md`](novad2.md))
+- ⏸ WiFi pcap / Wireshark (ESP32-C5 co-processor) · ⏸ dual-band WiFi
+- ⏸ LF RFID **emulate** (PIO coil) · ⏸ multi-threading · ⏸ PSRAM / richer UI
 
 ### Docs & release
 - ✅ BOM with prices, wiring (generated), SETUP, execution plan, architecture
