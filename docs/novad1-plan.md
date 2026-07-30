@@ -59,8 +59,30 @@ custom firmware, which would be a Rev-2-only, single-device decision.
   wall — it works from a fresh boot (~100 KB free) and fails once the heap is carved up
   (~66–86 KB). The reliable path is: install big packages from a fresh boot. Not fixable
   purely in net.py; the real lever is the resident footprint (below).
-- [ ] **Shrink the resident footprint** so more headroom is available (the Nova GUI
-  service is the big chunk) — the highest-leverage memory work, and it helps everything.
+- [ ] **Shrink the resident footprint.** *Measured (2026-07-30):* the GUI-resident set
+  is ~79 KB of `.mpy`, dominated by `novad1` (23 KB) + `novagui` (22 KB) which *are* the
+  GUI. The only cleanly-deferrable chunk is `novagui_radios`+`novagui_system` (~16 KB),
+  but deferring them breaks the `novagui.PinScreen` re-exports external code uses —
+  invasive, ~12 sites, real risk for a modest win. **The real win is the custom firmware
+  below** (frozen modules free the whole ~79 KB), so the interim refactor is deliberately
+  deferred, not done.
+
+### The custom-firmware endgame (v1.0-stable / Rev 2) — the big unlock
+A from-source RP2350 MicroPython build ("Nova firmware") solves three things at once:
+- **pcap** — patch the `cyw43-driver` for CYW43439 monitor mode + a Python hook for raw
+  frames (community-proven on the Pico W; not in stock MicroPython). This is the *only*
+  way to get pcap — it's C firmware, not Python.
+- **Footprint** — freeze the RPCortex OS + Nova D1 package into flash; frozen bytecode
+  runs from flash, not heap, so most of that ~79 KB leaves RAM. Directly fixes the
+  memory constraint.
+- **Speed** — one locked target makes `@native`/`@viper` on hot paths free to use.
+
+Big lift (build + maintain a MicroPython fork), so a *later* phase — but it's what makes
+everything else easy, and the footprint audit above tells us what to freeze.
+**Package-arch caveat:** freezing keeps distributed `.pkg`s arch-neutral `.mpy` (runs
+anywhere), so no arch label is needed — *unless* we later want installable *native*
+packages, which would need a `package.cfg` `arch:` field (`any`/`rp2350`) + a `pkgmgr`
+checker. Skip that unless a case demands it.
 - [ ] **SSD1309 bring-up** when the 2.42" panel arrives — the init sequence is written
   but device-unconfirmed; confirm it lights up, then it's a config toggle.
 - [ ] Decide the button **GPIO expander** (PCF8574) now, because the pin budget is full —
