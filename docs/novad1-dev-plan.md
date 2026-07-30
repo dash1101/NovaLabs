@@ -4,8 +4,10 @@ The build plan for the Nova D1 *software*: a modular, package-based multi-tool o
 RPCortex Vela. Hardware spec: [`nova-d1.md`](nova-d1.md). This doc is the source
 of truth for how we build it — architecture, requirements, and the staged plan.
 
-> **Status:** Stage 0 (wrapper scaffold) shipped in the repo. Betas of the GUI
-> start next; on-display testing when the SH1106 unit arrives.
+> **Status:** the wrapper, GUI, app framework and board profiles ship and are
+> **hardware-validated on the Pico 2 W** (build 1.00.25). This doc covers the
+> architecture and design principles; the current prioritized, hardware-grounded
+> plan lives in [`novad1-plan.md`](novad1-plan.md).
 
 ---
 
