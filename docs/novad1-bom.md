@@ -97,9 +97,9 @@ unavailable in the menu, so you can start small and add radios later.
 
 | Tier | What you get | Rough cost |
 |---|---|---|
-| **Essentials** | The device, its screen and controls, IR send/receive | **$25 – $35** |
-| **Recommended** | Adds sub-GHz, NFC and LoRa mesh — the full multi-tool | **$55 – $75** |
-| **Everything** | Adds GPS, SD, sensors, battery, iButton, haptics | **$95 – $125** |
+| **Essentials** | The device, its screen and controls, IR send/receive | **$20 – $30** |
+| **Recommended** | Adds sub-GHz, NFC and LoRa mesh — the full multi-tool | **$35 – $55** |
+| **Everything** | Adds GPS, SD, sensors, battery, iButton, haptics | **$50 – $75** |
 
 The **Recommended** tier is the one to build. It's what the project is designed
 around and it lands close to a **$60 target per unit** if you source the commodity
@@ -120,7 +120,7 @@ modules from AliExpress or eBay.
 | **IR receiver** (VS1838B / TSOP38238) | Learning remotes. | <$1 | Search `VS1838B IR receiver` |
 | **IR LED emitter** (940 nm) | Sending. A 3-pin module is easiest. | <$1 | Search `940nm IR LED module` |
 | Breadboard + jumper wires | Wiring it up. | $3 – $8 | Any starter kit |
-| Total | Starter | **≈ $25 – $30** | |
+| Total | Starter | **≈ $20 – $30** | |
 
 ### Recommended — the full multi-tool
 
