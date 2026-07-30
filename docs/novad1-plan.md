@@ -52,10 +52,15 @@ custom firmware, which would be a Rev-2-only, single-device decision.
 ## The plan, in priority order
 
 ### Phase A — harden the base (mostly done; finish on-hardware)
-- [x] pkg install streams to flash (no MemoryError on big packages)
-- [x] HTTPS reclaims heap before the TLS handshake
-- [ ] **Verify the TLS fix on hardware** — retry the large online install on 1.00.25 at
-  a fragmented heap; confirm it now gets through.
+- [x] pkg install streams to flash — **hardware-verified** (38-file NovaD1 install completed)
+- [x] HTTPS reclaims heap before the TLS handshake, and fails with actionable guidance
+  ("install from a fresh boot") when the heap is too fragmented for a contiguous block
+- [x] **Learned on hardware:** a large online install is a non-moving-GC *fragmentation*
+  wall — it works from a fresh boot (~100 KB free) and fails once the heap is carved up
+  (~66–86 KB). The reliable path is: install big packages from a fresh boot. Not fixable
+  purely in net.py; the real lever is the resident footprint (below).
+- [ ] **Shrink the resident footprint** so more headroom is available (the Nova GUI
+  service is the big chunk) — the highest-leverage memory work, and it helps everything.
 - [ ] **SSD1309 bring-up** when the 2.42" panel arrives — the init sequence is written
   but device-unconfirmed; confirm it lights up, then it's a config toggle.
 - [ ] Decide the button **GPIO expander** (PCF8574) now, because the pin budget is full —
