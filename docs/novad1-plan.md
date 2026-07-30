@@ -131,3 +131,69 @@ resident at once, and the pcap-via-custom-firmware question if we ever pursue it
 - GPIO expander: PCF8574 (I2C) vs 74HC165 (shift register) — pick before wiring buttons.
 - LF: start with RDM6300 read-only, or go straight to the coil front-end?
 - When to convert each blocking command to an async foreground app vs. leave sync.
+
+---
+
+## Full release checklist
+
+Status keys: **✅ done** · **🔬 hardware-verified** · **💻 code done, needs hardware** ·
+**⬜ to do** · **⏸ parked**
+
+### Platform & OS
+- 🔬 RP2350 port — board profiles + auto-detect (`esp32s3` / `pico2w` / `picoplus2w`)
+- 🔬 `pkg install` streams to flash (no MemoryError on large packages)
+- ✅ HTTPS TLS: reclaim heap + actionable failure when fragmented
+- 🔬 Async multitasking (shell + background services) on the Pico 2 W
+- 🔬 Reboot-from-async lands in the shell, not the REPL
+- ⬜ **Footprint reduction** — trim/lazy-load the resident set (Nova GUI service is the big chunk). *Highest-leverage memory work.*
+- ⬜ Fix `d1 status` detection accuracy (reports unwired modules as "detected")
+- ⬜ Replace `esp32.RMT` for IR TX (timing loop → PIO)
+- ⏸ OTA rework for RP2 (full `.uf2` or filesystem updater) — later phase
+
+### Display & UI
+- 🔬 GUI runs on SH1106
+- 💻 SSD1309 backend (init written, **DEVICE-UNCONFIRMED** — needs the 2.42" panel)
+- ⬜ Convert blocking commands (BLE scan, radio ops) to async foreground apps
+- ✅ App framework, app store, 9 bundled apps, `nova` scripting API
+
+### Radios & sensors  *(drivers exist in code; each needs wiring + on-hardware bring-up)*
+- 💻 PN532 NFC/RFID (I2C) — **first module to bring up**
+- 💻 CC1101 sub-GHz — capture/replay OOK, `.sub` files
+- 💻 SX1276 LoRa — needs a 2nd unit for real mesh/range
+- 💻 IR TX + RX — `.ir` files, NEC/Sony/RC5/RC6/Pioneer encoders (Pioneer layout DEVICE-UNCONFIRMED)
+- 💻 GPS (UART)
+- 💻 Battery sense + low-battery flag / VBUS detect
+- 💻 DHT11/22 temp + humidity
+- 💻 iButton / 1-Wire (needs a pin — blocked on the expander)
+- 💻 microSD (SPI)
+
+### PIO — the RP2350 payoff
+- ⬜ IR TX timing → PIO
+- ⬜ Sub-GHz capture/replay → PIO
+- ⬜ 125 kHz LF carrier → PIO
+- ⬜ Capture-under-load de-risk test (idle vs. services running)
+
+### LF RFID
+- ⬜ Read via RDM6300 (module, read-only) — the quick win
+- ⬜ Read + **emulate** via a 125 kHz coil front-end driven by PIO — the standout feature
+
+### Features on top
+- ✅ LoRa mesh routing (managed flood + TTL + dedup) — code done
+- ⬜ Mesh enhancements: node table, named nodes, ack/retry
+- ⬜ Rolling-code analyzer (capture, decode, predict where the scheme allows)
+- ⬜ More apps
+- ⏸ WiFi pcap — impossible on the CYW43439; Rev 2 + custom firmware only
+
+### Networking (Tier-2 async I/O)
+- 💻 Async `ping`/`wget`/`curl` + async httpd (`--bg`) — code done, DEVICE-PENDING
+- 🔬 BLE scan (works; reliable under a background service)
+
+### Hardware & product
+- ⬜ GPIO expander (PCF8574 / 74HC165) — unblocks buttons + iButton + LF
+- ⬜ Case (3D-printed / laser-cut)
+- ⬜ **Nova D1 Rev 2** — Pimoroni Pico Plus 2 W (PSRAM headroom, pcap possibility)
+
+### Docs & release
+- ✅ BOM with prices, wiring (generated), SETUP, execution plan, architecture
+- ✅ Browser simulator (runs the real modules)
+- ⬜ Graduate v1.0 from beta → stable channel once modules are proven
