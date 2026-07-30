@@ -160,19 +160,41 @@ Everything above, plus:
 | Part | What for | Price | Where |
 |---|---|---|---|
 | **PCF8574 I2C expander** *(or a 74HC165 shift register)* | **Recommended on Pico boards.** The default map already uses all 26 available pins; this frees about seven of them for the buttons, so you have room to grow. | $1 – $2 | Search `PCF8574 I2C expander module` |
-| **RDM6300 reader**, 125 kHz | Adds **low-frequency RFID** (EM4100 building fobs) — the one capability the PN532 can't provide. Read-only. | $3 – $6 | Search `RDM6300 125kHz RFID reader` |
+| **125 kHz LF RFID** | The one band the PN532 can't do (old building/apartment fobs, EM4100). Two ways to add it — see the note below. | $3 – $6 | see below |
 | **DS3231 RTC module** | Keeps the clock accurate with no WiFi. | $2 – $4 | Search `DS3231 RTC module` |
 | **3D-printed or laser-cut case** | Making it pocketable. | varies | Your own design for now |
 
-### Instead of the Pico 2 W
+**125 kHz LF RFID — read vs. emulate.** There's no cheap module that *emulates* a
+125 kHz tag over the air, so there are two levels:
 
-The software supports three boards and detects which one it's on, so you can swap:
+- **Read only (available now):** an **RDM6300** module (~$3–6, UART, one data pin). It
+  reads EM4100 fobs and nothing else — no writing, no emulation. Plug-and-play if you
+  just want to identify a fob.
+- **Read + emulate (the standout, planned):** a small **125 kHz coil front-end** — an
+  antenna coil, a driver transistor, and an envelope detector (~$3–5 in passives) —
+  driven by the RP2350's **PIO**. This is how a Flipper does it, and PIO is exactly the
+  right tool for the carrier timing. One antenna reads, clones, *and* emulates. It's a
+  bit of analog to get right, so it lands after the coil is tuned on real hardware; the
+  RDM6300 covers reading in the meantime.
 
-| Board | Why | Price |
+### Which board
+
+The software supports all three and detects which one it's on, so the build is the
+same either way. But there's a clear recommendation:
+
+| Board | Role | Price |
 |---|---|---|
-| **Raspberry Pi Pico 2 W** | The recommended target. Best value by a distance. | **$7** |
-| **Pimoroni Pico Plus 2 W** | Drop-in upgrade — identical pinout, plus 8 MB PSRAM, 16 MB flash, USB-C and extra GPIO. Worth it if you want the LF reader and iButton at the same time. | **≈$25** — [Pimoroni](https://shop.pimoroni.com/en-us/products/pimoroni-pico-plus-2-w) · [Adafruit](https://www.adafruit.com/product/6243) |
-| **ESP32-S3 devkit (N16R8)** | What the project was originally built on; still fully supported. | $8 – $15 |
+| **Raspberry Pi Pico 2 W** | **The reference board — build this.** RP2350, so it has the full PIO block (the hardware that drives IR / sub-GHz / LF timing), plus WiFi + Bluetooth, in 520 KB of RAM. At $7 it leaves almost the whole budget for radios. | **$7** — [official](https://www.raspberrypi.com/news/raspberry-pi-pico-2-w-on-sale-now/) · [PiShop](https://www.pishop.us/product/raspberry-pi-pico-2-w/) |
+| **Pimoroni Pico Plus 2 W** | **The "Rev 2" board.** Same RP2350 family and identical header, so the code drops straight in — but 8 MB PSRAM, 16 MB flash, USB-C and extra GPIO. Headroom for big capture buffers and every module at once without an expander. | **≈$25** — [Pimoroni](https://shop.pimoroni.com/en-us/products/pimoroni-pico-plus-2-w) · [Adafruit](https://www.adafruit.com/product/6243) |
+| **ESP32-S3 devkit (N16R8)** | Legacy — what the project was first built on. Still runs, but no PIO, so it's not the direction. | $8 – $15 |
+
+**Pico 2 W vs. Pico Plus 2 W:** they share the same RP2350 core, the *same* PIO, and
+the *same* CYW43439 radio — so PIO, speed and WiFi capability (including whatever the
+radio can and can't capture) are identical. The Plus only adds memory, flash and pins.
+The Pico 2 W's one tight spot is GPIO count, and a **$1–2 I²C expander** solves that far
+more cheaply than the ~$18 board difference. So the Pico 2 W is the build; the Plus is
+the premium **Rev 2** for anyone who wants the extra headroom, and its extra RAM is the
+natural home if WiFi packet capture ever needs big buffers.
 
 ---
 
