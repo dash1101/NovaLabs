@@ -113,14 +113,14 @@ modules from AliExpress or eBay.
 
 | Part | What for | Price | Where |
 |---|---|---|---|
-| **Raspberry Pi Pico 2 W** | The microcontroller. RP2350, 520 KB RAM, WiFi + Bluetooth. | **$7** | [Official](https://www.raspberrypi.com/news/raspberry-pi-pico-2-w-on-sale-now/) · [PiShop](https://www.pishop.us/product/raspberry-pi-pico-2-w/) · [Pimoroni](https://shop.pimoroni.com/en-us/products/raspberry-pi-pico-2-w) · [Seeed](https://www.seeedstudio.com/Raspberry-Pi-Pico-2-W-p-6244.html) |
-| **2.42" OLED display**, 128×64, SSD1309, **I2C** | The screen. Bigger and much more readable than the common 0.96". | $9 – $16 | Search `2.42 inch OLED SSD1309 I2C` |
-| **EC11 rotary encoder** with push switch | Primary control — scroll and click. | $1 – $2 | Search `EC11 rotary encoder module` |
+| **Raspberry Pi Pico 2 W** | The microcontroller. RP2350, 520 KB RAM, WiFi + Bluetooth. | $6 - $7 | [Official](https://www.raspberrypi.com/news/raspberry-pi-pico-2-w-on-sale-now/) · [PiShop](https://www.pishop.us/product/raspberry-pi-pico-2-w/) · [Pimoroni](https://shop.pimoroni.com/en-us/products/raspberry-pi-pico-2-w) · [Seeed](https://www.seeedstudio.com/Raspberry-Pi-Pico-2-W-p-6244.html) |
+| **2.42" OLED display**, 128×64, SSD1309, **I2C** | The screen. Bigger and much more readable than the common 0.96". | $8 – $12 | Search `2.42 inch OLED SSD1309 I2C` |
+| **EC11 rotary encoder** with push switch | Primary control — scroll and click. | $1 - $2 | Search `EC11 rotary encoder module` |
 | **2 × tactile push buttons** | Back and Home. | <$1 | Any electronics kit |
 | **IR receiver** (VS1838B / TSOP38238) | Learning remotes. | <$1 | Search `VS1838B IR receiver` |
 | **IR LED emitter** (940 nm) | Sending. A 3-pin module is easiest. | <$1 | Search `940nm IR LED module` |
-| Breadboard + jumper wires | Wiring it up. | $5 – $8 | Any starter kit |
-| | | **≈ $25 – $30** | |
+| Breadboard + jumper wires | Wiring it up. | $3 – $8 | Any starter kit |
+| Total | Starter | **≈ $25 – $30** | |
 
 ### Recommended — the full multi-tool
 
@@ -128,11 +128,11 @@ Everything above, plus:
 
 | Part | What for | Price | Where |
 |---|---|---|---|
-| **CC1101 module**, 433 MHz *(or 868/915 for your region)* | Sub-GHz capture and replay. | $4 – $9 | Search `CC1101 433MHz module` |
-| **SX1276 LoRa module**, 433 or 868/915 MHz | LoRa mesh messaging. | $7 – $13 | Search `SX1276 LoRa module RA-02` |
-| **PN532 NFC module** | NFC/RFID reading. Set its DIP switches to **I2C**. | $8 – $13 | Search `PN532 NFC module V3` |
+| **CC1101 module**, 433 MHz *(or 868/915 for your region)* | Sub-GHz capture and replay. | $2 – $5 | Search `CC1101 433MHz module` |
+| **SX1276 LoRa module**, 433 or 868/915 MHz | LoRa mesh messaging. | $5 – $7 | Search `SX1276 LoRa module RA-02` |
+| **PN532 NFC module** | NFC/RFID reading. Set its DIP switches to **I2C**. | $3 – $6 | Search `PN532 NFC module V3` |
 | **2 × antennas** (SMA or spring, matched to your frequencies) | **Required** — transmitting without an antenna can damage the radio. | $2 – $5 | Search `433MHz SMA antenna` |
-| | | **≈ +$25 – $40** | |
+| Total | Recommended | **≈ +$12 – $23** | |
 
 > ⚠️ **Pick your frequencies by region.** 433 MHz is common in Europe and most of
 > Asia; **915 MHz** is the licence-free band in North America. Buy the CC1101, the
@@ -143,17 +143,16 @@ Everything above, plus:
 
 | Part | What for | Price | Where |
 |---|---|---|---|
-| **NEO-M8N GPS module** *(NEO-6M is a cheaper alternative)* | Position and satellites. | $8 – $25 | Search `NEO-M8N GPS module` |
-| **microSD card module** (SPI) + a card | Storing captures and apps. | $2 – $4 | Search `microSD card module SPI` |
-| **DHT22** *(or the cheaper DHT11)* | Temperature and humidity. | $2 – $6 | Search `DHT22 module` |
-| **LiPo battery**, 1000–2000 mAh | Making it portable. | $8 – $12 | [Adafruit](https://www.adafruit.com/product/377) · search `1200mAh LiPo 3.7V` |
+| **NEO-M8N GPS module** *(NEO-6M is a cheaper alternative)* | Position and satellites. | $8 – $10 | Search `NEO-M8N GPS module` |
+| **microSD card module** (SPI) + a card | Storing captures and apps. | $1 – $3 | Search `microSD card module SPI` |
+| **DHT22** *(or the cheaper DHT11)* | Temperature and humidity. | $2 – $3 | Search `DHT22 module` |
+| **LiPo battery**, 2000 mAh | Making it portable. | $6 – $8 | [Adafruit](https://www.adafruit.com/product/377) · search `2000mAh LiPo 3.7V` |
 | **TP4056 charger module** (USB-C version) | Charging the battery safely. | $1 – $2 | Search `TP4056 USB-C charging module` |
 | **2 × 100 kΩ resistors** | Voltage divider for battery sensing. **Never** wire a battery straight to a GPIO. | <$1 | Any resistor kit |
 | **Vibration motor** + a small transistor | Haptic feedback. | $1 – $2 | Search `coin vibration motor 3V` |
 | **Active buzzer**, 3 V | Beeps and the timer alarm. | <$1 | Search `3V active buzzer` |
-| **WS2812 / NeoPixel LED** | Status light and the flashlight app. | <$1 | Search `WS2812 single LED module` |
 | **iButton / 1-Wire reader probe** + 4.7 kΩ resistor | Reading DS1990 contact keys. | $2 – $4 | Search `DS1990 iButton probe` |
-| | | **≈ +$30 – $55** | |
+| Total | Maximum | **≈ +$25 – $45** | |
 
 ### Optional extras
 
