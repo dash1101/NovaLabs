@@ -1,82 +1,129 @@
-# Nova D1 — V1 status board
+# Nova D1 — V1 reference
 
-**Goal: a finished V1 proof-of-concept.** This is the single place to see what the D1
-supports and what's left before we call V1 done. The big, hardware-blocked features are
-[Nova D2](novad2.md); what's here is what D1 actually ships.
+The build reference and status for Nova D1 V1: supported modules, the Pico 2 W pinout,
+the parts list, and remaining work. Features that need hardware D1 can't provide are
+[Nova D2](novad2.md).
 
-Status: **✅ done** · **🔬 hardware-verified** · **💻 code done, needs hardware** ·
-**🔨 in progress** · **⬜ to do**
+Status keys: **done** · **hw** (verified on hardware) · **code** (written, needs hardware)
+· **wip** · **todo**.
 
-## Module support matrix
+## Hardware
 
-Every hardware module the D1 targets, its driver, and whether it's been proven on the
-board. Drivers exist for all of them; the gap is on-hardware bring-up (one at a time).
+Reference board: **Raspberry Pi Pico 2 W** (RP2350, 520 KB RAM, WiFi + BLE). Display:
+**SSD1309** 2.42" 128×64 I²C (SH1106 also supported). The Pimoroni Pico Plus 2 W is a
+drop-in headroom option.
 
-| Module | Bus | Driver | On hardware | Notes |
-|---|---|---|---|---|
-| OLED display (SH1106) | I2C | `display` | 🔬 | current panel; GUI runs |
-| OLED display (SSD1309) | I2C | `display` | 💻 | 2.42" panel; init written, unconfirmed |
-| Encoder + buttons | GPIO | `novainput` | 🔬 | works |
-| WiFi (CYW43439) | — | `net`/`novawifi` | 🔬 | on-board |
-| Bluetooth LE | — | `novable` | 🔬 | scan verified, 29 devices |
-| PN532 (NFC/RFID) | I2C | `novanfc` | 💻 | **first radio to bring up** |
-| CC1101 (sub-GHz) | SPI | `novacc` | 💻 | capture/replay OOK |
-| SX1276 (LoRa) | SPI | `novalora`/`novamsg` | 💻 | mesh; needs 2nd unit for range |
-| IR TX + RX | GPIO | `novair` | 💻 | `.ir`; NEC/Sony/RC5/RC6/Pioneer |
-| GPS | UART | `novamods` | 💻 | position + NMEA |
-| DHT11/22 | GPIO | `novamods` | 💻 | temp + humidity |
-| Battery / VBUS | ADC/GPIO | `novapower` | 💻 | opt-in pins |
-| Vibration + buzzer | GPIO/PWM | `novamods`/`novasound` | 💻 | now drives notification alerts |
-| iButton / 1-Wire | GPIO | `novamods` | 💻 | needs a pin (GPIO expander) |
-| microSD | SPI | `novamods` | 💻 | storage |
-| RDM6300 (125 kHz LF read) | UART | — | ⬜ | optional; the one D1 LF capability |
+### Pico 2 W pinout
 
-The whole radio column is the critical path to V1: **wire → bring up → prove → async-ify
-→ test**, PN532 first. You have most modules in hand now.
+Board profile `pico2w`. SD shares the radio SPI0 bus. `d1 pins` on the device is
+canonical; this table is a snapshot.
 
-## V1 feature checklist
+| Signal | GPIO | Signal | GPIO |
+|---|---|---|---|
+| I²C SDA | 4 | CC1101 CS | 17 |
+| I²C SCL | 5 | CC1101 GDO0 | 20 |
+| Encoder A | 14 | SX1276 CS | 21 |
+| Encoder B | 15 | SX1276 RST | 12 |
+| Encoder SW | 13 | IR TX | 6 |
+| Button 1 | 22 | IR RX | 7 |
+| Button 2 | 26 | GPS TX | 0 |
+| Kill switch | 8 | GPS RX | 1 |
+| SPI SCK | 18 | Buzzer | 27 |
+| SPI MOSI | 19 | Vibration | 28 |
+| SPI MISO | 16 | Status LED | 2 |
+| SD CS | 9 | DHT | 3 |
 
-### Privacy / stealth (the new Nova D standard)
-- 🔬 (pending device test) **Kill switch / incognito** — `incognito on` silences ALL
-  radios instantly (WiFi/BLE/LoRa/sub-GHz/NFC); `off`/`toggle`/`status`. `novastealth`.
-- 💻 **Anti-fingerprinting** — `incognito mac on` sets random locally-administered MACs
-  to resist fingerprinting.
-- ⬜ **Physical kill switch** — wire a switch to `killsw` (`d1 pins set killsw <gpio>`);
-  the poll hook exists, needs the switch + a poll site in the UI loop.
+Reserved by the board (wireless module): GPIO 23, 24, 25, 29. iButton and a 125 kHz LF
+front-end need a GPIO expander (PCF8574 / 74HC165); the base map has no free pins for
+them. Full per-module wiring: [novad1-wiring.md](novad1-wiring.md).
+
+### V1 bill of materials
+
+Indicative USD, before shipping. Commodity modules are far cheaper from AliExpress/eBay.
+
+| Part | Purpose | Price |
+|---|---|---|
+| Raspberry Pi Pico 2 W | MCU | $6–7 |
+| 2.42" SSD1309 OLED, I²C | display | $8–12 |
+| EC11 rotary encoder | primary control | $1–2 |
+| 2× tactile buttons + 1 kill-switch button | navigation + stealth | <$1 |
+| VS1838B IR receiver + 940 nm IR LED | infrared | <$2 |
+| CC1101 module (433 / 868 / 915 MHz) | sub-GHz | $2–5 |
+| SX1276 LoRa module | LoRa mesh | $5–7 |
+| PN532 NFC module (set DIP to I²C) | NFC/RFID | $3–6 |
+| 2× antennas, band-matched | required before TX | $2–5 |
+| microSD module + card | storage | $2–4 |
+| NEO-M8N GPS | position | $8–25 |
+| DHT22, vibration motor + transistor, buzzer, WS2812 LED | sensors + feedback | $5–10 |
+| LiPo + TP4056 (USB-C) + 2× 100 kΩ divider | power | $10–15 |
+| Breadboard + jumpers | assembly | $3–8 |
+
+Match the CC1101, SX1276, and antennas to one frequency band, legal for transmit in the
+region (433 MHz common in EU/Asia; 915 MHz licence-free in North America). Everything runs
+at 3.3 V except the microSD module (5 V, regulated onboard).
+
+## Module support
+
+Drivers exist for every module; the gap is on-hardware bring-up, one at a time.
+
+| Module | Bus | Driver | Status |
+|---|---|---|---|
+| OLED SH1106 | I²C | `display` | hw |
+| OLED SSD1309 | I²C | `display` | hw (`d1 display ssd1309`) |
+| Encoder + buttons | GPIO | `novainput` | hw |
+| WiFi (CYW43439) | — | `net`/`novawifi` | hw |
+| Bluetooth LE | — | `novable` | hw |
+| PN532 NFC/RFID | I²C | `novanfc` | code — bring up first |
+| CC1101 sub-GHz | SPI | `novacc` | code |
+| SX1276 LoRa | SPI | `novalora`/`novamsg` | code |
+| IR TX + RX | GPIO | `novair` | code |
+| GPS | UART | `novamods` | code |
+| DHT11/22 | GPIO | `novamods` | code |
+| Battery / VBUS | ADC/GPIO | `novapower` | code |
+| Vibration + buzzer | GPIO/PWM | `novamods`/`novasound` | code |
+| microSD | SPI | `novamods` | code |
+| iButton | GPIO | `novamods` | code (needs expander pin) |
+| RDM6300 125 kHz LF read | UART | — | todo (optional) |
+
+## Feature status
+
+### Privacy (Nova D standard)
+- **hw-pending** — Incognito kill switch: `incognito on` silences all radios instantly
+  (WiFi/BLE/LoRa/sub-GHz/NFC). `off` / `toggle` / `status`. Module `novastealth`.
+- **code** — MAC randomisation: `incognito mac on`.
+- **todo** — Physical kill-switch poll wired into the UI loop (pin `killsw`, GPIO 8).
 
 ### UI
-- 🔬 GUI runs (SH1106); app system, app store, 9 apps, scripting
-- 🔨 **Home rework** — centralize common actions + subcategories
-- ⬜ **Smaller elements** — fit more on the 2.42" panel without hurting legibility
-- ⬜ **Native scroll** — for screens whose text runs off 128×64
-- ⬜ **Startup animation** — show the full splash while the panel finishes init, without
-  adding boot time (currently clipped because init is slow)
+- **hw** — GUI on the OLED; app system, app store, 9 apps, scripting.
+- **wip** — Home rework: centralise common actions, add subcategories.
+- **todo** — Smaller elements to fit more on the 2.42" panel.
+- **todo** — Native scroll for overflowing screens.
+- **todo** — Splash shows fully while the panel finishes init, without adding boot time.
 
 ### Notifications
-- ✅ Notification queue + unread bell
-- 💻 **Haptic alert** — vibe pulse + short fast buzzer chirps on each notification
-  (guarded; no-op when unwired; `Apps.NovaD1_Notify_Haptic`)
+- **done** — Queue + unread bell.
+- **code** — Haptic alert: vibration + buzzer chirps per notification
+  (`Apps.NovaD1_Notify_Haptic`, guarded).
 
-### Radios & comms
-- (module bring-up per the matrix above)
-- ✅ LoRa mesh: routing (managed flood + TTL + dedup) + AES-128 — code done
-- 💻 **LoRa BG receive + device send** — `novamsg.manager` already does background RX →
-  inbox + notify and drains a send queue; verify on hardware with a 2nd unit
-- ⬜ **Nova mesh standard**: explicit open broadcast + named encrypted channels
-- ⬜ Rolling-code analyzer
+### Comms
+- **done** — LoRa mesh: managed-flood routing + TTL + dedup + AES-128 (code).
+- **code** — Background RX + device send (`novamsg.manager`); needs a 2nd unit on-air.
+- **todo** — Explicit open broadcast + named encrypted channels.
+- **todo** — Rolling-code analyzer.
 
-### Platform (mostly done)
-- 🔬 Board auto-detect, streamed install, async multitasking, TLS-fragmentation handling
-- ⬜ Footprint reduction (banked for the custom-firmware endgame — see the plan)
-- ⬜ Fix IR TX off `esp32.RMT` (RP2 timing loop → PIO)
+### Platform
+- **hw** — Board auto-detect, streamed install, async multitasking, TLS-fragmentation
+  handling, `safeboot` (reboot without services to free RAM for OS updates).
+- **todo** — Footprint reduction (deferred to the custom-firmware phase; see the plan).
+- **todo** — IR TX off `esp32.RMT` → RP2 timing loop → PIO.
 
-## Explicitly NOT in V1 (→ Nova D2)
-WiFi pcap/Wireshark, LF RFID **emulate**, dual-band WiFi, multi-threading, PSRAM / richer
-UI. See [novad2.md](novad2.md). Killing these off the D1 path is what makes V1 finishable.
+## Not in V1 → Nova D2
+WiFi pcap/Wireshark, LF RFID emulate, dual-band WiFi, multi-threading, PSRAM / richer UI.
+See [novad2.md](novad2.md).
 
-## The short path to "V1 done"
-1. Finish the UI polish (home, scroll, smaller elements, splash) — no new hardware.
-2. Bring up the radios one at a time (PN532 → CC1101 → IR → GPS → SX1276), async-ifying
-   each so nothing blocks the loop.
-3. Verify stealth + notifications + LoRa on hardware.
+## Path to V1
+1. UI polish (home, scroll, smaller elements, splash) — no new hardware.
+2. Radio bring-up in order: PN532 → CC1101 → IR → GPS → SX1276, each async so it never
+   blocks the loop.
+3. Verify stealth, notifications, and LoRa on hardware.
 4. Graduate v1.0 from the beta channel to stable.

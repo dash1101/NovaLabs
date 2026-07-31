@@ -77,7 +77,7 @@ Full walkthrough: **`SETUP.md`** in the package.
 
 ### Raspberry Pi Pico 2 W  <code>pico2w</code>
 
-**rp2350** · status: **draft** · 26 GPIO assigned · display on **I2C**
+**rp2350** · status: **draft** · 24 GPIO assigned · display on **I2C**
 
 > **Do not use GPIO 23, 24, 25, 29** — the board itself owns them (wireless module / VSYS sense). They look free on a pinout diagram but are not.
 
@@ -89,9 +89,6 @@ Full walkthrough: **`SETUP.md`** in the package.
 |  | `spi_mosi` | **19** | SPI out (MOSI) |
 |  | `spi_miso` | **16** | SPI in (MISO) |
 | microSD | `sd_cs` | **9** | SD chip select |
-|  | `sd_sck` | **10** | SD clock |
-|  | `sd_mosi` | **11** | SD out |
-|  | `sd_miso` | **8** | SD in |
 | CC1101 sub-GHz | `cc_cs` | **17** | CC1101 chip select |
 |  | `cc_gdo0` | **20** | CC1101 GDO0 (data) |
 | SX1276 LoRa | `sx_cs` | **21** | SX1276 chip select (NSS) — DIO0 not needed - the driver polls |
@@ -112,11 +109,11 @@ Full walkthrough: **`SETUP.md`** in the package.
 | Power sense | `battery` | _unset_ | Battery ADC (via divider) — Optional - unset unless wired |
 |  | `vbus` | _unset_ | USB-power sense |
 
-*At the 26-pin ceiling, so ibutton is unassigned. Display on I2C. SD split onto SPI1 so LoRa RX and card writes do not contend. Buttons want a GPIO expander.*
+*Display on I2C. SD shares the radio SPI0 bus. Kill-switch on GPIO 8. iButton / LF front-end need a GPIO expander.*
 
 ### Pimoroni Pico Plus 2 W  <code>picoplus2w</code>
 
-**rp2350b** · status: **draft** · 26 GPIO assigned · display on **I2C**
+**rp2350b** · status: **draft** · 24 GPIO assigned · display on **I2C**
 
 > **Do not use GPIO 23, 24, 25, 29** — the board itself owns them (wireless module / VSYS sense). They look free on a pinout diagram but are not.
 
@@ -128,9 +125,6 @@ Full walkthrough: **`SETUP.md`** in the package.
 |  | `spi_mosi` | **19** | SPI out (MOSI) |
 |  | `spi_miso` | **16** | SPI in (MISO) |
 | microSD | `sd_cs` | **9** | SD chip select |
-|  | `sd_sck` | **10** | SD clock |
-|  | `sd_mosi` | **11** | SD out |
-|  | `sd_miso` | **8** | SD in |
 | CC1101 sub-GHz | `cc_cs` | **17** | CC1101 chip select |
 |  | `cc_gdo0` | **20** | CC1101 GDO0 (data) |
 | SX1276 LoRa | `sx_cs` | **21** | SX1276 chip select (NSS) — DIO0 not needed - the driver polls |
