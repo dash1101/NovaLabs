@@ -88,17 +88,20 @@ Drivers exist for every module; the gap is on-hardware bring-up, one at a time.
 ## Feature status
 
 ### Privacy (Nova D standard)
-- **hw-pending** — Incognito kill switch: `incognito on` silences all radios instantly
-  (WiFi/BLE/LoRa/sub-GHz/NFC). `off` / `toggle` / `status`. Module `novastealth`.
+- **code** — Incognito kill switch: `incognito on` silences all radios instantly
+  (WiFi/BLE/LoRa/sub-GHz/NFC). Also in the GUI power menu (STEALTH splash + notification)
+  and via a physical `killsw` button (GPIO 8). `off` / `toggle` / `status`. `novastealth`.
 - **code** — MAC randomisation: `incognito mac on`.
-- **todo** — Physical kill-switch poll wired into the UI loop (pin `killsw`, GPIO 8).
 
 ### UI
-- **hw** — GUI on the OLED; app system, app store, 9 apps, scripting.
-- **wip** — Home rework: centralise common actions, add subcategories.
+- **hw** — GUI on the OLED; app system, app store, apps, scripting.
+- **done** — Home favorites bar (`d1 fav add/remove`) over the folder gallery.
+- **done** — Native scroll + word-wrap for long text screens.
+- **done** — Splash plays in full (opening frame no longer clipped by slow panel init).
+- **done** — Power menu: Lock / Incognito / Reload / Reboot / Shutdown / Sleep.
+- **done** — Troubleshoot menu (reconnect WiFi, blink display, reload pins, restart GUI,
+  freeup, I2C scan, soft reboot) + a curated Commands menu (GUI access to safe shell cmds).
 - **todo** — Smaller elements to fit more on the 2.42" panel.
-- **todo** — Native scroll for overflowing screens.
-- **todo** — Splash shows fully while the panel finishes init, without adding boot time.
 
 ### Notifications
 - **done** — Queue + unread bell.
@@ -108,12 +111,16 @@ Drivers exist for every module; the gap is on-hardware bring-up, one at a time.
 ### Comms
 - **done** — LoRa mesh: managed-flood routing + TTL + dedup + AES-128 (code).
 - **code** — Background RX + device send (`novamsg.manager`); needs a 2nd unit on-air.
+- **done** — Wardriving: WiFi survey → WiGLE CSV, GPS-tagged, SD/flash (`novawardrive`,
+  GUI Wardrive app + `d1 wardrive`). Scan-based; no pcap.
 - **todo** — Explicit open broadcast + named encrypted channels.
 - **todo** — Rolling-code analyzer.
 
 ### Platform
 - **hw** — Board auto-detect, streamed install, async multitasking, TLS-fragmentation
-  handling, `safeboot` (reboot without services to free RAM for OS updates).
+  handling, `safeboot` (+ staged updates), storage guard (95% warn / 98% block).
+- **done** — `pkg remove` clears a package's startup/service autostart entries.
+- **done** — D1 service control: `novad1 service start|stop|restart|status`, `d1 refresh`.
 - **todo** — Footprint reduction (deferred to the custom-firmware phase; see the plan).
 - **todo** — IR TX off `esp32.RMT` → RP2 timing loop → PIO.
 
