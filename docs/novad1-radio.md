@@ -26,9 +26,34 @@ MicroPython, and revisiting them will not change that:
 - **Probe request capture.** Would reveal which networks a nearby phone is
   looking for. Requires monitor mode.
 - **Deauthentication detection or transmission.** Requires frame injection.
-- **Tracking client devices over WiFi.** Follows from the above.
+- **Passively detecting a phone by its WiFi.** Follows from the above. Spotting a
+  device as it walks past, without it connecting to anything, is monitor-mode
+  work. This is the part that is genuinely impossible here.
 
 Anything on this list belongs to a device with a radio that supports it.
+
+### The one WiFi client view that does work
+
+There is a single exception, and it is worth knowing about: **devices joined to
+the Nova D1's own access point are visible.** The CYW43 driver exposes the
+association table of an AP it is hosting, so `WLAN(AP_IF).status('stations')`
+returns the MAC of every connected client, up to 32.
+
+This is not passive — a device has to actually join. But for "tell me when I get
+home", having your phone auto-join the Nova D1's network is a perfectly good way
+to be told, and it costs nothing. The observer folds these in automatically
+whenever an access point is running.
+
+### So how does a camera know you are home?
+
+Almost certainly one of three things, none of which is packet capture:
+
+1. **It is on your network and sees your phone join.** A device already on the
+   LAN can watch the association table or ARP traffic. The Nova D1 can do the
+   equivalent once it joins that network.
+2. **Bluetooth.** Many do this, and it is the channel the Nova D1 is best at.
+3. **The phone app knows.** Geofencing on the phone, reported to the camera over
+   the internet. Nothing radio-side is happening locally at all.
 
 ## What the radios are used for
 
@@ -120,6 +145,37 @@ signal, encryption, and a GPS position and timestamp when a GPS module is fitted
 onboard flash (`/Vela/nova`). An SD card is worth using — a survey is a great many
 small writes. On flash the storage guard applies: a warning near 95% full and a
 hard stop at 98%, so a survey cannot fill the disk out from under everything else.
+
+## Staying unidentifiable
+
+Two identifiers go out in the clear whenever this device joins a network, and
+they are independent:
+
+- **The MAC address**, in every frame.
+- **The DHCP hostname**, in every lease request.
+
+Randomising one without the other achieves nothing — a fixed hostname re-links
+your sessions however often the MAC changes. So *Settings → Security → Privacy →
+Random ID* controls both together, and it is **on by default**. The cost is that
+a network using MAC-based access control sees a new device each time, which is
+what the switch is there for.
+
+**Incognito** is a hard stop, not a request. Earlier it was a flag that Nova D1
+code checked, which meant anything else — the shell's own `wifi scan`, most
+obviously — went straight past it and brought the radio back up. The lock now
+lives underneath the OS network layer, so there is no path left that can quietly
+re-enable a radio. It survives a reboot, because a privacy switch that forgets
+itself is not one. From the shell it is `radio off` / `radio on`.
+
+**Ghost mode** (*Privacy → What leaks → Select*) closes everything that speaks:
+radios locked, web panel stopped, mesh beacon off, and a fresh identity armed for
+when the radios come back. The observer keeps running, because listening
+transmits nothing.
+
+The *What leaks* screen is an inventory rather than a single "you are anonymous"
+indicator, because that claim would be false. Anonymity is a set of channels, and
+closing four of five is not anonymity — knowing which one is still open is the
+useful part.
 
 ## Where the interesting ideas live
 
