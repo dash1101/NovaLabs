@@ -33,8 +33,13 @@ well-documented, so the C5 firmware is a contained C/C++ job, not a MicroPython-
 - **WiFi pcap / Wireshark** — ESP32-C5 co-processor. The `.pcap` writer (`novapcap`)
   already exists.
 - **Dual-band WiFi** (2.4 + 5 GHz) — same co-processor.
-- **125 kHz LF RFID read and emulate** — PIO coil front-end with the RAM and pins to host
-  it. (D1 offers optional LF read only.)
+- **125 kHz LF RFID read and emulate** — a PIO coil front-end with the RAM and pins to
+  host it. (D1 offers optional LF read only.) *Emulate approach (to revisit):* PIO
+  generates the 125 kHz carrier; the coil couples to the reader's field, and emulation
+  works by **load modulation** — a FET across the coil switches the load in the card's
+  bit pattern (EM4100 = Manchester, ~64 bits) so the reader sees a tag. Read = envelope-
+  detect the returned modulation on the same coil. Reference: the Flipper's LF analog
+  front-end. Needs the coil + FET + detector tuned on real hardware.
 - **PSRAM / larger flash** — Pico Plus 2 W class; capture buffers, every module resident.
 - **Richer UI** — larger panel, more on-screen, more animation.
 - **Custom RP2350 firmware** — frozen OS + package (frees the heap), `@native`/`@viper` on
