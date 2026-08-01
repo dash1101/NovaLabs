@@ -1,33 +1,19 @@
 # Nova D1 — Wiring
 
-Every pin is configurable, and the defaults come from a **board profile** — so you
-pick your board once and the whole pinmap follows. Three boards are supported:
+**Nova D1 V1 targets the Raspberry Pi Pico 2 W.** Its pinout leads below. The ESP32-S3
+devkit and the Pimoroni Pico Plus 2 W run the same code and are also supported, but the
+Pico 2 W is the reference build.
 
-| Board | MCU | Status |
-|---|---|---|
-| ESP32-S3 devkit (N16R8) | ESP32-S3 | shipping — the current build |
-| Raspberry Pi Pico 2 W | RP2350A | port target |
-| Pimoroni Pico Plus 2 W | RP2350B | drop-in upgrade from the Pico 2 W |
-
-## Pick your board
+Pins come from a board profile and every pin is configurable. Nova D1 detects the board
+from `os.uname()`, so a fresh Pico gets the right pinmap unset. A value set by hand
+always wins over the profile and detection.
 
 ```
-d1 pins board              # list profiles, '*' is active, shows which was detected
-d1 pins board auto         # use whatever the hardware reports
-d1 pins board pico2w       # or name it
-d1 pins check              # is this map physically possible on this MCU?
-```
-
-With nothing configured, Nova D1 uses the board it detects from `os.uname()`, so a
-fresh Pico gets the right pinmap without being told. Anything you set by hand always
-wins over both the profile and detection.
-
-Wired something differently? Change just that pin — no registry editing:
-
-```
-d1 pins                    # every pin, its value, and where that value came from
-d1 pins set enc_a 4
-d1 pins clear enc_a        # back to the board default
+d1 pins board              # profiles; '*' active, shows the detected board
+d1 pins board pico2w       # set the board (or: d1 pins board auto)
+d1 pins                    # every pin, its value, and where it came from
+d1 pins set enc_a 4        # override one pin  (d1 pins clear enc_a to revert)
+d1 pins check              # validate the map for this MCU
 ```
 
 Full walkthrough: **`SETUP.md`** in the package.
@@ -38,42 +24,7 @@ Full walkthrough: **`SETUP.md`** in the package.
 
 <!-- BEGIN GENERATED PINMAPS -->
 
-*Tables below are generated from the board profiles in `novaboard.py` — the code is the source of truth, so these cannot drift. Regenerate with `repo/tools/novad1/gen_wiring.py`.*
-
-### ESP32-S3 (Nova D1 rev A)  <code>esp32s3</code>
-
-**esp32s3** · 24 GPIO assigned
-
-| Group | Signal | GPIO | Notes |
-|---|---|---|---|
-| I2C bus | `sda` | **8** | I2C data — Display, PN532, RTC all share this |
-|  | `scl` | **9** | I2C clock |
-| SPI bus (radios) | `spi_sck` | **12** | SPI clock — Separate CS per device |
-|  | `spi_mosi` | **11** | SPI out (MOSI) |
-|  | `spi_miso` | **13** | SPI in (MISO) |
-| microSD | `sd_cs` | **15** | SD chip select |
-| CC1101 sub-GHz | `cc_cs` | **10** | CC1101 chip select |
-|  | `cc_gdo0` | **14** | CC1101 GDO0 (data) |
-| SX1276 LoRa | `sx_cs` | **21** | SX1276 chip select (NSS) — DIO0 not needed - the driver polls |
-|  | `sx_rst` | **47** | SX1276 reset |
-| GPS | `gps_tx` | **17** | MCU TX -> GPS RX — UART, 9600 baud |
-|  | `gps_rx` | **18** | MCU RX <- GPS TX |
-| Controls | `enc_a` | **4** | Encoder A — EC11 encoder + 2 buttons |
-|  | `enc_b` | **5** | Encoder B |
-|  | `enc_sw` | **6** | Encoder button (Select) |
-|  | `btn1` | **7** | Button 1 (Back) |
-|  | `btn2` | **16** | Button 2 (Home) |
-| Infrared | `ir_tx` | **39** | IR emitter — TX is PWM at 38 kHz |
-|  | `ir_rx` | **38** | IR receiver |
-| Feedback | `buzzer` | **40** | Buzzer |
-|  | `vibe` | **41** | Vibration motor |
-|  | `led` | **48** | Status LED |
-| Sensors | `dht` | **2** | DHT11/22 data |
-|  | `ibutton` | **1** | iButton / 1-Wire |
-| Power sense | `battery` | _unset_ | Battery ADC (via divider) — Optional - unset unless wired |
-|  | `vbus` | _unset_ | USB-power sense |
-
-*One shared SPI bus for SD + both radios.*
+*Generated from the board profiles in `novaboard.py` — the code is the source of truth, so these cannot drift. Regenerate with `repo/tools/novad1/gen_wiring.py`.*
 
 ### Raspberry Pi Pico 2 W  <code>pico2w</code>
 
@@ -110,6 +61,41 @@ Full walkthrough: **`SETUP.md`** in the package.
 |  | `vbus` | _unset_ | USB-power sense |
 
 *Display on I2C. SD shares the radio SPI0 bus. Kill-switch on GPIO 8. iButton / LF front-end need a GPIO expander.*
+
+### ESP32-S3 (Nova D1 rev A)  <code>esp32s3</code>
+
+**esp32s3** · 24 GPIO assigned
+
+| Group | Signal | GPIO | Notes |
+|---|---|---|---|
+| I2C bus | `sda` | **8** | I2C data — Display, PN532, RTC all share this |
+|  | `scl` | **9** | I2C clock |
+| SPI bus (radios) | `spi_sck` | **12** | SPI clock — Separate CS per device |
+|  | `spi_mosi` | **11** | SPI out (MOSI) |
+|  | `spi_miso` | **13** | SPI in (MISO) |
+| microSD | `sd_cs` | **15** | SD chip select |
+| CC1101 sub-GHz | `cc_cs` | **10** | CC1101 chip select |
+|  | `cc_gdo0` | **14** | CC1101 GDO0 (data) |
+| SX1276 LoRa | `sx_cs` | **21** | SX1276 chip select (NSS) — DIO0 not needed - the driver polls |
+|  | `sx_rst` | **47** | SX1276 reset |
+| GPS | `gps_tx` | **17** | MCU TX -> GPS RX — UART, 9600 baud |
+|  | `gps_rx` | **18** | MCU RX <- GPS TX |
+| Controls | `enc_a` | **4** | Encoder A — EC11 encoder + 2 buttons |
+|  | `enc_b` | **5** | Encoder B |
+|  | `enc_sw` | **6** | Encoder button (Select) |
+|  | `btn1` | **7** | Button 1 (Back) |
+|  | `btn2` | **16** | Button 2 (Home) |
+| Infrared | `ir_tx` | **39** | IR emitter — TX is PWM at 38 kHz |
+|  | `ir_rx` | **38** | IR receiver |
+| Feedback | `buzzer` | **40** | Buzzer |
+|  | `vibe` | **41** | Vibration motor |
+|  | `led` | **48** | Status LED |
+| Sensors | `dht` | **2** | DHT11/22 data |
+|  | `ibutton` | **1** | iButton / 1-Wire |
+| Power sense | `battery` | _unset_ | Battery ADC (via divider) — Optional - unset unless wired |
+|  | `vbus` | _unset_ | USB-power sense |
+
+*One shared SPI bus for SD + both radios.*
 
 ### Pimoroni Pico Plus 2 W  <code>picoplus2w</code>
 
