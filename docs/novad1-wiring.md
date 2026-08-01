@@ -28,7 +28,7 @@ Full walkthrough: **`SETUP.md`** in the package.
 
 ### Raspberry Pi Pico 2 W  <code>pico2w</code>
 
-**rp2350** · status: **draft** · 24 GPIO assigned · display on **I2C**
+**rp2350** · status: **draft** · 23 GPIO assigned · display on **I2C**
 
 > **Do not use GPIO 23, 24, 25, 29** — the board itself owns them (wireless module / VSYS sense). They look free on a pinout diagram but are not.
 
@@ -55,7 +55,6 @@ Full walkthrough: **`SETUP.md`** in the package.
 |  | `ir_rx` | **7** | IR receiver |
 | Feedback | `buzzer` | **27** | Buzzer |
 |  | `vibe` | **28** | Vibration motor |
-|  | `led` | **2** | Status LED |
 | Sensors | `dht` | **3** | DHT11/22 data |
 | Power sense | `battery` | _unset_ | Battery ADC (via divider) — Optional - unset unless wired |
 |  | `vbus` | _unset_ | USB-power sense |
@@ -99,7 +98,7 @@ Full walkthrough: **`SETUP.md`** in the package.
 
 ### Pimoroni Pico Plus 2 W  <code>picoplus2w</code>
 
-**rp2350b** · status: **draft** · 24 GPIO assigned · display on **I2C**
+**rp2350b** · status: **draft** · 23 GPIO assigned · display on **I2C**
 
 > **Do not use GPIO 23, 24, 25, 29** — the board itself owns them (wireless module / VSYS sense). They look free on a pinout diagram but are not.
 
@@ -126,7 +125,6 @@ Full walkthrough: **`SETUP.md`** in the package.
 |  | `ir_rx` | **7** | IR receiver |
 | Feedback | `buzzer` | **27** | Buzzer |
 |  | `vibe` | **28** | Vibration motor |
-|  | `led` | **2** | Status LED |
 | Sensors | `dht` | **3** | DHT11/22 data |
 | Power sense | `battery` | _unset_ | Battery ADC (via divider) — Optional - unset unless wired |
 |  | `vbus` | _unset_ | USB-power sense |
