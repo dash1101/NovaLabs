@@ -42,8 +42,23 @@ well-documented, so the C5 firmware is a contained C/C++ job, not a MicroPython-
   front-end. Needs the coil + FET + detector tuned on real hardware.
 - **PSRAM / larger flash** — Pico Plus 2 W class; capture buffers, every module resident.
 - **Richer UI** — larger panel, more on-screen, more animation.
-- **Custom RP2350 firmware** — frozen OS + package (frees the heap), `@native`/`@viper` on
-  hot paths. See the D1 plan's custom-firmware section.
+- **A custom build, purpose-made for this device.** D2 is a single known target, so the
+  software can stop being portable-by-default and be built *for* it:
+  - **Frozen modules** — the RPCortex OS and the Nova D2 package are frozen into the
+    firmware image. Frozen bytecode executes from flash instead of being loaded onto the
+    heap, which removes most of the resident RAM cost (~79 KB of it on D1) and makes
+    imports near-instant.
+  - **`@native` / `@viper`** on hot paths (rendering, PIO feeding, packet decode) — the
+    only real *runtime* speedups MicroPython offers. They emit machine code for one
+    architecture, which is normally a portability problem; on a locked target it isn't.
+  - **An architecture-built Nova D2 package** — compiled for the RP2350 rather than
+    shipped as arch-neutral bytecode. Distributing that as an installable `.pkg` would
+    need a `package.cfg` `arch:` field (`any` / `rp2350`) plus a `pkgmgr` check so a
+    wrong-arch package can't install; freezing it into the firmware avoids that
+    entirely, which is the preferred route.
+
+  Net effect: faster, far more RAM headroom, and no compromise for boards D2 doesn't
+  target. The cost is maintaining a MicroPython fork and a per-device build.
 - **Multi-threading** — the RP2350 is dual-core; MicroPython `_thread` runs on core 1 for
   PIO/radio work while the UI and async loop own core 0. Shared-heap constraints (GC,
   shared state) make it a measured experiment; the heavy sniffing is offloaded to the C5.
