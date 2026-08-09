@@ -111,7 +111,7 @@
                     Keyboard: ↑/↓ or ←/→ = encoder · Enter = Select · Backspace = Back · h = Home<br>
                     Drop a real Flipper <strong>.ir</strong>, <strong>.sub</strong> or <strong>.nfc</strong> file on the
                     device — it's parsed by the same codecs the hardware uses and shown on the screen.<br>
-                    Always runs the live code from the repo, so it tracks the device as features ship.
+                    The modules are fetched live from the repository, so this is the same code the device runs.
                 </div>
                 <div id="err"></div>
             </div>
@@ -140,13 +140,16 @@
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
 <script>
 const REPO = 'https://raw.githubusercontent.com/dash1101/RPCortex-repo/main/repo/packages/novad1/';
-// Every Nova D1 package module — fetched live so the sim never drifts from the device.
+// Every Nova D1 package module, fetched live from the repo. The FILE LIST is
+// hand-maintained: add a module to the package and it must be added here too,
+// or the sim 404s on it and whatever imports it dies.
 const MODS = ['novacore','novaboard','novamodtab','novafont','novafont5x7','novaicons','novainput','novacanvas','display','novacrypt',
   'novamesh','novalora','novamsg','novastore','novanfc','novacc','novair','novable',
   'novapower','novanotify','novastealth','novawardrive','novawifi','novalog','novartc','novasound','novasplash',
   'nova','novamods','novaui','novaapps','novaoui','novableid','novawatch',
   'novajob','novagui_sensors','novagui_radios','novagui_system','novagui_watch','novagui_res','novagui_files',
-  'novagui_shell','novagui','novaservice'];
+  'novagui_shell','novagui','novaservice',
+  'novad1','novaweb','novaappcfg','novaappstore','novapcap','novarfid'];
 
 const BOOT = `
 import sys, types, time as _t, os as _os

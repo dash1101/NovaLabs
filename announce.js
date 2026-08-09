@@ -18,12 +18,12 @@
 
   var ANNOUNCEMENT = {
     enabled: true,
-    id:      'construction-2026-06',
+    id:      'construction-2026-08',
     tag:     'Heads up',
     title:   'Under construction',
-    body:    'NovaLabs and RPCortex are actively in development. Things may ' +
-             'change, break, or move around while we build toward the v1.0 ' +
-             'release — thanks for stopping by early!',
+    body:    'The Nova D1 is still being built, and this site is being built ' +
+             'alongside it — things may change, break, or move around. ' +
+             'Thanks for stopping by early!',
     cta:     'Got it',
     repeat:  'session'
   };

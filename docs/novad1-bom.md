@@ -12,7 +12,7 @@ soldering iron strictly required if you use a breadboard. The software is free a
 source-available.
 
 **Try it before you buy anything:** the [browser simulator](https://novalabs.app/d1-sim)
-runs the real firmware, in your browser.
+runs the real Nova D1 modules, in your browser.
 
 > **Prices below are indicative, gathered July 2026, in USD, before shipping and tax.**
 > The microcontroller and display prices are stable. The radio and sensor modules are
@@ -24,7 +24,9 @@ runs the real firmware, in your browser.
 
 ## 1. What it can do
 
-Everything in this section is **built and working today** unless marked otherwise.
+A driver exists for everything in this section. Where a feature has not yet been
+brought up on real hardware it is marked, and the
+[V1 reference](novad1-v1.md) tracks that module by module.
 
 ### Infrared
 - **Learn any remote.** Capture a raw IR burst and replay it with the correct 38 kHz
