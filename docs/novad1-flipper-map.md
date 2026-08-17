@@ -2,7 +2,8 @@
 
 How the Nova D1 (ESP32-S3 + RPCortex + the `novad1` package suite) lines up with
 the Flipper Zero, what's done, and what each missing piece needs. This guides what
-to build and what hardware to add. Status as of NovaD1 v0.10.0.
+to build and what hardware to add. The package version this tracks is whatever
+`repo/index.json` currently lists for NovaD1; the status marks below move with it.
 
 Legend: ✅ working · 🟡 partial / device-pending · 🔧 needs hardware · 🗺 roadmap
 
@@ -40,7 +41,7 @@ Legend: ✅ working · 🟡 partial / device-pending · 🔧 needs hardware · �
 | iButton (1-Wire) | ✅ (driver present) 🔧 | Reads DS1990 if a reader is wired. |
 | 1-Wire / sensors (DHT, etc.) | ✅ DHT11 | |
 
-## Wireless (Flipper needs add-ons; Nova has it built in — our edge)
+## Wireless (Flipper needs add-ons; Nova D1 has it built in)
 | Capability | Nova D1 | Notes |
 |---|---|---|
 | WiFi scan / connect | ✅ | Background manager + scan app. |
@@ -56,7 +57,7 @@ Legend: ✅ working · 🟡 partial / device-pending · 🔧 needs hardware · �
 | App/plugin ecosystem | 🟡 RPCortex packages ✅ / Nova-UI app repo 🗺 | OS has a full package manager; downloadable Nova-UI apps (script-apps) are roadmap. |
 | Scripting | 🟡 RPCortex `.rps` ✅ / Nova script-UI 🗺 | Button-grid script apps (IR remote, LoRa buttons) are the next build. |
 | Animated UI, PIN lock, settings | ✅ | Icon gallery, PIN lock, kitted settings, web panel. |
-| Battery life | 🟡 platform-bound | ESP32-S3 + WiFi won't match Flipper's STM32 deep-sleep. We compete on capability, not runtime. |
+| Battery life | 🟡 platform-bound | ESP32-S3 + WiFi won't match Flipper's STM32 deep-sleep. The trade is capability for runtime. |
 
 ## Where the Nova D1 WINS
 - **Built-in WiFi + BLE + LoRa + a phone web panel** — Flipper needs add-on boards for these.
