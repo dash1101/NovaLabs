@@ -42,6 +42,11 @@ is written `[text](other-doc.md)` and becomes the page link.
 **Add a Nova D1 module to the simulator.** `js/sim.js` has a hand-maintained `MODS` list. Every
 module added to the Nova D1 package must be added there too, or the simulator fails at load.
 
+## Writing about the products
+
+The home page, the Nova D1 page and `docs/novad1-v2.md` describe the current state of the C++ build.
+Say only what has run on a board: the v2 page lists what exists, and what has run on a Pico 2 W, separately.
+
 ## Statements that must follow the products
 
 The site describes things that live in other repositories. When they change, these pages need to:

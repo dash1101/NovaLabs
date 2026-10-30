@@ -52,7 +52,9 @@ def front_matter(text):
     return meta, m.group(2)
 
 
-def rel_root(path):
+def rel_root(path, absolute=False):
+    if absolute:
+        return "/"
     depth = path.count("/")
     return "../" * depth if depth else "./"
 
@@ -68,6 +70,8 @@ class Site:
     def __init__(self, status_override=None):
         self.site = load("site.json")
         self.d1 = load("d1.json")
+        self.noindex = set()
+        self.social = ""
         if status_override is not None:
             self.site["status"] = {"text": status_override, "tone": "warn"}
 
@@ -114,15 +118,31 @@ class Site:
         for s in filter(None, [meta.get("scripts")]):
             scripts += '<script src="%s%s"></script>' % (root, s)
         body = body.replace("<main>", '<main id="main">', 1)
+        path = meta.get("path", "")
+        url = self.site["url"] + ("" if path in ("", "index.html") else path)
+        desc = html.escape(meta.get("description", ""), quote=True)
+        ttl = html.escape(title, quote=True)
+        social = (
+            '<meta name="theme-color" content="#090f1d">'
+            '<link rel="canonical" href="%s">'
+            '<meta property="og:site_name" content="%s"><meta property="og:type" content="website">'
+            '<meta property="og:title" content="%s"><meta property="og:description" content="%s">'
+            '<meta property="og:url" content="%s"><meta property="og:image" content="%simg/og.png">'
+            '<meta name="twitter:card" content="summary_large_image">'
+            % (url, self.site["name"], ttl, desc, url, self.site["url"]))
+        if meta.get("noindex"):
+            social += '<meta name="robots" content="noindex">'
+            self.noindex.add(path)
+        self.social = social
         return ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
                 '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
-                '<title>%s</title><meta name="description" content="%s">'
+                '<title>%s</title><meta name="description" content="%s">%s'
                 '<link rel="icon" type="image/svg+xml" href="%sfavicon.svg">'
                 '<link rel="preload" as="font" type="font/woff2" crossorigin href="%sds/fonts/BricolageGrotesque-latin.woff2">'
                 '<link rel="preload" as="font" type="font/woff2" crossorigin href="%sds/fonts/InstrumentSans-latin.woff2">'
                 '<link rel="stylesheet" href="%sds/ds.css"><link rel="stylesheet" href="%snova.css">'
                 '</head><body><a class="skip" href="#main">Skip to content</a>%s%s%s%s%s</body></html>\n'
-                % (html.escape(title), html.escape(meta.get("description", ""), quote=True),
+                % (html.escape(title), html.escape(meta.get("description", ""), quote=True), self.social,
                    root, root, root, root, root,
                    self.statusbar(root), self.nav(meta.get("nav", ""), root), body,
                    self.footer(root), scripts))
@@ -194,7 +214,7 @@ def build(out_dir, status=None):
     for fn in sorted(os.listdir(pdir)):
         with open(os.path.join(pdir, fn), encoding="utf-8") as f:
             meta, body = front_matter(f.read())
-        root = rel_root(meta["path"])
+        root = rel_root(meta["path"], bool(meta.get("absolute")))
         write(meta["path"], s.page(meta, s.fill(body, root), root))
 
     names, titles = s.docs()
@@ -204,7 +224,7 @@ def build(out_dir, status=None):
             body, title = md.convert(f.read(), link_map)
         main = ('<main id="main"><div class="wrap docs">%s<article class="docs-body prose">%s</article></div></main>'
                 % (s.docs_nav(names, titles, n), body))
-        meta = {"title": titles[n], "description": "Nova D1 documentation: " + titles[n] + ".", "nav": "docs"}
+        meta = {"title": titles[n], "description": "Nova D1 documentation: " + titles[n] + ".", "nav": "docs", "path": "docs/%s.html" % n}
         write("docs/%s.html" % n, s.page(meta, main, root).replace('<main id="main">', '<main id="main">', 1))
 
     # the docs overview is the "Docs, specs & tools" list
@@ -213,8 +233,16 @@ def build(out_dir, status=None):
             '<p class="lede" style="margin-bottom:28px">%s</p><div class="links">%s</div>'
             '<p class="progress-note">%s</p></div></div></main>'
             % (s.docs_nav(names, titles, "index"), s.d1["resources_intro"], cards, s.d1["runs_on"]))
-    write("docs/index.html", s.page({"title": "Docs", "description": "Nova D1 documentation, specs and tools.", "nav": "docs"},
+    write("docs/index.html", s.page({"title": "Docs", "description": "Nova D1 documentation, specs and tools.", "nav": "docs", "path": "docs/index.html"},
                                     main, root))
+    # the files a crawler asks for
+    base = s.site["url"]
+    urls = [base + ("" if r == "index.html" else r) for r in written if r not in s.noindex]
+    with open(os.path.join(out_dir, "sitemap.xml"), "w", encoding="utf-8") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n%s</urlset>\n'
+                % "".join("  <url><loc>%s</loc></url>\n" % u for u in sorted(urls)))
+    with open(os.path.join(out_dir, "robots.txt"), "w", encoding="utf-8") as f:
+        f.write("User-agent: *\nAllow: /\n\nSitemap: %ssitemap.xml\n" % base)
     return written
 
 
@@ -234,9 +262,14 @@ def check(out_dir, written):
                 continue
             path, _, frag = url.partition("#")
             path = path.partition("?")[0]
-            target = p if not path else os.path.normpath(os.path.join(os.path.dirname(p), path))
+            if path.startswith("/"):
+                target = path[1:]
+                if not target or target.endswith("/"):
+                    target += "index.html"
+            else:
+                target = p if not path else os.path.normpath(os.path.join(os.path.dirname(p), path))
             full = os.path.join(out_dir, target)
-            if path.endswith("/") or (path and os.path.isdir(full)):
+            if os.path.isdir(full):
                 target = os.path.join(target, "index.html")
                 full = os.path.join(out_dir, target)
             if not os.path.exists(full):
@@ -244,6 +277,22 @@ def check(out_dir, written):
             elif frag and target in ids and frag not in ids[target]:
                 problems.append("%s: %s has no #%s" % (p, target, frag))
     return problems
+
+
+def ds_drift():
+    """Warn when ds/ differs from the other site's copy; the two are meant to be identical."""
+    import hashlib
+    mine, theirs = os.path.join(ROOT, "ds"), os.path.join(os.path.dirname(ROOT), "RPCortex-site", "ds")
+    if not os.path.isdir(theirs):
+        return []
+    out = []
+    for dp, _, fs in os.walk(mine):
+        for f in fs:
+            a = os.path.join(dp, f)
+            b = os.path.join(theirs, os.path.relpath(a, mine))
+            if not os.path.exists(b) or hashlib.sha256(open(a, "rb").read()).hexdigest() != hashlib.sha256(open(b, "rb").read()).hexdigest():
+                out.append(os.path.relpath(a, ROOT))
+    return out
 
 
 def main():
@@ -263,6 +312,8 @@ def main():
                 shutil.copytree(src, dst, dirs_exist_ok=True)
             elif os.path.exists(src):
                 shutil.copy(src, dst)
+    for f in ds_drift():
+        print("  ~ %s differs from the other site's copy (see ds/README.md)" % f)
     written = build(out, a.status)
     problems = check(out, written)
     for p in problems:

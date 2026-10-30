@@ -8,19 +8,19 @@ features are worth building and which are not possible at all.
 
 | | What it sees | What it cannot see |
 |---|---|---|
-| **WiFi** (`WLAN.scan()`) | Access points: BSSID, SSID, channel, signal, encryption, hidden flag | **Client devices.** Phones, laptops, cameras — anything that connects *to* an access point rather than being one |
-| **Bluetooth LE** (`gap_scan`) | Every advertising device, with its complete advertising payload: address, signal, name, service UUIDs, manufacturer data, transmit power | Devices that are paired and idle, or that have advertising switched off |
+| **WiFi** (`wifi scan`) | Access points: BSSID, SSID, channel, signal, encryption, hidden flag | **Client devices.** Phones, laptops, cameras — anything that connects *to* an access point rather than being one |
+| **Bluetooth LE** (`bt scan`) | Every advertising device, with its complete advertising payload: address, signal, name, service UUIDs, manufacturer data, transmit power | Devices that are paired and idle, or that have advertising switched off |
 
-The asymmetry matters more than it first appears. WiFi scanning under MicroPython
-has no monitor mode on this radio, so the device only ever hears the beacons that
+The asymmetry matters more than it first appears. WiFi scanning on this radio
+has no monitor mode, so the device only ever hears the beacons that
 access points broadcast; a phone sitting on the network is invisible. Bluetooth is
 the opposite — nearly everything advertises, and the payload is rich enough to say
 what a device is rather than merely that it exists.
 
 ### Ruled out, permanently
 
-These are not backlog items. They are not possible on this hardware under
-MicroPython, and revisiting them will not change that:
+These are not backlog items. They are not possible on this hardware with its
+stock radio firmware, and revisiting them will not change that:
 
 - **Packet capture.** No monitor mode means no raw 802.11 frames.
 - **Probe request capture.** Would reveal which networks a nearby phone is

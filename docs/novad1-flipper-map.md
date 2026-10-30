@@ -1,6 +1,6 @@
 # Nova D1 vs Flipper Zero — feature map
 
-How the Nova D1 (ESP32-S3 + RPCortex + the `novad1` package suite) lines up with
+How the Nova D1 (a Raspberry Pi Pico 2 W + RPCortex + the `novad1` package) lines up with
 the Flipper Zero, what's done, and what each missing piece needs. This guides what
 to build and what hardware to add. The package version this tracks is whatever
 `repo/index.json` currently lists for NovaD1; the status marks below move with it.
@@ -45,7 +45,7 @@ Legend: ✅ working · 🟡 partial / device-pending · 🔧 needs hardware · �
 | Capability | Nova D1 | Notes |
 |---|---|---|
 | WiFi scan / connect | ✅ | Background manager + scan app. |
-| WiFi recon / deauth-detect / sniff | 🟡 scan ✅ / sniff 🗺 | Promiscuous mode is limited in MicroPython. |
+| WiFi recon / deauth-detect / sniff | 🟡 scan ✅ / sniff 🗺 | Promiscuous mode is not available on the Pico 2 W's radio. |
 | Bluetooth LE scan | ✅ | BLE scan app. |
 | **LoRa P2P / mesh messaging** | 🟡 P2P foundation done; mesh 🗺 | **Flipper can't do this without add-ons.** Packet layer done + tested; SX1276 driver device-pending; Messages app (point-to-point). Meshtastic-style mesh routing is the headline roadmap item. |
 | GPS | ✅ | NEO-M8N: RX + satellites-in-view; live-coordinates app next. |
@@ -57,7 +57,7 @@ Legend: ✅ working · 🟡 partial / device-pending · 🔧 needs hardware · �
 | App/plugin ecosystem | 🟡 RPCortex packages ✅ / Nova-UI app repo 🗺 | OS has a full package manager; downloadable Nova-UI apps (script-apps) are roadmap. |
 | Scripting | 🟡 RPCortex `.rps` ✅ / Nova script-UI 🗺 | Button-grid script apps (IR remote, LoRa buttons) are the next build. |
 | Animated UI, PIN lock, settings | ✅ | Icon gallery, PIN lock, kitted settings, web panel. |
-| Battery life | 🟡 platform-bound | ESP32-S3 + WiFi won't match Flipper's STM32 deep-sleep. The trade is capability for runtime. |
+| Battery life | 🟡 platform-bound | A Pico 2 W with WiFi on won't match Flipper's STM32 deep-sleep. The trade is capability for runtime. |
 
 ## Where the Nova D1 WINS
 - **Built-in WiFi + BLE + LoRa + a phone web panel** — Flipper needs add-on boards for these.

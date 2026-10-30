@@ -1,8 +1,11 @@
 # Nova D1 — V1 reference
 
-The build reference and status for Nova D1 V1: supported modules, the Pico 2 W pinout,
+The build reference and status for Nova D1 V1, the MicroPython build: supported modules, the Pico 2 W pinout,
 the parts list, and remaining work. Features that need hardware D1 can't provide are
 [Nova D2](novad2.md).
+
+The C++ build for RPCortex v2 is described in [Nova D1 on RPCortex v2](novad1-v2.md); module status for it
+moves there as each module is brought up on a board.
 
 Status keys: **done** · **hw** (verified on hardware) · **code** (written, needs hardware)
 · **wip** · **todo**.

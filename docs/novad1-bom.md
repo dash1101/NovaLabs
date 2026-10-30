@@ -2,7 +2,7 @@
 
 The Nova D1 is a pocket multi-tool for radio, RFID and infrared: a small OLED, a
 rotary encoder and three buttons on top of a microcontroller running
-[RPCortex](https://rpc.novalabs.app), our MicroPython operating system. It reads and
+[RPCortex](https://rpc.novalabs.app), our operating system, written in C++. It reads and
 replays IR remotes, captures and replays sub-GHz signals, reads NFC tags, sends
 encrypted LoRa messages across a self-relaying mesh, and reads Flipper Zero files
 directly.
@@ -86,8 +86,9 @@ brought up on real hardware it is marked, and the
 ### Known limits, stated plainly
 - **125 kHz LF RFID** (old building fobs, EM4100) needs an extra reader module — see
   the optional parts. The PN532 physically cannot do 125 kHz.
-- **WiFi packet capture** to `.pcap` is not possible on stock MicroPython; the file
-  writer is built, but the capture itself needs a custom firmware build.
+- **WiFi packet capture** to `.pcap` is not possible with the Pico 2 W's stock radio
+  firmware, which has no monitor mode. The file writer is built, but the capture itself
+  would need different radio firmware.
 - **Sub-GHz rolling codes** — see above. Not a limitation we plan to remove.
 
 ---

@@ -26,7 +26,7 @@ D1 uses one MCU for everything. D2 splits the work:
   co-processor provides both pcap and dual-band, off the RP2350's heap.
 
 Keeping PIO rules out returning D1/D2 to an ESP32-S3. ESP32 promiscuous capture is
-well-documented, so the C5 firmware is a contained C/C++ job, not a MicroPython-core fork.
+well-documented, so the C5 firmware is a contained C/C++ job.
 
 ## Features
 
@@ -42,26 +42,14 @@ well-documented, so the C5 firmware is a contained C/C++ job, not a MicroPython-
   front-end. Needs the coil + FET + detector tuned on real hardware.
 - **PSRAM / larger flash** — Pico Plus 2 W class; capture buffers, every module resident.
 - **Richer UI** — larger panel, more on-screen, more animation.
-- **A custom build, purpose-made for this device.** D2 is a single known target, so the
-  software can stop being portable-by-default and be built *for* it:
-  - **Frozen modules** — the RPCortex OS and the Nova D2 package are frozen into the
-    firmware image. Frozen bytecode executes from flash instead of being loaded onto the
-    heap, which removes most of the resident RAM cost (~79 KB of it on D1) and makes
-    imports near-instant.
-  - **`@native` / `@viper`** on hot paths (rendering, PIO feeding, packet decode) — the
-    only real *runtime* speedups MicroPython offers. They emit machine code for one
-    architecture, which is normally a portability problem; on a locked target it isn't.
-  - **An architecture-built Nova D2 package** — compiled for the RP2350 rather than
-    shipped as arch-neutral bytecode. Distributing that as an installable `.pkg` would
-    need a `package.cfg` `arch:` field (`any` / `rp2350`) plus a `pkgmgr` check so a
-    wrong-arch package can't install; freezing it into the firmware avoids that
-    entirely, which is the preferred route.
-
-  Net effect: faster, far more RAM headroom, and no compromise for boards D2 doesn't
-  target. The cost is maintaining a MicroPython fork and a per-device build.
-- **Multi-threading** — the RP2350 is dual-core; MicroPython `_thread` runs on core 1 for
-  PIO/radio work while the UI and async loop own core 0. Shared-heap constraints (GC,
-  shared state) make it a measured experiment; the heavy sniffing is offloaded to the C5.
+- **Built on RPCortex v2.** v2 has no interpreter, so the custom firmware D2 once needed
+  (frozen modules, `@native`/`@viper`, a MicroPython fork, an architecture label on
+  packages) is not needed: Nova D2 is a native C++ package that runs from a flash slot, as
+  the D1 package does. D2 is a single known target, so the package can use PIO and both
+  cores directly.
+- **Both cores** — RPCortex v2 already schedules tasks on both RP2350 cores, so PIO and
+  radio work can live on core 1 while the UI owns core 0. The heavy sniffing is still
+  offloaded to the C5.
 
 ## Deferred from D1
 
@@ -71,7 +59,7 @@ well-documented, so the C5 firmware is a contained C/C++ job, not a MicroPython-
 | Dual-band WiFi | — | yes |
 | LF RFID emulate | — | yes (PIO coil) |
 | LF RFID read | optional (RDM6300) | yes |
-| Multi-threading | — | experiment |
+| Both cores | yes (RPCortex v2) | yes |
 | PSRAM / richer UI | tight | yes |
 
 D1 keeps: sub-GHz, IR, NFC, LoRa mesh, GPS, BLE, the app system.
@@ -87,10 +75,10 @@ explicit modes formalise it:
 - **Encrypted channels** — named channels with pre-shared keys, Meshtastic-style.
 
 True Meshtastic interop (real Meshtastic hardware) requires their LoRa PHY params, protobuf
-payloads, and AES-256-CTR channel PSKs — heavy for MicroPython, a D2-era stretch. The Nova
+payloads, and AES-256-CTR channel PSKs — a D2-era stretch. The Nova
 standard is compatible in spirit, not on the wire.
 
 ## Sequencing
 
 D2 follows D1's V1 release: finish D1 → ESP32-C5 co-processor + capture firmware → custom
-RP2350 firmware (frozen + native) → LF emulate → richer UI. Each is a distinct phase.
+the D2 package on RPCortex v2 → LF emulate → richer UI. Each is a distinct phase.

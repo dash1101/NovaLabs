@@ -1,5 +1,5 @@
 {
-  "progress_intro": "Developed in the open.",
+  "progress_intro": "Developed in the open. This list tracks the MicroPython build (V1); the C++ build for RPCortex v2 is described above, and each module moves here as it is brought up on a board.",
   "categories": [
     {
       "name": "Core platform",
@@ -168,7 +168,7 @@
           "status": "hw"
         }
       ],
-      "note": "USB-HID rides the ESP32-S3 native USB (later); 125&nbsp;kHz needs an LF module."
+      "note": "USB HID (keyboard, BadUSB) is built into RPCortex v2 for the Pico's USB port and is host-tested; 125 kHz needs an LF module."
     }
   ],
   "shots": [
@@ -225,8 +225,13 @@
       "href": "d1-sim.html"
     },
     {
-      "title": "V1 reference",
-      "text": "Modules, pinout, parts and what's left for V1.",
+      "title": "Nova D1 on RPCortex v2",
+      "text": "The C++ build: how it installs, how it runs, and what has run on a board.",
+      "href": "docs/novad1-v2.html"
+    },
+    {
+      "title": "V1 reference (MicroPython)",
+      "text": "Modules, pinout, parts and what's left for the MicroPython build.",
       "href": "docs/novad1-v1.html"
     },
     {
