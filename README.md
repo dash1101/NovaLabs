@@ -1,38 +1,31 @@
 # NovaLabs
 
-Source for [**novalabs.app**](https://novalabs.app) — the home of NovaLabs, an independent hardware &amp; software lab founded by [dash](https://github.com/dash1101).
+Source for [**novalabs.app**](https://novalabs.app), a hub for the projects [dash](https://github.com/dash1101) has started and finished.
 
-NovaLabs builds:
+The projects listed there:
 
-- **[RPCortex](https://rpc.novalabs.app)** — a real, multitasking operating system for microcontrollers. v1.0 "Vela" is the stable MicroPython release; v2.0 "Vela II", the native C++ rewrite, is in beta. *(source-available)*
-- **Nova D1** — a build-it-yourself cybersecurity &amp; networking multi-tool, and an affordable alternative to the Flipper Zero. It runs RPCortex as the `novad1` package suite rather than as its own firmware. *(in active development — est. Q1 2027)*
-- **ytdl-UI** — a private, no-tracking media downloader at [yt.novalabs.app](https://yt.novalabs.app).
+- **[RPCortex](https://rpc.novalabs.app)**: an operating system for the Raspberry Pi Pico family. v2 "Vela II" is written in C++ and is in beta; v1.0 "Vela" is the stable MicroPython release. *(source-available)*
+- **Nova D1**: a build-it-yourself cybersecurity and networking multi-tool, built around a Raspberry Pi Pico 2 W. It runs RPCortex as the `novad1` package. *(in development)*
+- **ytdl-UI**: a private media downloader at [yt.novalabs.app](https://yt.novalabs.app).
 
-The Nova D1 docs live in [`docs/`](docs/) — the [V1 reference](docs/novad1-v1.md), [wiring](docs/novad1-wiring.md), [parts list](docs/novad1-bom.md), [radio notes](docs/novad1-radio.md), the [Flipper comparison](docs/novad1-flipper-map.md) and the [D2 concept](docs/novad2.md).
+The Nova D1 documentation is in [`docs/`](docs/) and is rendered on the site: [Nova D1 on RPCortex v2](docs/novad1-v2.md), the [V1 reference](docs/novad1-v1.md), [wiring](docs/novad1-wiring.md), the [parts list](docs/novad1-bom.md), [radio notes](docs/novad1-radio.md), the [Flipper comparison](docs/novad1-flipper-map.md) and the [D2 concept](docs/novad2.md).
 
 ---
 
 ## Structure
 
-```
-index.html     — the landing page
-d1.html        — the Nova D1 product page
-d1-sim.html    — the browser simulator; runs the real Nova D1 modules under Pyodide
-contact.html   — contact
-privacy.html   — privacy policy
-style.css      — glass-morphism styling (NovaLabs blue palette)
-script.js      — nav, scroll reveals, animated stats, ambient effects
-announce.js    — the announcement banner
-favicon.svg    — the NovaLabs "N" chip mark
-logo.svg       — transparent "N" mark for dark backgrounds
-docs/          — Nova D1 and Nova D2 reference docs
-banners/       — announcement art, and the renders made from it
-img/           — screenshots and page art
-.nojekyll      — serve files as-is if hosted on GitHub Pages
-```
+The site is static and is served from this repository as it stands. The pages are generated from sources in `site/` by `python3 site/build.py`, and the generated files are committed beside them. `site/README.md` describes the everyday jobs: editing a page, marking a Nova D1 feature as done, adding a doc, showing a notice.
 
-It's a static site — relative paths throughout, so it serves the same whether
-it's behind the homelab Caddy or on GitHub Pages.
+```
+site/pages/    one source file per page
+site/data/     the content that changes: nav, footer, Nova D1 progress, screens and links
+site/build.py  the generator; it fails on a broken link or an unfilled placeholder
+docs/          Nova D1 and Nova D2 reference docs (markdown), rendered to docs/*.html
+ds/            the design system shared with rpc.novalabs.app (stylesheet and fonts)
+nova.css       what only this site needs (the simulator)
+js/sim.js      the browser simulator; runs the Nova D1 modules under Pyodide
+img/           Nova D1 screen renders and the social card
+```
 
 ---
 
