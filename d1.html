@@ -1,241 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova D1 — build progress | NovaLabs</title>
-    <meta name="description" content="The Nova D1 is a build-it-yourself ESP32-S3 multi-tool that runs RPCortex. Live build progress: OLED UI, LoRa messaging, NFC, GPS, sub-GHz, a phone web panel and more.">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .badge{display:inline-block;font-size:.72rem;font-weight:600;padding:.12rem .5rem;
-            border-radius:999px;letter-spacing:.3px;white-space:nowrap}
-        .b-done{background:rgba(60,200,120,.16);color:#5fe39a;border:1px solid rgba(60,200,120,.4)}
-        .b-part{background:rgba(255,200,80,.14);color:#ffd470;border:1px solid rgba(255,200,80,.4)}
-        .b-next{background:rgba(120,180,255,.16);color:#9fc6ff;border:1px solid rgba(120,180,255,.4)}
-        .b-late{background:rgba(160,160,190,.12);color:#b7bcd6;border:1px solid rgba(160,160,190,.35)}
-        .b-hw{background:rgba(255,140,120,.14);color:#ff9f88;border:1px solid rgba(255,140,120,.4)}
-        .cat{margin-bottom:1.1rem}
-        .cat h3{display:flex;align-items:center;gap:.6rem;margin:0 0 .2rem;font-size:1.15rem}
-        .cat .pct{margin-left:auto;font-size:.8rem;color:var(--text-dim,#9aa3c0)}
-        .feat{display:flex;align-items:center;gap:.6rem;padding:.45rem 0;
-            border-top:1px solid rgba(255,255,255,.06);font-size:.95rem}
-        .feat .badge{margin-left:auto}
-        .progress-note{font-size:.82rem;color:#9aa3c0;margin-top:.4rem}
-        .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:.5rem}
-        .shot figure{margin:0}
-        .shot img{width:100%;border-radius:10px;border:1px solid rgba(120,180,255,.18);
-            background:#01040a;image-rendering:pixelated;display:block}
-        .shot figcaption{font-size:.82rem;color:#9aa3c0;margin-top:.45rem;text-align:center}
-    </style>
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <img src="logo.svg" alt="NovaLabs" class="nav-logo-svg">
-                <span class="nav-title">NovaLabs</span>
-            </a>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="index.html#projects" class="nav-link">Projects</a>
-                <a href="d1.html" class="nav-link active">Nova D1</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-                <a href="https://rpc.novalabs.app" class="nav-link nav-link-ext" target="_blank" rel="noopener">RPCortex&nbsp;&#8599;</a>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation"><span class="hamburger"></span></button>
-        </div>
-    </nav>
-
-    <div class="background">
-        <div class="gradient-orb orb-1"></div>
-        <div class="gradient-orb orb-2"></div>
-        <div class="gradient-orb orb-3"></div>
-        <div class="stars"></div>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Nova D1 | NovaLabs</title><meta name="description" content="The Nova D1 is a build-it-yourself ESP32-S3 multi-tool that runs RPCortex. Live build progress: OLED UI, LoRa messaging, NFC, GPS, sub-GHz, a phone web panel and more."><link rel="icon" type="image/svg+xml" href="./favicon.svg"><link rel="preload" as="font" type="font/woff2" crossorigin href="./ds/fonts/BricolageGrotesque-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="./ds/fonts/InstrumentSans-latin.woff2"><link rel="stylesheet" href="./ds/ds.css"><link rel="stylesheet" href="./nova.css"></head><body><a class="skip" href="#main">Skip to content</a><header class="nav"><div class="wrap nav-in"><a class="brand" href="./"><img src="./logo.svg" alt="">NovaLabs</a><button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span></button><nav id="menu" class="menu" aria-label="Main"><a href="./index.html#projects">Projects</a><a href="./d1.html" aria-current="page">Nova D1</a><a href="./d1-sim.html">Simulator</a><a href="./docs/index.html">Docs</a><a href="./index.html#about">About</a><a href="./contact.html">Contact</a><a class="ext" href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex &#8599;</a></nav></div></header><main id="main">
+<section class="wrap hero" id="home">
+  <div>
+    <div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Nova D1</div>
+    <h1>A multi-tool you build yourself.</h1>
+    <p class="lede">An ESP32-S3 pocket multi-tool that runs <strong>RPCortex</strong>: a 128&times;64 OLED UI driven by a rotary + buttons, LoRa messaging, NFC, GPS, sub-GHz, infrared, WiFi/BLE, and a phone web control panel — all from off-the-shelf modules. This page tracks the build live.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="./d1-sim.html">Try the simulator</a>
+      <a class="btn btn-ghost" href="#interface">See the UI</a>
+      <a class="btn btn-ghost" href="#progress">Build progress</a>
     </div>
+  </div>
+  <div class="device">
+    <div class="screen"><img src="./img/d1/home.png" alt="The Nova D1 home screen on its OLED"></div>
+    <div class="panel-row" aria-hidden="true"><div class="knob"></div><div class="keys"><span>BACK</span><span>SELECT</span><span>HOME</span></div></div>
+    <p class="caption">Rotary encoder and buttons, as on the device</p>
+  </div>
+</section>
 
-    <div class="container">
-        <header class="hero" id="home">
-            <div class="glass-card main-card">
-                <h1 class="title"><span class="title-line">Nova D1</span></h1>
-                <p class="tagline gradient-text">A multi-tool you build yourself.</p>
-                <p class="subtitle">An ESP32-S3 pocket multi-tool that runs <strong>RPCortex</strong>: a 128&times;64 OLED UI driven by a rotary + buttons, LoRa messaging, NFC, GPS, sub-GHz, infrared, WiFi/BLE, and a phone web control panel — all from off-the-shelf modules. This page tracks the build live.</p>
-                <div class="hero-actions">
-                    <a href="d1-sim.html" class="btn btn-primary">Try the simulator</a>
-                    <a href="#interface" class="btn btn-secondary">See the UI</a>
-                    <a href="#progress" class="btn btn-secondary">Build progress</a>
-                </div>
-                <div class="pulse-ring"></div>
-            </div>
-        </header>
+<section class="wrap sec" id="interface">
+  <div class="sec-head"><div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Screens</div><h2>The interface</h2><p>The 128&times;64 OLED, driven by a rotary encoder and its buttons. These are real renders of the actual UI &mdash; and you can <a href="d1-sim.html">drive it yourself in the browser</a>.</p></div>
+  <div class="shots"><div class="shot"><figure><img src="./img/d1/home_folders.png" alt="Nova D1 home — category folders"><figcaption>Home &mdash; apps organised in folders</figcaption></figure></div><div class="shot"><figure><img src="./img/d1/app_nfc.png" alt="NFC app"><figcaption>NFC &mdash; scan &amp; save cards (Flipper .nfc)</figcaption></figure></div><div class="shot"><figure><img src="./img/d1/app_subghz.png" alt="Sub-GHz app"><figcaption>Sub-GHz &mdash; save &amp; replay codes (Flipper .sub)</figcaption></figure></div><div class="shot"><figure><img src="./img/d1/app_ble.png" alt="BLE app"><figcaption>BLE &mdash; scan &amp; ping nearby devices</figcaption></figure></div><div class="shot"><figure><img src="./img/d1/app_msg.png" alt="LoRa messages app"><figcaption>Messages &mdash; encrypted LoRa P2P</figcaption></figure></div><div class="shot"><figure><img src="./img/d1/app_settings.png" alt="Settings"><figcaption>Settings &mdash; grouped, on-device</figcaption></figure></div><div class="shot"><figure><img src="./img/d1/app_led.png" alt="LED control app"><figcaption>LED &mdash; live colour control</figcaption></figure></div><div class="shot"><figure><img src="./img/d1/app_store.png" alt="App Store"><figcaption>App Store &mdash; browse &amp; install apps</figcaption></figure></div><div class="shot"><figure><img src="./img/d1/app_diag.png" alt="Diagnostics"><figcaption>Diagnostics &mdash; module self-tests</figcaption></figure></div></div>
+  <p class="progress-note"><a href="./d1-sim.html">▶ Open the live simulator</a></p>
+</section>
 
-        <section class="services" id="interface">
-            <h2 class="section-heading">The interface</h2>
-            <p style="text-align:center;color:#9aa3c0;margin:-0.5rem auto 1.5rem;max-width:660px">
-                The 128&times;64 OLED, driven by a rotary encoder and its buttons. These are real renders of
-                the actual UI &mdash; and you can
-                <a href="d1-sim.html" style="color:#9fc6ff">drive it yourself in the browser</a>.
-            </p>
-            <div class="glass-card">
-                <div class="shots">
-                    <div class="shot"><figure><img src="img/d1/home_folders.png" alt="Nova D1 home — category folders"><figcaption>Home &mdash; apps organised in folders</figcaption></figure></div>
-                    <div class="shot"><figure><img src="img/d1/app_nfc.png" alt="NFC app"><figcaption>NFC &mdash; scan &amp; save cards (Flipper .nfc)</figcaption></figure></div>
-                    <div class="shot"><figure><img src="img/d1/app_subghz.png" alt="Sub-GHz app"><figcaption>Sub-GHz &mdash; save &amp; replay codes (Flipper .sub)</figcaption></figure></div>
-                    <div class="shot"><figure><img src="img/d1/app_ble.png" alt="BLE app"><figcaption>BLE &mdash; scan &amp; ping nearby devices</figcaption></figure></div>
-                    <div class="shot"><figure><img src="img/d1/app_msg.png" alt="LoRa messages app"><figcaption>Messages &mdash; encrypted LoRa P2P</figcaption></figure></div>
-                    <div class="shot"><figure><img src="img/d1/app_settings.png" alt="Settings"><figcaption>Settings &mdash; grouped, on-device</figcaption></figure></div>
-                    <div class="shot"><figure><img src="img/d1/app_led.png" alt="LED control app"><figcaption>LED &mdash; live colour control</figcaption></figure></div>
-                    <div class="shot"><figure><img src="img/d1/app_store.png" alt="App Store"><figcaption>App Store &mdash; browse &amp; install apps</figcaption></figure></div>
-                    <div class="shot"><figure><img src="img/d1/app_diag.png" alt="Diagnostics"><figcaption>Diagnostics &mdash; module self-tests</figcaption></figure></div>
-                </div>
-                <p class="progress-note" style="text-align:center;margin-top:1.2rem">
-                    <a href="d1-sim.html" style="color:#9fc6ff">▶ Open the live simulator</a>
-                </p>
-            </div>
-        </section>
+<section class="wrap sec" id="progress">
+  <div class="sec-head"><div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Status</div><h2>Build progress</h2>
+    <p>Developed in the open. Status:</p><div class="legend"><span class="badge b-done">done</span> <span class="badge b-part">partial</span> <span class="badge b-next">next</span> <span class="badge b-late">later</span> <span class="badge b-hw">needs hardware</span></div></div>
+  <div class="cats"><div class="panel cat"><h3>Core platform <span class="pct">verified</span></h3><div class="feat">OLED UI · rotary + 3 buttons <span class="badge b-done">done</span></div><div class="feat">Animated icon gallery · screen-off · PIN lock <span class="badge b-done">done</span></div><div class="feat">All peripheral test apps (on hardware) <span class="badge b-done">done</span></div><div class="feat">Notifications + top-bar bell <span class="badge b-done">done</span></div></div><div class="panel cat"><h3>Wireless <span class="pct">our edge</span></h3><div class="feat">WiFi scan / background connect <span class="badge b-done">done</span></div><div class="feat">Bluetooth LE scan <span class="badge b-done">done</span></div><div class="feat">LoRa P2P messaging (SX1276) <span class="badge b-done">done</span></div><div class="feat">LoRa mesh routing (Meshtastic-style) <span class="badge b-late">later</span></div><div class="feat">GPS live coordinates (NEO-M8N) <span class="badge b-done">done</span></div></div><div class="panel cat"><h3>Phone control <span class="pct">web panel</span></h3><div class="feat">Web panel: status · apps · shell <span class="badge b-done">done</span></div><div class="feat">WiFi onboarding from your phone <span class="badge b-done">done</span></div><div class="feat">Messages synced web &harr; device <span class="badge b-done">done</span></div><div class="feat">Bluetooth bridge (web-Bluetooth) <span class="badge b-next">next</span></div></div><div class="panel cat"><h3>RF &amp; signals </h3><div class="feat">NFC read (PN532, 13.56&nbsp;MHz) <span class="badge b-part">partial</span></div><div class="feat">Infrared receive + send <span class="badge b-done">done</span></div><div class="feat">IR record / replay library <span class="badge b-next">next</span></div><div class="feat">Sub-GHz capture / replay (CC1101) <span class="badge b-next">next</span></div><div class="feat">125&nbsp;kHz RFID fob cloning <span class="badge b-hw">needs hardware</span></div></div><div class="panel cat"><h3>Scripting &amp; apps </h3><div class="feat">RPCortex package manager <span class="badge b-done">done</span></div><div class="feat">Python script API (nova.*) <span class="badge b-next">next</span></div><div class="feat">Button-grid script apps (IR remote, LoRa) <span class="badge b-next">next</span></div><div class="feat">Downloadable Nova-UI apps <span class="badge b-late">later</span></div></div><div class="panel cat"><h3>Sensors &amp; storage </h3><div class="feat">MicroSD (mount, store scripts/data) <span class="badge b-done">done</span></div><div class="feat">DHT11 temp/humidity · status LED · buzzer <span class="badge b-done">done</span></div><div class="feat">Battery / USB power icons <span class="badge b-done">done</span></div><div class="feat">RTC + auto NTP time sync <span class="badge b-done">done</span></div></div><div class="panel cat"><h3>USB &amp; HID <span class="pct">planned</span></h3><div class="feat">HID controller (keyboard / mouse) <span class="badge b-late">later</span></div><div class="feat">BadUSB (scripted keystrokes) <span class="badge b-late">later</span></div><div class="feat">U2F security key <span class="badge b-late">later</span></div><div class="feat">125&nbsp;kHz RFID scanning <span class="badge b-hw">needs hardware</span></div><p class="progress-note">USB-HID rides the ESP32-S3 native USB (later); 125&nbsp;kHz needs an LF module.</p></div></div>
+  <p class="progress-note">Built on <a href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex</a> · installable as the <code>novad1</code> package · ~$40 in off-the-shelf modules.</p>
+</section>
 
-        <section class="services" id="progress">
-            <h2 class="section-heading">Build progress</h2>
-            <p style="text-align:center;color:#9aa3c0;margin:-0.5rem auto 1.5rem;max-width:640px">
-                Developed in the open. Status:
-                <span class="badge b-done">done</span>
-                <span class="badge b-part">partial</span>
-                <span class="badge b-next">next</span>
-                <span class="badge b-late">later</span>
-                <span class="badge b-hw">needs hardware</span>
-            </p>
-            <div class="services-grid">
-
-                <div class="glass-card service-card cat" style="--delay:.05s">
-                    <h3>Core platform <span class="pct">verified</span></h3>
-                    <div class="feat">OLED UI · rotary + 3 buttons <span class="badge b-done">done</span></div>
-                    <div class="feat">Animated icon gallery · screen-off · PIN lock <span class="badge b-done">done</span></div>
-                    <div class="feat">All peripheral test apps (on hardware) <span class="badge b-done">done</span></div>
-                    <div class="feat">Notifications + top-bar bell <span class="badge b-done">done</span></div>
-                </div>
-
-                <div class="glass-card service-card cat" style="--delay:.1s">
-                    <h3>Wireless <span class="pct">our edge</span></h3>
-                    <div class="feat">WiFi scan / background connect <span class="badge b-done">done</span></div>
-                    <div class="feat">Bluetooth LE scan <span class="badge b-done">done</span></div>
-                    <div class="feat">LoRa P2P messaging (SX1276) <span class="badge b-done">done</span></div>
-                    <div class="feat">LoRa mesh routing (Meshtastic-style) <span class="badge b-late">later</span></div>
-                    <div class="feat">GPS live coordinates (NEO-M8N) <span class="badge b-done">done</span></div>
-                </div>
-
-                <div class="glass-card service-card cat" style="--delay:.15s">
-                    <h3>Phone control <span class="pct">web panel</span></h3>
-                    <div class="feat">Web panel: status · apps · shell <span class="badge b-done">done</span></div>
-                    <div class="feat">WiFi onboarding from your phone <span class="badge b-done">done</span></div>
-                    <div class="feat">Messages synced web &harr; device <span class="badge b-done">done</span></div>
-                    <div class="feat">Bluetooth bridge (web-Bluetooth) <span class="badge b-next">next</span></div>
-                </div>
-
-                <div class="glass-card service-card cat" style="--delay:.2s">
-                    <h3>RF &amp; signals</h3>
-                    <div class="feat">NFC read (PN532, 13.56&nbsp;MHz) <span class="badge b-part">partial</span></div>
-                    <div class="feat">Infrared receive + send <span class="badge b-done">done</span></div>
-                    <div class="feat">IR record / replay library <span class="badge b-next">next</span></div>
-                    <div class="feat">Sub-GHz capture / replay (CC1101) <span class="badge b-next">next</span></div>
-                    <div class="feat">125&nbsp;kHz RFID fob cloning <span class="badge b-hw">needs hardware</span></div>
-                </div>
-
-                <div class="glass-card service-card cat" style="--delay:.25s">
-                    <h3>Scripting &amp; apps</h3>
-                    <div class="feat">RPCortex package manager <span class="badge b-done">done</span></div>
-                    <div class="feat">Python script API (nova.*) <span class="badge b-next">next</span></div>
-                    <div class="feat">Button-grid script apps (IR remote, LoRa) <span class="badge b-next">next</span></div>
-                    <div class="feat">Downloadable Nova-UI apps <span class="badge b-late">later</span></div>
-                </div>
-
-                <div class="glass-card service-card cat" style="--delay:.3s">
-                    <h3>Sensors &amp; storage</h3>
-                    <div class="feat">MicroSD (mount, store scripts/data) <span class="badge b-done">done</span></div>
-                    <div class="feat">DHT11 temp/humidity · status LED · buzzer <span class="badge b-done">done</span></div>
-                    <div class="feat">Battery / USB power icons <span class="badge b-done">done</span></div>
-                    <div class="feat">RTC + auto NTP time sync <span class="badge b-done">done</span></div>
-                </div>
-
-                <div class="glass-card service-card cat" style="--delay:.35s">
-                    <h3>USB &amp; HID <span class="pct">planned</span></h3>
-                    <div class="feat">HID controller (keyboard / mouse) <span class="badge b-late">later</span></div>
-                    <div class="feat">BadUSB (scripted keystrokes) <span class="badge b-late">later</span></div>
-                    <div class="feat">U2F security key <span class="badge b-late">later</span></div>
-                    <div class="feat">125&nbsp;kHz RFID scanning <span class="badge b-hw">needs hardware</span></div>
-                    <p class="progress-note">USB-HID rides the ESP32-S3 native USB (later); 125&nbsp;kHz needs an LF module.</p>
-                </div>
-
-            </div>
-            <p class="progress-note" style="text-align:center;margin-top:1.5rem">
-                Built on <a href="https://rpc.novalabs.app" target="_blank" rel="noopener" style="color:#9fc6ff">RPCortex</a> ·
-                installable as the <code>novad1</code> package · ~$40 in off-the-shelf modules.
-            </p>
-        </section>
-
-        <section class="services" id="resources">
-            <h2 class="section-heading">Docs, specs &amp; tools</h2>
-            <p style="text-align:center;color:#9aa3c0;margin:-0.5rem auto 1.5rem;max-width:660px">
-                Everything Nova D1 in one place &mdash; the build guide, the Flipper
-                compatibility map, the roadmap, and the design specs.
-            </p>
-            <div class="services-grid">
-                <a class="glass-card service-card" href="d1-sim.html" style="text-decoration:none;color:inherit">
-                    <h3>▶ Browser simulator</h3>
-                    <p style="color:#9aa3c0;font-size:.92rem">Drive the real UI in your browser &mdash; no hardware.</p>
-                </a>
-                <a class="glass-card service-card" href="https://github.com/dash1101/NovaLabs/blob/main/docs/novad1-v1.md" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">
-                    <h3>V1 reference</h3>
-                    <p style="color:#9aa3c0;font-size:.92rem">Modules, pinout, parts and what's left for V1.</p>
-                </a>
-                <a class="glass-card service-card" href="https://github.com/dash1101/NovaLabs/blob/main/docs/novad1-radio.md" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">
-                    <h3>What it can see</h3>
-                    <p style="color:#9aa3c0;font-size:.92rem">What the WiFi and Bluetooth radios can observe &mdash; and what they can't.</p>
-                </a>
-                <a class="glass-card service-card" href="https://github.com/dash1101/NovaLabs/blob/main/docs/novad1-bom.md" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">
-                    <h3>Parts &amp; prices</h3>
-                    <p style="color:#9aa3c0;font-size:.92rem">Everything it does, every part to buy, what it costs.</p>
-                </a>
-                <a class="glass-card service-card" href="https://github.com/dash1101/RPCortex-repo/blob/main/repo/packages/novad1/SETUP.md" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">
-                    <h3>Setup guide</h3>
-                    <p style="color:#9aa3c0;font-size:.92rem">Install, pick your board, wire it, turn it on.</p>
-                </a>
-                <a class="glass-card service-card" href="https://github.com/dash1101/NovaLabs/blob/main/docs/novad1-wiring.md" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">
-                    <h3>Wiring guide</h3>
-                    <p style="color:#9aa3c0;font-size:.92rem">Pin map for every module, per board.</p>
-                </a>
-                <a class="glass-card service-card" href="https://github.com/dash1101/NovaLabs/blob/main/docs/novad1-flipper-map.md" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">
-                    <h3>Flipper compatibility</h3>
-                    <p style="color:#9aa3c0;font-size:.92rem">What matches a Flipper Zero, and how.</p>
-                </a>
-                <a class="glass-card service-card" href="https://github.com/dash1101/NovaLabs/blob/main/docs/novad2.md" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">
-                    <h3>Nova D2 ↗</h3>
-                    <p style="color:#9aa3c0;font-size:.92rem">The next device — pcap, dual-band, LF emulate.</p>
-                </a>
-            </div>
-            <p class="progress-note" style="text-align:center;margin-top:1.5rem">
-                Runs on <a href="https://rpc.novalabs.app" target="_blank" rel="noopener" style="color:#9fc6ff">RPCortex</a> ·
-                packages: <a href="https://github.com/dash1101/RPCortex-repo" target="_blank" rel="noopener" style="color:#9fc6ff">RPCortex-repo</a>
-            </p>
-        </section>
-
-        <footer class="footer">
-            <div class="glass-card footer-card">
-                <div class="footer-brand">
-                    <img src="logo.svg" alt="" class="footer-logo">
-                    <span>NovaLabs</span>
-                </div>
-                <div class="footer-links">
-                    <a href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex</a>
-                    <a href="index.html#nova-d1">Nova D1</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="privacy.html">Privacy</a>
-                    <a href="https://github.com/dash1101" target="_blank" rel="noopener">GitHub</a>
-                </div>
-                <p class="footer-subtitle">Built by dash · &copy; 2026 NovaLabs · all rights reserved</p>
-            </div>
-        </footer>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+<section class="wrap sec" id="resources">
+  <div class="sec-head"><div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Reference</div><h2>Docs, specs &amp; tools</h2><p>Everything Nova D1 in one place &mdash; the build guide, the Flipper compatibility map, the roadmap, and the design specs.</p></div>
+  <div class="links"><a class="link-card" href="./d1-sim.html"><h3>▶ Browser simulator</h3><p>Drive the real UI in your browser &mdash; no hardware.</p></a><a class="link-card" href="./docs/novad1-v1.html"><h3>V1 reference</h3><p>Modules, pinout, parts and what's left for V1.</p></a><a class="link-card" href="./docs/novad1-radio.html"><h3>What it can see</h3><p>What the WiFi and Bluetooth radios can observe &mdash; and what they can't.</p></a><a class="link-card" href="./docs/novad1-bom.html"><h3>Parts &amp; prices</h3><p>Everything it does, every part to buy, what it costs.</p></a><a class="link-card" href="https://github.com/dash1101/RPCortex-repo/blob/main/repo/packages/novad1/SETUP.md" target="_blank" rel="noopener"><h3>Setup guide</h3><p>Install, pick your board, wire it, turn it on.</p></a><a class="link-card" href="./docs/novad1-wiring.html"><h3>Wiring guide</h3><p>Pin map for every module, per board.</p></a><a class="link-card" href="./docs/novad1-flipper-map.html"><h3>Flipper compatibility</h3><p>What matches a Flipper Zero, and how.</p></a><a class="link-card" href="./docs/novad2.html"><h3>Nova D2</h3><p>The next device — pcap, dual-band, LF emulate.</p></a></div>
+  <p class="progress-note">Runs on <a href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex</a> · packages: <a href="https://github.com/dash1101/RPCortex-repo" target="_blank" rel="noopener">RPCortex-repo</a></p>
+</section>
+</main>
+<footer class="foot"><div class="wrap foot-in"><a class="brand" href="./"><img src="./logo.svg" alt="">NovaLabs</a><div class="foot-links"><a href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex</a><a href="./d1.html">Nova D1</a><a href="./d1-sim.html">Simulator</a><a href="./docs/index.html">Docs</a><a href="./contact.html">Contact</a><a href="./privacy.html">Privacy</a><a href="https://github.com/dash1101" target="_blank" rel="noopener">GitHub</a></div><small>Built by dash &middot; &copy; 2026 NovaLabs &middot; all rights reserved</small></div></footer><script src="./ds/ds.js"></script></body></html>

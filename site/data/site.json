@@ -1,0 +1,74 @@
+{
+  "name": "NovaLabs",
+  "status": {
+    "text": "",
+    "tone": "warn",
+    "link": "",
+    "link_text": ""
+  },
+  "nav": [
+    {
+      "label": "Projects",
+      "href": "index.html#projects"
+    },
+    {
+      "label": "Nova D1",
+      "href": "d1.html",
+      "key": "d1"
+    },
+    {
+      "label": "Simulator",
+      "href": "d1-sim.html",
+      "key": "sim"
+    },
+    {
+      "label": "Docs",
+      "href": "docs/index.html",
+      "key": "docs"
+    },
+    {
+      "label": "About",
+      "href": "index.html#about"
+    },
+    {
+      "label": "Contact",
+      "href": "contact.html",
+      "key": "contact"
+    }
+  ],
+  "external": {
+    "label": "RPCortex &#8599;",
+    "href": "https://rpc.novalabs.app"
+  },
+  "footer": [
+    {
+      "label": "RPCortex",
+      "href": "https://rpc.novalabs.app"
+    },
+    {
+      "label": "Nova D1",
+      "href": "d1.html"
+    },
+    {
+      "label": "Simulator",
+      "href": "d1-sim.html"
+    },
+    {
+      "label": "Docs",
+      "href": "docs/index.html"
+    },
+    {
+      "label": "Contact",
+      "href": "contact.html"
+    },
+    {
+      "label": "Privacy",
+      "href": "privacy.html"
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/dash1101"
+    }
+  ],
+  "copyright": "Built by dash &middot; &copy; 2026 NovaLabs &middot; all rights reserved"
+}

@@ -1,0 +1,274 @@
+{
+  "progress_intro": "Developed in the open.",
+  "categories": [
+    {
+      "name": "Core platform",
+      "tag": "verified",
+      "items": [
+        {
+          "text": "OLED UI · rotary + 3 buttons",
+          "status": "done"
+        },
+        {
+          "text": "Animated icon gallery · screen-off · PIN lock",
+          "status": "done"
+        },
+        {
+          "text": "All peripheral test apps (on hardware)",
+          "status": "done"
+        },
+        {
+          "text": "Notifications + top-bar bell",
+          "status": "done"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "name": "Wireless",
+      "tag": "our edge",
+      "items": [
+        {
+          "text": "WiFi scan / background connect",
+          "status": "done"
+        },
+        {
+          "text": "Bluetooth LE scan",
+          "status": "done"
+        },
+        {
+          "text": "LoRa P2P messaging (SX1276)",
+          "status": "done"
+        },
+        {
+          "text": "LoRa mesh routing (Meshtastic-style)",
+          "status": "late"
+        },
+        {
+          "text": "GPS live coordinates (NEO-M8N)",
+          "status": "done"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "name": "Phone control",
+      "tag": "web panel",
+      "items": [
+        {
+          "text": "Web panel: status · apps · shell",
+          "status": "done"
+        },
+        {
+          "text": "WiFi onboarding from your phone",
+          "status": "done"
+        },
+        {
+          "text": "Messages synced web &harr; device",
+          "status": "done"
+        },
+        {
+          "text": "Bluetooth bridge (web-Bluetooth)",
+          "status": "next"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "name": "RF &amp; signals",
+      "tag": "",
+      "items": [
+        {
+          "text": "NFC read (PN532, 13.56&nbsp;MHz)",
+          "status": "part"
+        },
+        {
+          "text": "Infrared receive + send",
+          "status": "done"
+        },
+        {
+          "text": "IR record / replay library",
+          "status": "next"
+        },
+        {
+          "text": "Sub-GHz capture / replay (CC1101)",
+          "status": "next"
+        },
+        {
+          "text": "125&nbsp;kHz RFID fob cloning",
+          "status": "hw"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "name": "Scripting &amp; apps",
+      "tag": "",
+      "items": [
+        {
+          "text": "RPCortex package manager",
+          "status": "done"
+        },
+        {
+          "text": "Python script API (nova.*)",
+          "status": "next"
+        },
+        {
+          "text": "Button-grid script apps (IR remote, LoRa)",
+          "status": "next"
+        },
+        {
+          "text": "Downloadable Nova-UI apps",
+          "status": "late"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "name": "Sensors &amp; storage",
+      "tag": "",
+      "items": [
+        {
+          "text": "MicroSD (mount, store scripts/data)",
+          "status": "done"
+        },
+        {
+          "text": "DHT11 temp/humidity · status LED · buzzer",
+          "status": "done"
+        },
+        {
+          "text": "Battery / USB power icons",
+          "status": "done"
+        },
+        {
+          "text": "RTC + auto NTP time sync",
+          "status": "done"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "name": "USB &amp; HID",
+      "tag": "planned",
+      "items": [
+        {
+          "text": "HID controller (keyboard / mouse)",
+          "status": "late"
+        },
+        {
+          "text": "BadUSB (scripted keystrokes)",
+          "status": "late"
+        },
+        {
+          "text": "U2F security key",
+          "status": "late"
+        },
+        {
+          "text": "125&nbsp;kHz RFID scanning",
+          "status": "hw"
+        }
+      ],
+      "note": "USB-HID rides the ESP32-S3 native USB (later); 125&nbsp;kHz needs an LF module."
+    }
+  ],
+  "shots": [
+    {
+      "img": "img/d1/home_folders.png",
+      "alt": "Nova D1 home — category folders",
+      "caption": "Home &mdash; apps organised in folders"
+    },
+    {
+      "img": "img/d1/app_nfc.png",
+      "alt": "NFC app",
+      "caption": "NFC &mdash; scan &amp; save cards (Flipper .nfc)"
+    },
+    {
+      "img": "img/d1/app_subghz.png",
+      "alt": "Sub-GHz app",
+      "caption": "Sub-GHz &mdash; save &amp; replay codes (Flipper .sub)"
+    },
+    {
+      "img": "img/d1/app_ble.png",
+      "alt": "BLE app",
+      "caption": "BLE &mdash; scan &amp; ping nearby devices"
+    },
+    {
+      "img": "img/d1/app_msg.png",
+      "alt": "LoRa messages app",
+      "caption": "Messages &mdash; encrypted LoRa P2P"
+    },
+    {
+      "img": "img/d1/app_settings.png",
+      "alt": "Settings",
+      "caption": "Settings &mdash; grouped, on-device"
+    },
+    {
+      "img": "img/d1/app_led.png",
+      "alt": "LED control app",
+      "caption": "LED &mdash; live colour control"
+    },
+    {
+      "img": "img/d1/app_store.png",
+      "alt": "App Store",
+      "caption": "App Store &mdash; browse &amp; install apps"
+    },
+    {
+      "img": "img/d1/app_diag.png",
+      "alt": "Diagnostics",
+      "caption": "Diagnostics &mdash; module self-tests"
+    }
+  ],
+  "resources": [
+    {
+      "title": "▶ Browser simulator",
+      "text": "Drive the real UI in your browser &mdash; no hardware.",
+      "href": "d1-sim.html"
+    },
+    {
+      "title": "V1 reference",
+      "text": "Modules, pinout, parts and what's left for V1.",
+      "href": "docs/novad1-v1.html"
+    },
+    {
+      "title": "What it can see",
+      "text": "What the WiFi and Bluetooth radios can observe &mdash; and what they can't.",
+      "href": "docs/novad1-radio.html"
+    },
+    {
+      "title": "Parts &amp; prices",
+      "text": "Everything it does, every part to buy, what it costs.",
+      "href": "docs/novad1-bom.html"
+    },
+    {
+      "title": "Setup guide",
+      "text": "Install, pick your board, wire it, turn it on.",
+      "href": "https://github.com/dash1101/RPCortex-repo/blob/main/repo/packages/novad1/SETUP.md"
+    },
+    {
+      "title": "Wiring guide",
+      "text": "Pin map for every module, per board.",
+      "href": "docs/novad1-wiring.html"
+    },
+    {
+      "title": "Flipper compatibility",
+      "text": "What matches a Flipper Zero, and how.",
+      "href": "docs/novad1-flipper-map.html"
+    },
+    {
+      "title": "Nova D2",
+      "text": "The next device — pcap, dual-band, LF emulate.",
+      "href": "docs/novad2.html"
+    }
+  ],
+  "iface_intro": "The 128&times;64 OLED, driven by a rotary encoder and its buttons. These are real renders of the actual UI &mdash; and you can <a href=\"d1-sim.html\">drive it yourself in the browser</a>.",
+  "built_on": "Built on <a href=\"https://rpc.novalabs.app\" target=\"_blank\" rel=\"noopener\">RPCortex</a> · installable as the <code>novad1</code> package · ~$40 in off-the-shelf modules.",
+  "runs_on": "Runs on <a href=\"https://rpc.novalabs.app\" target=\"_blank\" rel=\"noopener\">RPCortex</a> · packages: <a href=\"https://github.com/dash1101/RPCortex-repo\" target=\"_blank\" rel=\"noopener\">RPCortex-repo</a>",
+  "resources_intro": "Everything Nova D1 in one place &mdash; the build guide, the Flipper compatibility map, the roadmap, and the design specs.",
+  "legend": {
+    "done": "done",
+    "part": "partial",
+    "next": "next",
+    "late": "later",
+    "hw": "needs hardware"
+  }
+}

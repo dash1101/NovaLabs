@@ -1,0 +1,48 @@
+---
+title: Nova D1 Simulator
+description: Try the Nova D1 in your browser — the real OLED UI running live, no hardware needed. Drive it with the on-screen encoder and buttons.
+nav: sim
+path: d1-sim.html
+scripts: js/sim.js
+external_scripts: https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js
+---
+<main>
+<section class="wrap page-head">
+  <div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Simulator</div>
+  <h1>Nova D1 Simulator</h1>
+  <p class="lede" style="margin-top:14px"><strong>The real UI, in your browser.</strong></p>
+  <p class="lede" style="margin-top:14px">This runs the <strong>actual</strong> Nova D1 interface — the same code that
+                drives the device — live from the repo. No hardware needed. Turn the encoder and press the
+                buttons to explore every menu and app. Hardware features show “not found” (there are no real
+                chips in a browser); everything else is the genuine experience. <strong>Drop a real Flipper
+                Zero <code>.ir</code>, <code>.sub</code> or <code>.nfc</code> file on the device</strong> and watch
+                the same codecs the hardware uses parse it and show it on the screen.</p>
+</section>
+<section class="wrap" style="padding-bottom:40px">
+  <div class="sim-card sim">
+    <div class="device sim-device" style="max-width:none;padding:14px 14px 18px">
+      <div class="bezel"><canvas id="oled" width="128" height="64"></canvas></div>
+      <div id="status">loading Python runtime…</div>
+      <div class="controls">
+        <div class="crow">
+          <button class="ctl ctl-turn" onclick="K('ccw')" aria-label="Turn left">⟲<small>turn left</small></button>
+          <button class="ctl ctl-turn" onclick="K('cw')" aria-label="Turn right">⟳<small>turn right</small></button>
+        </div>
+        <div class="crow">
+          <button class="ctl" onclick="K('back')">‹ Back</button>
+          <button class="ctl ctl-sel" onclick="K('select')">● Select</button>
+          <button class="ctl" onclick="K('home')">⌂ Home</button>
+        </div>
+      </div>
+      <label class="filebtn">Drop or open a Flipper file (.ir / .sub / .nfc)
+        <input type="file" accept=".ir,.sub,.nfc" onchange="loadFlipperFile(this.files[0])" hidden>
+      </label>
+      <div class="simhint">Keyboard: ↑/↓ or ←/→ = encoder · Enter = Select · Backspace = Back · h = Home<br>
+                    Drop a real Flipper <strong>.ir</strong>, <strong>.sub</strong> or <strong>.nfc</strong> file on the
+                    device — it's parsed by the same codecs the hardware uses and shown on the screen.<br>
+                    The modules are fetched live from the repository, so this is the same code the device runs.</div>
+      <div id="err"></div>
+    </div>
+  </div>
+</section>
+</main>

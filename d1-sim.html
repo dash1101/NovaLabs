@@ -1,323 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova D1 — Simulator | NovaLabs</title>
-<meta name="description" content="Try the Nova D1 in your browser — the real OLED UI running live, no hardware needed. Drive it with the on-screen encoder and buttons.">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="style.css">
-<style>
-  /* --- simulator-specific, built on the NovaLabs design tokens --- */
-  .sim-wrap{max-width:820px;margin:0 auto;padding:1.2rem}
-  .device{display:flex;flex-direction:column;align-items:center;gap:.5rem;
-    padding:1.1rem;border-radius:22px;
-    background:linear-gradient(160deg,rgba(20,28,54,.9),rgba(8,12,28,.95));
-    border:1px solid var(--glass-border);box-shadow:var(--shadow),inset 0 0 40px rgba(0,0,0,.5)}
-  /* width:100% makes the bezel FILL the device (align-items:center otherwise
-     shrinks it to content, which kept the canvas tiny). */
-  .bezel{width:100%;padding:12px;border-radius:14px;background:#01040a;
-    border:1px solid rgba(120,180,255,.18);box-shadow:inset 0 0 24px rgba(56,189,248,.08)}
-  #oled{display:block;image-rendering:pixelated;border-radius:6px;
-    width:100%;height:auto;aspect-ratio:2/1}
-  @media(max-width:540px){.sim-wrap{padding:.5rem}.device{padding:.6rem}.bezel{padding:8px}}
-  #status{color:var(--text-secondary);font-size:.85rem;margin:.3rem 0 0;min-height:1.2em}
-  .controls{display:flex;flex-direction:column;gap:.7rem;margin-top:1.4rem;width:100%;max-width:480px}
-  .crow{display:flex;gap:.7rem;justify-content:center}
-  .ctl{flex:1;background:var(--glass-bg);color:var(--text-primary);
-    border:1px solid var(--glass-border);border-radius:14px;padding:1rem .5rem;
-    font-size:1rem;font-weight:600;cursor:pointer;transition:transform .1s,background .15s;
-    -webkit-tap-highlight-color:transparent;user-select:none}
-  .ctl:hover{background:rgba(255,255,255,.09)}
-  .ctl:active{transform:scale(.96);background:rgba(56,189,248,.18)}
-  .ctl small{display:block;font-weight:400;font-size:.7rem;color:var(--text-secondary);margin-top:.15rem}
-  .ctl-sel{background:linear-gradient(135deg,rgba(56,189,248,.22),rgba(99,102,241,.22));
-    border-color:rgba(96,165,250,.5)}
-  .ctl-turn{font-size:1.3rem}
-  .filebtn{display:inline-block;margin-top:1.2rem;padding:.7rem 1.2rem;border-radius:12px;
-    cursor:pointer;font-size:.85rem;font-weight:600;color:var(--text-primary);
-    background:var(--glass-bg);border:1px dashed rgba(96,165,250,.5);transition:background .15s,border-color .15s}
-  .filebtn:hover{background:rgba(56,189,248,.14);border-color:rgba(96,165,250,.8)}
-  .device.drag{outline:2px dashed rgba(96,165,250,.9);outline-offset:6px}
-  .device.drag .bezel{box-shadow:inset 0 0 30px rgba(56,189,248,.35)}
-  .simhint{color:var(--text-secondary);font-size:.82rem;line-height:1.6;margin-top:1.4rem;text-align:center}
-  #err{color:#ff9f88;font-size:.85rem;white-space:pre-wrap;text-align:left;
-    background:rgba(255,140,120,.08);border:1px solid rgba(255,140,120,.4);
-    border-radius:12px;padding:1rem;margin-top:1.2rem;display:none}
-</style>
-</head>
-<body>
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="index.html" class="nav-logo">
-            <img src="logo.svg" alt="NovaLabs" class="nav-logo-svg">
-            <span class="nav-title">NovaLabs</span>
-        </a>
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="index.html#projects" class="nav-link">Projects</a>
-            <a href="d1.html" class="nav-link active">Nova D1</a>
-            <a href="contact.html" class="nav-link">Contact</a>
-            <a href="https://rpc.novalabs.app" class="nav-link nav-link-ext" target="_blank" rel="noopener">RPCortex&nbsp;&#8599;</a>
-        </div>
-        <button class="nav-toggle" aria-label="Toggle navigation"><span class="hamburger"></span></button>
-    </div>
-</nav>
-
-<div class="background">
-    <div class="gradient-orb orb-1"></div>
-    <div class="gradient-orb orb-2"></div>
-    <div class="gradient-orb orb-3"></div>
-    <div class="stars"></div>
-</div>
-
-<div class="container">
-    <header class="hero" id="home">
-        <div class="glass-card main-card">
-            <h1 class="title"><span class="title-line">Nova D1 Simulator</span></h1>
-            <p class="tagline gradient-text">The real UI, in your browser.</p>
-            <p class="subtitle">This runs the <strong>actual</strong> Nova D1 interface — the same code that
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Nova D1 Simulator | NovaLabs</title><meta name="description" content="Try the Nova D1 in your browser — the real OLED UI running live, no hardware needed. Drive it with the on-screen encoder and buttons."><link rel="icon" type="image/svg+xml" href="./favicon.svg"><link rel="preload" as="font" type="font/woff2" crossorigin href="./ds/fonts/BricolageGrotesque-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="./ds/fonts/InstrumentSans-latin.woff2"><link rel="stylesheet" href="./ds/ds.css"><link rel="stylesheet" href="./nova.css"></head><body><a class="skip" href="#main">Skip to content</a><header class="nav"><div class="wrap nav-in"><a class="brand" href="./"><img src="./logo.svg" alt="">NovaLabs</a><button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span></button><nav id="menu" class="menu" aria-label="Main"><a href="./index.html#projects">Projects</a><a href="./d1.html">Nova D1</a><a href="./d1-sim.html" aria-current="page">Simulator</a><a href="./docs/index.html">Docs</a><a href="./index.html#about">About</a><a href="./contact.html">Contact</a><a class="ext" href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex &#8599;</a></nav></div></header><main id="main">
+<section class="wrap page-head">
+  <div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Simulator</div>
+  <h1>Nova D1 Simulator</h1>
+  <p class="lede" style="margin-top:14px"><strong>The real UI, in your browser.</strong></p>
+  <p class="lede" style="margin-top:14px">This runs the <strong>actual</strong> Nova D1 interface — the same code that
                 drives the device — live from the repo. No hardware needed. Turn the encoder and press the
                 buttons to explore every menu and app. Hardware features show “not found” (there are no real
                 chips in a browser); everything else is the genuine experience. <strong>Drop a real Flipper
                 Zero <code>.ir</code>, <code>.sub</code> or <code>.nfc</code> file on the device</strong> and watch
                 the same codecs the hardware uses parse it and show it on the screen.</p>
+</section>
+<section class="wrap" style="padding-bottom:40px">
+  <div class="sim-card sim">
+    <div class="device sim-device" style="max-width:none;padding:14px 14px 18px">
+      <div class="bezel"><canvas id="oled" width="128" height="64"></canvas></div>
+      <div id="status">loading Python runtime…</div>
+      <div class="controls">
+        <div class="crow">
+          <button class="ctl ctl-turn" onclick="K('ccw')" aria-label="Turn left">⟲<small>turn left</small></button>
+          <button class="ctl ctl-turn" onclick="K('cw')" aria-label="Turn right">⟳<small>turn right</small></button>
         </div>
-    </header>
-
-    <section class="services">
-        <div class="glass-card sim-wrap">
-            <div class="device">
-                <div class="bezel"><canvas id="oled" width="128" height="64"></canvas></div>
-                <div id="status">loading Python runtime…</div>
-
-                <div class="controls">
-                    <div class="crow">
-                        <button class="ctl ctl-turn" onclick="K('ccw')">⟲<small>turn left</small></button>
-                        <button class="ctl ctl-turn" onclick="K('cw')">⟳<small>turn right</small></button>
-                    </div>
-                    <div class="crow">
-                        <button class="ctl" onclick="K('back')">‹ Back</button>
-                        <button class="ctl ctl-sel" onclick="K('select')">● Select</button>
-                        <button class="ctl" onclick="K('home')">⌂ Home</button>
-                    </div>
-                </div>
-
-                <label class="filebtn">Drop or open a Flipper file (.ir / .sub / .nfc)
-                    <input type="file" accept=".ir,.sub,.nfc" onchange="loadFlipperFile(this.files[0])" hidden>
-                </label>
-
-                <div class="simhint">
-                    Keyboard: ↑/↓ or ←/→ = encoder · Enter = Select · Backspace = Back · h = Home<br>
+        <div class="crow">
+          <button class="ctl" onclick="K('back')">‹ Back</button>
+          <button class="ctl ctl-sel" onclick="K('select')">● Select</button>
+          <button class="ctl" onclick="K('home')">⌂ Home</button>
+        </div>
+      </div>
+      <label class="filebtn">Drop or open a Flipper file (.ir / .sub / .nfc)
+        <input type="file" accept=".ir,.sub,.nfc" onchange="loadFlipperFile(this.files[0])" hidden>
+      </label>
+      <div class="simhint">Keyboard: ↑/↓ or ←/→ = encoder · Enter = Select · Backspace = Back · h = Home<br>
                     Drop a real Flipper <strong>.ir</strong>, <strong>.sub</strong> or <strong>.nfc</strong> file on the
                     device — it's parsed by the same codecs the hardware uses and shown on the screen.<br>
-                    The modules are fetched live from the repository, so this is the same code the device runs.
-                </div>
-                <div id="err"></div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="glass-card footer-card">
-            <div class="footer-brand">
-                <img src="logo.svg" alt="" class="footer-logo">
-                <span>NovaLabs</span>
-            </div>
-            <div class="footer-links">
-                <a href="d1.html">Nova D1</a>
-                <a href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex</a>
-                <a href="contact.html">Contact</a>
-                <a href="privacy.html">Privacy</a>
-                <a href="https://github.com/dash1101" target="_blank" rel="noopener">GitHub</a>
-            </div>
-            <p class="footer-subtitle">Built by dash · &copy; 2026 NovaLabs · all rights reserved</p>
-        </div>
-    </footer>
-</div>
-
-<script src="script.js"></script>
-<script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
-<script>
-const REPO = 'https://raw.githubusercontent.com/dash1101/RPCortex-repo/main/repo/packages/novad1/';
-// Every Nova D1 package module, fetched live from the repo. The FILE LIST is
-// hand-maintained: add a module to the package and it must be added here too,
-// or the sim 404s on it and whatever imports it dies.
-const MODS = ['novacore','novaboard','novamodtab','novafont','novafont5x7','novaicons','novainput','novacanvas','display','novacrypt',
-  'novamesh','novalora','novamsg','novastore','novanfc','novacc','novair','novable',
-  'novapower','novanotify','novastealth','novawardrive','novawifi','novalog','novartc','novasound','novasplash',
-  'nova','novamods','novaui','novaapps','novaoui','novableid','novawatch',
-  'novajob','novagui_sensors','novagui_radios','novagui_system','novagui_watch','novagui_res','novagui_files',
-  'novagui_shell','novagui','novaservice',
-  'novad1','novaweb','novaappcfg','novaappstore','novapcap','novarfid'];
-
-const BOOT = `
-import sys, types, time as _t, os as _os
-def _install():
-    m=types.ModuleType('machine')
-    class Pin:
-        OUT=1; IN=0; PULL_UP=2
-        def __init__(s,*a,**k): pass
-        def value(s,*a): return 0
-        def irq(s,*a,**k): pass
-    class I2C:
-        def __init__(s,*a,**k): pass
-        def scan(s): return []
-        def writeto(s,*a,**k): pass
-        def readfrom(s,*a,**k): return b'\\x00'*32
-    class SPI:
-        def __init__(s,*a,**k): pass
-        def write(s,*a): pass
-        def read(s,n,*a): return b'\\x00'*n
-        def deinit(s): pass
-    m.Pin=Pin; m.I2C=I2C; m.SPI=SPI
-    m.RTC=lambda *a: types.SimpleNamespace(datetime=lambda *a:(2026,6,30,0,12,30,0,0))
-    m.freq=lambda *a: 240000000
-    sys.modules['machine']=m
-    sys.modules['network']=types.SimpleNamespace(WLAN=lambda *a: types.SimpleNamespace(active=lambda *a:False, scan=lambda:[], isconnected=lambda:False, status=lambda *a:0), STA_IF=0)
-    sys.modules['utime']=types.SimpleNamespace(ticks_ms=lambda:int(_t.time()*1000), ticks_us=lambda:int(_t.time()*1e6), ticks_diff=lambda a,b:a-b, ticks_add=lambda a,b:a+b, sleep_ms=lambda ms:None, sleep_us=lambda us:None, time=lambda:int(_t.time()), localtime=lambda *a:_t.localtime(*(a or ())))
-    sys.modules['uos']=types.SimpleNamespace(urandom=_os.urandom, listdir=lambda p='.':[], stat=lambda p:(_ for _ in ()).throw(OSError), mkdir=lambda p:None)
-    _reg={'System.TZ_Offset':'0','Apps.NovaD1_Contrast':'255','Apps.NovaD1_DimSec':'0','Apps.NovaD1_OffSec':'0'}
-    sys.modules['regedit']=types.SimpleNamespace(read=lambda k:_reg.get(k), save=lambda k,v:_reg.__setitem__(k,v) or True)
-_install()
-sys.path.insert(0,'/nova')
-import novacanvas, display, novagui, novainput as ev
-_mk=display.MockDisplay(128,64)
-_ui=novagui.NovaUI(_mk, novacanvas.Canvas(128,64), types.SimpleNamespace(poll=lambda:None),
-                   {'wifi':'connected','time':'12:30','notify':0,'saving':False,'power':{}},
-                   novagui.build_home({}))
-_ui.render()
-_EV={'cw':ev.ROT_CW,'ccw':ev.ROT_CCW,'select':ev.SELECT,'back':ev.BACK}
-def key(name):
-    if name=='home':
-        _ui._apply('home')
-    else:
-        e=_EV.get(name)
-        if e is not None:
-            _ui.handle(e)
-    _ui.render()
-def tick():
-    try:
-        _ui.stack[-1].tick(33)
-    except Exception:
-        pass
-    _ui.render()
-def frame():
-    return bytes(_mk.last)
-def _push(scr):
-    _ui.stack.append(scr); _ui.render()
-def _info(title, lines):
-    return novagui.TextScreen(title, lines)
-def load_file(fname, text):
-    # Parse a real Flipper .ir / .sub / .nfc with the SAME codecs the device uses,
-    # then show it on the virtual screen — proof the interop is real, in a browser.
-    low = (fname or '').lower()
-    try:
-        if low.endswith('.ir'):
-            import novair
-            sigs = novair.parse_flipper(text)
-            if not sigs:
-                _push(_info('IR', ['(no signals parsed)'])); return 'IR: no signals found'
-            _push(novagui.IRSignalsScreen(fname[:14], sigs))
-            return 'IR remote loaded: {} button(s) - Select fires'.format(len(sigs))
-        if low.endswith('.sub'):
-            import novacc
-            d = novacc.parse_flipper(text)
-            lines = ['Freq {:.2f} MHz'.format(d.get('freq_mhz') or 0),
-                     'Proto: ' + str(d.get('protocol', '?'))[:15]]
-            if 'key' in d:
-                lines.append('Key ' + str(d.get('key', ''))[:15])
-                lines.append('Bits {}  TE {}'.format(d.get('bit'), d.get('te')))
-            elif 'raw' in d:
-                lines.append('RAW {} edges'.format(len(d.get('raw') or [])))
-            _push(_info('Sub-GHz', lines)); return 'Sub-GHz code parsed'
-        if low.endswith('.nfc'):
-            import novanfc
-            card = novanfc.parse(text)
-            dt, sub = novanfc.identify(card.sak(), card.atqa())
-            _push(_info('NFC', ['Type: ' + str(sub or dt)[:15],
-                                'UID ' + novanfc.hexs(card.uid()),
-                                'SAK {:02X}'.format(card.sak())]))
-            return 'NFC tag parsed: ' + str(sub or dt)
-        return 'drop a .ir, .sub or .nfc file'
-    except Exception as e:
-        return 'parse error: ' + str(e)
-`;
-
-let py=null, pyKey=null, pyTick=null, pyFrame=null, pyLoad=null;
-const cv=document.getElementById('oled'), ctx=cv.getContext('2d');
-const statusEl=document.getElementById('status'), errEl=document.getElementById('err');
-
-function fail(msg){ errEl.style.display='block'; errEl.textContent='Simulator error:\\n'+msg+
-  '\\n\\nReport it at github.com/dash1101/NovaLabs/issues'; statusEl.textContent='failed to start'; }
-
-function draw(){
-  if(!pyFrame) return;
-  let proxy=pyFrame();
-  let buf = proxy.toJs ? proxy.toJs() : proxy;
-  if(proxy.destroy) proxy.destroy();
-  const img=ctx.createImageData(128,64);
-  for(let y=0;y<64;y++) for(let x=0;x<128;x++){
-    const on = buf[(y>>3)*128+x] & (1<<(y&7));
-    const i=(y*128+x)*4;
-    img.data[i]   = on?143:6;
-    img.data[i+1] = on?227:11;
-    img.data[i+2] = on?255:22;
-    img.data[i+3] = 255;
-  }
-  ctx.putImageData(img,0,0);
-}
-function K(name){ if(!pyKey)return; try{ pyKey(name); }catch(e){ fail(''+e); } draw(); }
-window.K=K;
-
-function loadFlipperFile(file){
-  if(!file) return;
-  if(!pyLoad){ statusEl.textContent='still loading — try again in a second'; return; }
-  const rd=new FileReader();
-  rd.onload=()=>{
-    let msg;
-    try{ msg=pyLoad(file.name, rd.result); }catch(e){ msg='error: '+e; }
-    statusEl.textContent = ''+(msg||'loaded');
-    draw();
-  };
-  rd.readAsText(file);
-}
-window.loadFlipperFile=loadFlipperFile;
-
-function loop(){ if(pyTick){ try{ pyTick(); }catch(e){} draw(); } requestAnimationFrame(loop); }
-
-document.addEventListener('keydown',e=>{
-  const m={'ArrowUp':'ccw','ArrowLeft':'ccw','ArrowDown':'cw','ArrowRight':'cw',
-           'Enter':'select','Backspace':'back','h':'home'};
-  if(m[e.key]!==undefined){ e.preventDefault(); K(m[e.key]); }
-});
-
-// Drag-and-drop a real Flipper .ir/.sub/.nfc onto the device -> it parses with the
-// live codecs and shows on the virtual screen.
-const dev=document.querySelector('.device');
-['dragover','dragenter'].forEach(n=>dev.addEventListener(n,e=>{e.preventDefault(); dev.classList.add('drag');}));
-['dragleave','dragend'].forEach(n=>dev.addEventListener(n,e=>{e.preventDefault(); dev.classList.remove('drag');}));
-dev.addEventListener('drop',e=>{ e.preventDefault(); dev.classList.remove('drag');
-  const f=e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if(f) loadFlipperFile(f); });
-
-(async()=>{
-  try{
-    py = await loadPyodide();
-    statusEl.textContent='fetching Nova modules…';
-    py.FS.mkdir('/nova');
-    for(const mod of MODS){
-      const r = await fetch(REPO+mod+'.py');
-      if(!r.ok) throw 'fetch '+mod+'.py -> HTTP '+r.status;
-      py.FS.writeFile('/nova/'+mod+'.py', await r.text());
-    }
-    statusEl.textContent='starting GUI…';
-    py.runPython(BOOT);
-    pyKey=py.globals.get('key'); pyTick=py.globals.get('tick'); pyFrame=py.globals.get('frame');
-    pyLoad=py.globals.get('load_file');
-    statusEl.textContent='Nova D1 ready — use the controls or your keyboard';
-    draw(); loop();
-  }catch(e){ fail(''+(e && e.message || e)); }
-})();
-</script>
-</body>
-</html>
+                    The modules are fetched live from the repository, so this is the same code the device runs.</div>
+      <div id="err"></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="foot"><div class="wrap foot-in"><a class="brand" href="./"><img src="./logo.svg" alt="">NovaLabs</a><div class="foot-links"><a href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex</a><a href="./d1.html">Nova D1</a><a href="./d1-sim.html">Simulator</a><a href="./docs/index.html">Docs</a><a href="./contact.html">Contact</a><a href="./privacy.html">Privacy</a><a href="https://github.com/dash1101" target="_blank" rel="noopener">GitHub</a></div><small>Built by dash &middot; &copy; 2026 NovaLabs &middot; all rights reserved</small></div></footer><script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script><script src="./ds/ds.js"></script><script src="./js/sim.js"></script></body></html>

@@ -1,0 +1,44 @@
+---
+title: Nova D1
+description: The Nova D1 is a build-it-yourself ESP32-S3 multi-tool that runs RPCortex. Live build progress: OLED UI, LoRa messaging, NFC, GPS, sub-GHz, a phone web panel and more.
+nav: d1
+path: d1.html
+---
+<main>
+<section class="wrap hero" id="home">
+  <div>
+    <div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Nova D1</div>
+    <h1>A multi-tool you build yourself.</h1>
+    <p class="lede">An ESP32-S3 pocket multi-tool that runs <strong>RPCortex</strong>: a 128&times;64 OLED UI driven by a rotary + buttons, LoRa messaging, NFC, GPS, sub-GHz, infrared, WiFi/BLE, and a phone web control panel — all from off-the-shelf modules. This page tracks the build live.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="{{root}}d1-sim.html">Try the simulator</a>
+      <a class="btn btn-ghost" href="#interface">See the UI</a>
+      <a class="btn btn-ghost" href="#progress">Build progress</a>
+    </div>
+  </div>
+  <div class="device">
+    <div class="screen"><img src="{{root}}img/d1/home.png" alt="The Nova D1 home screen on its OLED"></div>
+    <div class="panel-row" aria-hidden="true"><div class="knob"></div><div class="keys"><span>BACK</span><span>SELECT</span><span>HOME</span></div></div>
+    <p class="caption">Rotary encoder and buttons, as on the device</p>
+  </div>
+</section>
+
+<section class="wrap sec" id="interface">
+  <div class="sec-head"><div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Screens</div><h2>The interface</h2><p>{{d1.iface_intro}}</p></div>
+  <div class="shots">{{d1_shots}}</div>
+  <p class="progress-note"><a href="{{root}}d1-sim.html">▶ Open the live simulator</a></p>
+</section>
+
+<section class="wrap sec" id="progress">
+  <div class="sec-head"><div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Status</div><h2>Build progress</h2>
+    <p>{{d1.progress_intro}} Status:</p><div class="legend">{{d1_legend}}</div></div>
+  <div class="cats">{{d1_progress}}</div>
+  <p class="progress-note">{{d1.built_on}}</p>
+</section>
+
+<section class="wrap sec" id="resources">
+  <div class="sec-head"><div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Reference</div><h2>Docs, specs &amp; tools</h2><p>{{d1.resources_intro}}</p></div>
+  <div class="links">{{d1_resources}}</div>
+  <p class="progress-note">{{d1.runs_on}}</p>
+</section>
+</main>
