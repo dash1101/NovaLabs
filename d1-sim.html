@@ -1,43 +1,41 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Nova D1 Simulator | NovaLabs</title><meta name="description" content="Try the Nova D1 in your browser — the real OLED UI running live, no hardware needed. Drive it with the on-screen encoder and buttons."><meta name="theme-color" content="#090f1d"><link rel="canonical" href="https://novalabs.app/d1-sim.html"><meta property="og:site_name" content="NovaLabs"><meta property="og:type" content="website"><meta property="og:title" content="Nova D1 Simulator | NovaLabs"><meta property="og:description" content="Try the Nova D1 in your browser — the real OLED UI running live, no hardware needed. Drive it with the on-screen encoder and buttons."><meta property="og:url" content="https://novalabs.app/d1-sim.html"><meta property="og:image" content="https://novalabs.app/img/og.png"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/svg+xml" href="./favicon.svg"><link rel="preload" as="font" type="font/woff2" crossorigin href="./ds/fonts/BricolageGrotesque-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="./ds/fonts/InstrumentSans-latin.woff2"><link rel="stylesheet" href="./ds/ds.css"><link rel="stylesheet" href="./nova.css"></head><body><a class="skip" href="#main">Skip to content</a><header class="nav"><div class="wrap nav-in"><a class="brand" href="./"><img src="./logo.svg" alt="">NovaLabs</a><button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span></button><nav id="menu" class="menu" aria-label="Main"><a href="./index.html#projects">Projects</a><a href="./d1.html">Nova D1</a><a href="./d1-sim.html" aria-current="page">Simulator</a><a href="./docs/index.html">Docs</a><a href="./index.html#about">About</a><a href="./contact.html">Contact</a><a class="ext" href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex &#8599;</a></nav></div></header><main id="main">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Nova D1 Simulator | NovaLabs</title><meta name="description" content="The Nova D1 software for RPCortex v2, running in the browser. Turn the knob, press the buttons, open every app."><meta name="theme-color" content="#090f1d"><link rel="canonical" href="https://novalabs.app/d1-sim.html"><meta property="og:site_name" content="NovaLabs"><meta property="og:type" content="website"><meta property="og:title" content="Nova D1 Simulator | NovaLabs"><meta property="og:description" content="The Nova D1 software for RPCortex v2, running in the browser. Turn the knob, press the buttons, open every app."><meta property="og:url" content="https://novalabs.app/d1-sim.html"><meta property="og:image" content="https://novalabs.app/img/og.png"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/svg+xml" href="./favicon.svg"><link rel="preload" as="font" type="font/woff2" crossorigin href="./ds/fonts/BricolageGrotesque-latin.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="./ds/fonts/InstrumentSans-latin.woff2"><link rel="stylesheet" href="./ds/ds.css"><link rel="stylesheet" href="./nova.css"></head><body><a class="skip" href="#main">Skip to content</a><header class="nav"><div class="wrap nav-in"><a class="brand" href="./"><img src="./logo.svg" alt="">NovaLabs</a><button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span></button><nav id="menu" class="menu" aria-label="Main"><a href="./index.html#projects">Projects</a><a href="./d1.html">Nova D1</a><a href="./d1-sim.html" aria-current="page">Simulator</a><a href="./docs/index.html">Docs</a><a href="./index.html#about">About</a><a href="./contact.html">Contact</a><a class="ext" href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex &#8599;</a></nav></div></header><main id="main">
 <section class="wrap page-head">
   <div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Simulator</div>
   <h1>Nova D1 Simulator</h1>
-  <p class="lede" style="margin-top:14px"><strong>The real UI, in your browser.</strong></p>
-  <p class="lede" style="margin-top:14px">This runs the <strong>actual</strong> Nova D1 interface — the same code that
-                drives the device — live from the repo. No hardware needed. Turn the encoder and press the
-                buttons to explore every menu and app. Hardware features show “not found” (there are no real
-                chips in a browser); everything else is the genuine experience. <strong>Drop a real Flipper
-                Zero <code>.ir</code>, <code>.sub</code> or <code>.nfc</code> file on the device</strong> and watch
-                the same codecs the hardware uses parse it and show it on the screen.</p>
-<p class="progress-note" style="margin-top:12px">The simulator runs the MicroPython modules; the C++ build for RPCortex v2 draws the same screens.</p>
+  <p class="lede" style="margin-top:14px">The device's own software, running in this page.</p>
+  <p class="lede" style="margin-top:14px">This is the Nova D1 package for RPCortex v2, compiled to WebAssembly from the same C++ the
+    device runs. The panel below is the display chip's memory, filled the way the real driver fills it, so what it shows is what
+    the OLED would show. Turn the knob, press the buttons, open any app.</p>
+  <p class="progress-note" style="margin-top:12px">The radios, GPS, sensors and files are simulated, and the Wi-Fi networks and
+    nearby devices are made up. The screens, the navigation and the settings are the real thing.</p>
 </section>
 <section class="wrap" style="padding-bottom:40px">
   <div class="sim-card sim">
     <div class="device sim-device" style="max-width:none;padding:14px 14px 18px">
-      <div class="bezel"><canvas id="oled" width="128" height="64"></canvas></div>
-      <div id="status">loading Python runtime…</div>
+      <div class="bezel" id="bezel"><canvas id="oled" width="128" height="64" role="img" aria-label="The Nova D1 display, 128 by 64 pixels"></canvas><div class="grid" aria-hidden="true"></div></div>
+      <div id="status" role="status">loading…</div>
       <div class="controls">
         <div class="crow">
-          <button class="ctl ctl-turn" onclick="K('ccw')" aria-label="Turn left">⟲<small>turn left</small></button>
-          <button class="ctl ctl-turn" onclick="K('cw')" aria-label="Turn right">⟳<small>turn right</small></button>
+          <button class="ctl ctl-turn" id="b-ccw" aria-label="Turn the knob left">⟲<small>turn left</small></button>
+          <button class="ctl ctl-turn" id="b-cw" aria-label="Turn the knob right">⟳<small>turn right</small></button>
         </div>
         <div class="crow">
-          <button class="ctl" onclick="K('back')">‹ Back</button>
-          <button class="ctl ctl-sel" onclick="K('select')">● Select</button>
-          <button class="ctl" onclick="K('home')">⌂ Home</button>
+          <button class="ctl" id="b-back">‹ Back</button>
+          <button class="ctl ctl-sel" id="b-select">● Select<small>hold for more</small></button>
+          <button class="ctl" id="b-home">⌂ Home<small>hold for power</small></button>
+        </div>
+        <div class="crow crow-aux">
+          <button class="chip-btn" id="b-net" aria-pressed="true">Wi-Fi: on</button>
+          <button class="chip-btn" id="b-reset">Restart</button>
         </div>
       </div>
-      <label class="filebtn">Drop or open a Flipper file (.ir / .sub / .nfc)
-        <input type="file" accept=".ir,.sub,.nfc" onchange="loadFlipperFile(this.files[0])" hidden>
-      </label>
-      <div class="simhint">Keyboard: ↑/↓ or ←/→ = encoder · Enter = Select · Backspace = Back · h = Home<br>
-                    Drop a real Flipper <strong>.ir</strong>, <strong>.sub</strong> or <strong>.nfc</strong> file on the
-                    device — it's parsed by the same codecs the hardware uses and shown on the screen.<br>
-                    The modules are fetched live from the repository, so this is the same code the device runs.</div>
-      <div id="err"></div>
+      <div class="simhint">Keyboard: ↑ ↓ or ← → turn the knob · Enter selects · Backspace goes back · H goes home.<br>
+        Hold Enter or H for the held versions. The mouse wheel over the screen turns the knob.</div>
+      <p class="stamp" id="stamp"></p>
+      <div id="err" hidden></div>
     </div>
   </div>
 </section>
 </main>
-<footer class="foot"><div class="wrap foot-in"><a class="brand" href="./"><img src="./logo.svg" alt="">NovaLabs</a><div class="foot-links"><a href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex</a><a href="./d1.html">Nova D1</a><a href="./d1-sim.html">Simulator</a><a href="./docs/index.html">Docs</a><a href="./contact.html">Contact</a><a href="./privacy.html">Privacy</a><a href="https://github.com/dash1101" target="_blank" rel="noopener">GitHub</a></div><small>Built by dash &middot; &copy; 2026 NovaLabs &middot; all rights reserved</small></div></footer><script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script><script src="./ds/ds.js"></script><script src="./js/sim.js"></script></body></html>
+<footer class="foot"><div class="wrap foot-in"><a class="brand" href="./"><img src="./logo.svg" alt="">NovaLabs</a><div class="foot-links"><a href="https://rpc.novalabs.app" target="_blank" rel="noopener">RPCortex</a><a href="./d1.html">Nova D1</a><a href="./d1-sim.html">Simulator</a><a href="./docs/index.html">Docs</a><a href="./contact.html">Contact</a><a href="./privacy.html">Privacy</a><a href="https://github.com/dash1101" target="_blank" rel="noopener">GitHub</a></div><small>Built by dash &middot; &copy; 2026 NovaLabs &middot; all rights reserved</small></div></footer><script src="./ds/ds.js"></script><script src="./js/sim.js"></script></body></html>

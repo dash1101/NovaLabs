@@ -23,7 +23,8 @@ site/build.py  the generator; it fails on a broken link or an unfilled placehold
 docs/          Nova D1 and Nova D2 reference docs (markdown), rendered to docs/*.html
 ds/            the design system shared with rpc.novalabs.app (stylesheet and fonts)
 nova.css       what only this site needs (the simulator)
-js/sim.js      the browser simulator; runs the Nova D1 modules under Pyodide
+js/sim.js      the browser simulator's glass: keys in, panel out
+sim/           novad1-sim.wasm, the Nova D1 C++ package compiled to WebAssembly (a built artifact)
 img/           Nova D1 screen renders and the social card
 ```
 

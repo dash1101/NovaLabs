@@ -39,8 +39,10 @@ is written `[text](other-doc.md)` and becomes the page link.
 **Show a notice on every page.** Set `status.text` in `site.json` (and optionally `link` and
 `link_text`; `tone` is `warn` or `ok`). Empty it to hide the bar.
 
-**Add a Nova D1 module to the simulator.** `js/sim.js` has a hand-maintained `MODS` list. Every
-module added to the Nova D1 package must be added there too, or the simulator fails at load.
+**Update the simulator.** `sim/novad1-sim.wasm` is the Nova D1 package for RPCortex v2 compiled to
+WebAssembly. It does not follow the source on its own: after a change to `RPCortex-v2/os/apps/novad1`,
+run `os/host/build_sim.sh <this repo>/sim/novad1-sim.wasm` there (it needs `zig`; the script header says how
+to get it from pip) and commit the result. The line under the simulator shows the build it came from.
 
 ## Writing about the products
 
@@ -52,5 +54,5 @@ Say only what has run on a board: the v2 page lists what exists, and what has ru
 The site describes things that live in other repositories. When they change, these pages need to:
 
 - RPCortex (what it is written in, what version is current): the home page and the privacy page.
-- Nova D1 hardware (ESP32-S3 today, an RP2350 port planned): `d1.json`, the docs and the home page.
+- Nova D1 hardware (the C++ build runs on the Pico 2 W; the MicroPython line also supports the ESP32-S3): `d1.json`, the docs and the home page.
   The wiring doc and the board profile in the package repository must agree.

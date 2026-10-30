@@ -221,7 +221,7 @@
   "resources": [
     {
       "title": "▶ Browser simulator",
-      "text": "Drive the real UI in your browser &mdash; no hardware.",
+      "text": "The C++ build running in your browser &mdash; no hardware.",
       "href": "d1-sim.html"
     },
     {
