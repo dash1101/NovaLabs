@@ -33,7 +33,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import md  # noqa: E402
 
-ASSETS = ("ds", "img", "js", "nova.css", "logo.svg", "favicon.svg", "CNAME")
+ASSETS = ("ds", "img", "js", "sim", "nova.css", "logo.svg", "favicon.svg", "CNAME")
 
 
 def load(name):
