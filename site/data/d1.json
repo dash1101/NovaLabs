@@ -266,7 +266,7 @@
     }
   ],
   "iface_intro": "The 128&times;64 OLED, driven by a rotary encoder and its buttons. These are real renders of the actual UI &mdash; and you can <a href=\"d1-sim.html\">drive it yourself in the browser</a>.",
-  "built_on": "Built on <a href=\"https://rpc.novalabs.app\" target=\"_blank\" rel=\"noopener\">RPCortex</a> · installable as the <code>novad1</code> package · ~$40 in off-the-shelf modules.",
+  "built_on": "Built on <a href=\"https://rpc.novalabs.app\" target=\"_blank\" rel=\"noopener\">RPCortex</a> · installable as the <code>novad1</code> package · from about $20 in off-the-shelf modules.",
   "runs_on": "Runs on <a href=\"https://rpc.novalabs.app\" target=\"_blank\" rel=\"noopener\">RPCortex</a> · packages: <a href=\"https://github.com/dash1101/RPCortex-repo\" target=\"_blank\" rel=\"noopener\">RPCortex-repo</a>",
   "resources_intro": "Everything Nova D1 in one place &mdash; the build guide, the Flipper compatibility map, the roadmap, and the design specs.",
   "legend": {
