@@ -1,4 +1,4 @@
-# Nova D1 vs Flipper Zero — feature map
+# Nova D1 vs Flipper Zero: feature map
 
 How the Nova D1 (a Raspberry Pi Pico 2 W + RPCortex + the `novad1` package) lines up with
 the Flipper Zero, what's done, and what each missing piece needs. This guides what
@@ -17,7 +17,7 @@ Legend: ✅ working · 🟡 partial / device-pending · 🔧 needs hardware · �
 ## 125 kHz RFID (LF)
 | Flipper | Nova D1 | Notes |
 |---|---|---|
-| Read/emulate/write EM4100, HID, T5577 fobs | 🔧 | **Needs added LF hardware** — PN532 is 13.56 MHz only. Add an RDM6300 (read EM4100) and/or a T5577 + 125 kHz coil (write/emulate). Then a driver. |
+| Read/emulate/write EM4100, HID, T5577 fobs | 🔧 | **Needs added LF hardware**: PN532 is 13.56 MHz only. Add an RDM6300 (read EM4100) and/or a T5577 + 125 kHz coil (write/emulate). Then a driver. |
 
 ## NFC (13.56 MHz / HF)
 | Flipper | Nova D1 | Notes |
@@ -31,7 +31,7 @@ Legend: ✅ working · 🟡 partial / device-pending · 🔧 needs hardware · �
 |---|---|---|
 | Receive a remote signal | ✅ | Raw mark/space capture; saved as a Flipper `.ir` file. |
 | Send a signal | ✅ | 38 kHz, ~33% duty, frames repeated (real-remote behaviour). |
-| Universal remote + saved IR library | ✅ | The IR app is a `.ir` file library — a file = a remote of named buttons. |
+| Universal remote + saved IR library | ✅ | The IR app is a `.ir` file library: a file = a remote of named buttons. |
 | Learn → store → replay a specific code | ✅ | Record → `.ir` → replay; **Flipper `.ir` files interoperate both ways**. |
 
 ## GPIO / hardware
@@ -60,9 +60,9 @@ Legend: ✅ working · 🟡 partial / device-pending · 🔧 needs hardware · �
 | Battery life | 🟡 platform-bound | A Pico 2 W with WiFi on won't match Flipper's STM32 deep-sleep. The trade is capability for runtime. |
 
 ## Where the Nova D1 WINS
-- **Built-in WiFi + BLE + LoRa + a phone web panel** — Flipper needs add-on boards for these.
+- **Built-in WiFi + BLE + LoRa + a phone web panel**: Flipper needs add-on boards for these.
 - **A real OS underneath** (RPCortex): shell, package manager, scripting, multitasking.
-- **LoRa mesh messaging** (Meshtastic-style) — a class of feature Flipper doesn't target.
+- **LoRa mesh messaging** (Meshtastic-style): a class of feature Flipper doesn't target.
 
 ## What to add to close the biggest gaps
 1. **125 kHz LF module** (RDM6300 / T5577 + coil) → match Flipper's iconic fob cloning.

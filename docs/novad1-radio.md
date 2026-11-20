@@ -8,13 +8,13 @@ features are worth building and which are not possible at all.
 
 | | What it sees | What it cannot see |
 |---|---|---|
-| **WiFi** (`wifi scan`) | Access points: BSSID, SSID, channel, signal, encryption, hidden flag | **Client devices.** Phones, laptops, cameras — anything that connects *to* an access point rather than being one |
+| **WiFi** (`wifi scan`) | Access points: BSSID, SSID, channel, signal, encryption, hidden flag | **Client devices.** Phones, laptops, cameras: anything that connects *to* an access point rather than being one |
 | **Bluetooth LE** (`bt scan`) | Every advertising device, with its complete advertising payload: address, signal, name, service UUIDs, manufacturer data, transmit power | Devices that are paired and idle, or that have advertising switched off |
 
 The asymmetry matters more than it first appears. WiFi scanning on this radio
 has no monitor mode, so the device only ever hears the beacons that
 access points broadcast; a phone sitting on the network is invisible. Bluetooth is
-the opposite — nearly everything advertises, and the payload is rich enough to say
+the opposite: nearly everything advertises, and the payload is rich enough to say
 what a device is rather than merely that it exists.
 
 ### Ruled out, permanently
@@ -39,7 +39,7 @@ the Nova D1's own access point are visible.** The CYW43 driver exposes the
 association table of an AP it is hosting, so `WLAN(AP_IF).status('stations')`
 returns the MAC of every connected client, up to 32.
 
-This is not passive — a device has to actually join. But for "tell me when I get
+This is not passive: a device has to actually join. But for "tell me when I get
 home", having your phone auto-join the Nova D1's network is a perfectly good way
 to be told, and it costs nothing. The observer folds these in automatically
 whenever an access point is running.
@@ -57,7 +57,7 @@ Almost certainly one of three things, none of which is packet capture:
 
 ## What the radios are used for
 
-### Radar — the background observer
+### Radar: the background observer
 
 The observer runs as a background service, alternating Bluetooth and WiFi scans
 with a rest between them. It is not a scan button: because it keeps listening
@@ -92,18 +92,18 @@ Two rules govern the result, and both matter:
 
 - **A randomised address has no manufacturer.** Modern phones rotate their
   Bluetooth address specifically to prevent this kind of identification. When the
-  locally-administered bit is set the device reports *randomised* — it does not
+  locally-administered bit is set the device reports *randomised*: it does not
   guess a vendor, because there is nothing there to guess from.
 - **An unknown prefix stays unknown.** Unrecognised prefixes show as the raw
   prefix, and unrecognised company identifiers as their number. On a tool whose
   purpose is telling you what something is, a confident wrong answer is worse than
   an honest blank.
 
-Expect a smart-home device to identify as its *silicon* rather than its brand —
+Expect a smart-home device to identify as its *silicon* rather than its brand:
 Espressif, Realtek, Tuya. That is the correct answer: it means "an ESP32-class
 module", which narrows things considerably even though it is not a brand name.
 
-### Presence — the trick a smart camera uses
+### Presence: the trick a smart camera uses
 
 A WiFi camera that knows when you get home is not doing anything exotic. It is
 watching for a radio it recognises and noting when that radio appears.
@@ -120,7 +120,7 @@ Alerts for *unknown* devices are available but off by default. In any populated
 area they fire constantly, and an alert that always fires is one you learn to
 ignore.
 
-### Locate — finding something physically
+### Locate: finding something physically
 
 Pick a device and walk. The screen shows signal strength and, more usefully,
 which way it is *moving*: warmer, colder.
@@ -131,10 +131,10 @@ Walking is what turns that into a location, and an arrow would imply a capabilit
 the hardware does not have.
 
 A rough distance appears when the device advertises its transmit power. Treat it
-as an order of magnitude — walls, bodies and antenna orientation each move it by
+as an order of magnitude: walls, bodies and antenna orientation each move it by
 metres.
 
-### Wardriving — surveying access points
+### Wardriving: surveying access points
 
 A survey of the access points around you, logged to a WiGLE-compatible CSV.
 
@@ -142,7 +142,7 @@ Each unique access point is recorded once, by BSSID, with its SSID, channel,
 signal, encryption, and a GPS position and timestamp when a GPS module is fitted.
 
 **Where it saves:** the SD card when one is mounted (`/sd/nova`), otherwise
-onboard flash (`/Vela/nova`). An SD card is worth using — a survey is a great many
+onboard flash (`/Vela/nova`). An SD card is worth using: a survey is a great many
 small writes. On flash the storage guard applies: a warning near 95% full and a
 hard stop at 98%, so a survey cannot fill the disk out from under everything else.
 
@@ -154,15 +154,15 @@ they are independent:
 - **The MAC address**, in every frame.
 - **The DHCP hostname**, in every lease request.
 
-Randomising one without the other achieves nothing — a fixed hostname re-links
+Randomising one without the other achieves nothing: a fixed hostname re-links
 your sessions however often the MAC changes. So *Settings → Security → Privacy →
 Random ID* controls both together, and it is **on by default**. The cost is that
 a network using MAC-based access control sees a new device each time, which is
 what the switch is there for.
 
 **Incognito** is a hard stop, not a request. Earlier it was a flag that Nova D1
-code checked, which meant anything else — the shell's own `wifi scan`, most
-obviously — went straight past it and brought the radio back up. The lock now
+code checked, which meant anything else (the shell's own `wifi scan`, most
+obviously) went straight past it and brought the radio back up. The lock now
 lives underneath the OS network layer, so there is no path left that can quietly
 re-enable a radio. It survives a reboot, because a privacy switch that forgets
 itself is not one. From the shell it is `radio off` / `radio on`.
@@ -174,7 +174,7 @@ transmits nothing.
 
 The *What leaks* screen is an inventory rather than a single "you are anonymous"
 indicator, because that claim would be false. Anonymity is a set of channels, and
-closing four of five is not anonymity — knowing which one is still open is the
+closing four of five is not anonymity: knowing which one is still open is the
 useful part.
 
 ## Where the interesting ideas live

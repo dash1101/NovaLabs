@@ -1,4 +1,4 @@
-# Nova D1 — Wiring
+# Nova D1: Wiring
 
 **Nova D1 V1 targets the Raspberry Pi Pico 2 W.** Its pinout leads below. The ESP32-S3
 devkit and the Pimoroni Pico Plus 2 W run the same code and are also supported, but the
@@ -137,24 +137,24 @@ Full walkthrough: **`SETUP.md`** in the package.
 
 ## Per-module wiring
 
-Pin **numbers** differ per board — get them from the tables above or `d1 pins`. The
+Pin **numbers** differ per board: get them from the tables above or `d1 pins`. The
 signal names below are the same everywhere, so this section applies to any board.
 
 - **OLED display (I2C, 4-pin):** VCC→3V3, GND→GND, SDA→`sda`, SCL→`scl`.
   SH1106 / SSD1306 / SSD1309 all work; set which one with `d1 display <kind>`.
-  Address 0x3C (some modules 0x3D — `d1 scan` will tell you).
+  Address 0x3C (some modules 0x3D: `d1 scan` will tell you).
 - **PN532 NFC/RFID:** set the module's DIP switches to **I2C** mode.
   VCC→3V3, GND→GND, SDA→`sda`, SCL→`scl`. Address 0x24 (some report 0x48).
 - **CC1101 sub-GHz (8-pin SPI):** VCC→3V3, GND→GND, SCK→`spi_sck`, MOSI(SI)→`spi_mosi`,
   MISO(SO)→`spi_miso`, CSN→`cc_cs`, GDO0→`cc_gdo0`. GDO2 unused.
 - **SX1276 LoRa (SPI):** VCC→3V3, GND→GND, SCK→`spi_sck`, MOSI→`spi_mosi`,
-  MISO→`spi_miso`, NSS→`sx_cs`, RST→`sx_rst`. DIO0 can stay unconnected — the driver
+  MISO→`spi_miso`, NSS→`sx_cs`, RST→`sx_rst`. DIO0 can stay unconnected: the driver
   polls status over SPI instead of using an interrupt line.
   ⚠️ **Attach the antenna before transmitting** or you can damage the module.
 - **microSD (6-pin SPI):** VCC→**5V** on most modules (they regulate onboard),
   GND→GND, SCK→`sd_sck`, MOSI→`sd_mosi`, MISO→`sd_miso`, CS→`sd_cs`.
   On boards where `sd_sck`/`sd_mosi`/`sd_miso` are unset, the SD shares the radio SPI
-  bus — use `spi_sck` / `spi_mosi` / `spi_miso` and only `sd_cs` is separate.
+  bus: use `spi_sck` / `spi_mosi` / `spi_miso` and only `sd_cs` is separate.
 - **NEO-M8N GPS (4-pin):** VCC→3V3 or 5V, GND→GND, module RX→`gps_tx`,
   module TX→`gps_rx`. 9600 baud. Needs sky view for a first fix.
 - **EC11 rotary encoder:** A→`enc_a`, B→`enc_b`, switch→`enc_sw`, common→GND.
@@ -163,7 +163,7 @@ signal names below are the same everywhere, so this section applies to any board
 - **IR receiver (e.g. VS1838B, 3-pin):** VCC→3V3, GND→GND, OUT→`ir_rx`.
 - **IR emitter (3-pin module):** VCC→3V3, GND→GND, IN→`ir_tx`.
 - **Buzzer:** signal→`buzzer`, GND→GND. A small active buzzer can be driven directly.
-- **Vibration motor:** signal→`vibe` **through a transistor** — do not drive a motor
+- **Vibration motor:** signal→`vibe` **through a transistor**: do not drive a motor
   from a GPIO.
 - **Status LED:** data→`led`. On ESP32-S3 devkits this is the onboard WS2812 RGB; on
   Pico boards use an external LED, because the onboard one is wired to the radio chip
@@ -176,7 +176,7 @@ signal names below are the same everywhere, so this section applies to any board
 
 ⚠️ **3V3 vs 5V:** the display, CC1101, SX1276, PN532, DHT and GPS all run at 3V3. The
 microSD module usually wants 5V because it regulates onboard. Check each module's
-silkscreen — 5V into a 3V3 part is a dead part.
+silkscreen: 5V into a 3V3 part is a dead part.
 
 **`battery` and `vbus` ship unset on purpose.** An unconnected ADC pin floats, and a
 floating reading would show a confident, wrong battery level. Nova D1 only reads them
@@ -190,13 +190,13 @@ once you've told it the pin, so leave them alone unless they're wired.
 
 The N16R8's 16 MB flash and 8 MB octal PSRAM consume GPIO that look free:
 
-- **GPIO 26–32** — SPI flash
-- **GPIO 33–37** — octal PSRAM (*the* N16R8 trap)
-- **GPIO 0, 3, 45, 46** — strapping pins, avoid for I/O
-- **GPIO 19, 20** — native USB D−/D+
-- **GPIO 43, 44** — UART0, the serial console
+- **GPIO 26 to 32**: SPI flash
+- **GPIO 33 to 37**: octal PSRAM (*the* N16R8 trap)
+- **GPIO 0, 3, 45, 46**: strapping pins, avoid for I/O
+- **GPIO 19, 20**: native USB D−/D+
+- **GPIO 43, 44**: UART0, the serial console
 
-**Usable:** GPIO 1–18, 21, 38–42, 47, 48.
+**Usable:** GPIO 1 to 18, 21, 38 to 42, 47, 48.
 
 ### RP2350 (Pico 2 W and Pico Plus 2 W)
 
@@ -204,17 +204,17 @@ The N16R8's 16 MB flash and 8 MB octal PSRAM consume GPIO that look free:
   so a sensible-looking pinmap can simply be unassignable. Build around the valid
   groups and run `d1 pins check`, which knows the rules.
 - **GPIO 23/24/25/29 belong to the wireless module** (and VSYS sense). That leaves
-  **26 usable pins** on the standard header — and the default map uses all 26, which
+  **26 usable pins** on the standard header, and the default map uses all 26, which
   is why `ibutton` is unassigned. A **PCF8574 I2C expander** or a **74HC165** shift
   register for the buttons and switches collapses ~7 pins into ~2 and buys the room
   back.
 - **The display is on I2C**, sharing the bus with the PN532 and RTC. That's a
   deliberate choice: the frame buffer is only ~1 KB and the page-diff renderer only
-  pushes changed rows, so I2C keeps up comfortably while saving 2–3 pins.
+  pushes changed rows, so I2C keeps up comfortably while saving 2 to 3 pins.
 - **No `esp32.RMT`.** IR transmit uses a timing loop, and will move to a PIO state
-  machine — that's the main reason for the RP2350: PIO handles RF/IR edge timing in
+  machine: that's the main reason for the RP2350: PIO handles RF/IR edge timing in
   hardware, in both directions.
 - The **Pico Plus 2 W** shares the Pico 2 W header exactly, so the same map drops
-  straight in. It adds 8 MB PSRAM, 16 MB flash and extra GPIO past GP28 — that's where
+  straight in. It adds 8 MB PSRAM, 16 MB flash and extra GPIO past GP28: that's where
   `ibutton` and the 125 kHz LF front-end should go once the numbering is confirmed on
   a real board.

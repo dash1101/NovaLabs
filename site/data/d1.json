@@ -26,7 +26,7 @@
     },
     {
       "name": "Wireless",
-      "tag": "our edge",
+      "tag": "radios",
       "items": [
         {
           "text": "WiFi scan / background connect",
@@ -174,54 +174,54 @@
   "shots": [
     {
       "img": "img/d1/home_folders.png",
-      "alt": "Nova D1 home — category folders",
-      "caption": "Home &mdash; apps organised in folders"
+      "alt": "Nova D1 home: category folders",
+      "caption": "Home: apps organised in folders"
     },
     {
       "img": "img/d1/app_nfc.png",
       "alt": "NFC app",
-      "caption": "NFC &mdash; scan &amp; save cards (Flipper .nfc)"
+      "caption": "NFC: scan &amp; save cards (Flipper .nfc)"
     },
     {
       "img": "img/d1/app_subghz.png",
       "alt": "Sub-GHz app",
-      "caption": "Sub-GHz &mdash; save &amp; replay codes (Flipper .sub)"
+      "caption": "Sub-GHz: save &amp; replay codes (Flipper .sub)"
     },
     {
       "img": "img/d1/app_ble.png",
       "alt": "BLE app",
-      "caption": "BLE &mdash; scan &amp; ping nearby devices"
+      "caption": "BLE: scan &amp; ping nearby devices"
     },
     {
       "img": "img/d1/app_msg.png",
       "alt": "LoRa messages app",
-      "caption": "Messages &mdash; encrypted LoRa P2P"
+      "caption": "Messages: encrypted LoRa P2P"
     },
     {
       "img": "img/d1/app_settings.png",
       "alt": "Settings",
-      "caption": "Settings &mdash; grouped, on-device"
+      "caption": "Settings: grouped, on-device"
     },
     {
       "img": "img/d1/app_led.png",
       "alt": "LED control app",
-      "caption": "LED &mdash; live colour control"
+      "caption": "LED: live colour control"
     },
     {
       "img": "img/d1/app_store.png",
       "alt": "App Store",
-      "caption": "App Store &mdash; browse &amp; install apps"
+      "caption": "App Store: browse &amp; install apps"
     },
     {
       "img": "img/d1/app_diag.png",
       "alt": "Diagnostics",
-      "caption": "Diagnostics &mdash; module self-tests"
+      "caption": "Diagnostics: module self-tests"
     }
   ],
   "resources": [
     {
       "title": "▶ Browser simulator",
-      "text": "The C++ build running in your browser &mdash; no hardware.",
+      "text": "The C++ build, running in your browser. No hardware needed.",
       "href": "d1-sim.html"
     },
     {
@@ -236,7 +236,7 @@
     },
     {
       "title": "What it can see",
-      "text": "What the WiFi and Bluetooth radios can observe &mdash; and what they can't.",
+      "text": "What the WiFi and Bluetooth radios can observe, and what they can't.",
       "href": "docs/novad1-radio.html"
     },
     {
@@ -261,14 +261,14 @@
     },
     {
       "title": "Nova D2",
-      "text": "The next device — pcap, dual-band, LF emulate.",
+      "text": "The next device: pcap, dual-band, LF emulate.",
       "href": "docs/novad2.html"
     }
   ],
-  "iface_intro": "The 128&times;64 OLED, driven by a rotary encoder and its buttons. These are real renders of the actual UI &mdash; and you can <a href=\"d1-sim.html\">drive it yourself in the browser</a>.",
+  "iface_intro": "The 128&times;64 OLED, driven by a rotary encoder and its buttons. These are real renders of the actual UI, and you can <a href=\"d1-sim.html\">drive it yourself in the browser</a>.",
   "built_on": "Built on <a href=\"https://rpc.novalabs.app\" target=\"_blank\" rel=\"noopener\">RPCortex</a> · installable as the <code>novad1</code> package · from about $20 in off-the-shelf modules.",
   "runs_on": "Runs on <a href=\"https://rpc.novalabs.app\" target=\"_blank\" rel=\"noopener\">RPCortex</a> · packages: <a href=\"https://github.com/dash1101/RPCortex-repo\" target=\"_blank\" rel=\"noopener\">RPCortex-repo</a>",
-  "resources_intro": "Everything Nova D1 in one place &mdash; the build guide, the Flipper compatibility map, the roadmap, and the design specs.",
+  "resources_intro": "Everything Nova D1 in one place: the build guide, the Flipper compatibility map, the roadmap, and the design specs.",
   "legend": {
     "done": "done",
     "part": "partial",

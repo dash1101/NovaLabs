@@ -32,16 +32,16 @@ path: index.html
                             <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
                             <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>
                             <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
-                        </svg><div><div class="tag">Operating system</div><h3>RPCortex</h3></div><p>A full, multitasking operating system for the Raspberry Pi Pico family, written in C++ with no interpreter: a real shell with pipes and scripting, user accounts, a package manager, Wi-Fi and over-the-air updates, and packages that run in a sandbox so a bad one costs a command rather than the device. v2 &ldquo;Vela II&rdquo; is in beta. Source-available.</p><a class="go" href="https://rpc.novalabs.app" target="_blank" rel="noopener">rpc.novalabs.app &rarr;</a></article>
+                        </svg><div><div class="tag">Operating system</div><h3>RPCortex</h3></div><p>A full, multitasking operating system for the Raspberry Pi Pico family, written in C++ with no interpreter: a real shell with pipes and scripting, user accounts, a package manager, Wi-Fi and over-the-air updates, and on the RP2350 a sandbox for packages, so a bad one costs a command rather than the device. v2 &ldquo;Vela II&rdquo; is in beta. Source-available.</p><a class="go" href="https://rpc.novalabs.app" target="_blank" rel="noopener">rpc.novalabs.app &rarr;</a></article>
   <article class="proj"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="5" y="2" width="14" height="20" rx="2"/>
                             <line x1="9" y1="6" x2="15" y2="6"/>
                             <circle cx="12" cy="14" r="3"/>
                             <line x1="12" y1="2" x2="12" y2="1"/>
-                        </svg><div><div class="tag">Hardware · In development</div><h3>Nova D1</h3></div><p>A DIY cybersecurity &amp; networking multi-tool: a build-it-yourself alternative to the Flipper Zero, built around a Raspberry Pi Pico 2 W and powered by RPCortex. Off-the-shelf parts, a 3D-printed shell, no custom PCB.</p><a class="go" href="{{root}}d1.html">Learn more &rarr;</a></article>
+                        </svg><div><div class="tag">Hardware · In development</div><h3>Nova D1</h3></div><p>A build-it-yourself alternative to the Flipper Zero for security and radio experiments, built around a Raspberry Pi Pico 2 W and running RPCortex. Off-the-shelf modules, no custom PCB.</p><a class="go" href="{{root}}d1.html">Learn more &rarr;</a></article>
   <article class="proj"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/>
-                        </svg><div><div class="tag">Web app</div><h3>ytdl-UI</h3></div><p>Pull video or audio from almost anywhere, privately — no ads, no tracking, no accounts. A clean front-end for grabbing the content you want.</p><a class="go" href="https://yt.novalabs.app" target="_blank" rel="noopener">yt.novalabs.app &rarr;</a></article>
+                        </svg><div><div class="tag">Web app</div><h3>ytdl-UI</h3></div><p>A simple page for saving video or audio from almost anywhere. No ads, no tracking, and no account to make.</p><a class="go" href="https://yt.novalabs.app" target="_blank" rel="noopener">yt.novalabs.app &rarr;</a></article>
   </div>
 </section>
 
@@ -49,19 +49,19 @@ path: index.html
   <div class="feature">
     <div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Flagship hardware · <span class="status-dot"></span>In active development</div>
     <h2>The Nova D1</h2>
-    <p class="lede">A pocket multi-tool for security research, RF tinkering, and hardware exploration — built entirely from off-the-shelf modules in a 3D-printed shell, for about <strong>$20 to start</strong> and roughly <strong>$55 with the radios</strong>. No custom PCB, no factory, no $200 price tag.</p>
-    <p class="body-copy">The Nova D1 doesn't run rigid, single-purpose firmware. It is a package for <a href="https://rpc.novalabs.app/release-vela2" target="_blank" rel="noopener">RPCortex v2 &ldquo;Vela II&rdquo;</a>, a genuine multitasking OS written in C++: put the OS on a Pico 2 W, run <code>pkg install novad1</code>, and it brings up the Nova GUI with its background services. The package runs from its own flash slot instead of being copied into RAM, and over-the-air updates keep the OS and the package current. The MicroPython build for RPCortex v1 is still around and is tracked on the build progress page.</p>
-    <p class="cap-intro">Everything you'd reach for when exploring the signals and devices around you — for research, learning, and gear you own:</p>
+    <p class="lede">A pocket multi-tool for security research, radio tinkering and poking at hardware, built from off-the-shelf modules. It costs about <strong>$20 to start</strong>, and roughly <strong>$55 with the radios</strong>.</p>
+    <p class="body-copy">The Nova D1 is a package for <a href="https://rpc.novalabs.app/release-vela2" target="_blank" rel="noopener">RPCortex v2 &ldquo;Vela II&rdquo;</a>, the multitasking OS I write for the Pico, in C++. Put the OS on a Pico 2 W, run <code>pkg install novad1</code>, and it brings up the Nova GUI with its background services. Both the OS and the package update over Wi-Fi. The package is built to run from its own flash slot rather than from RAM, which has not been confirmed on a board yet. The MicroPython build for RPCortex v1 is still around, and the build progress page tracks it.</p>
+    <p class="cap-intro">What it does, for research, for learning, and on gear you own:</p>
     <div class="cap-grid">
     <div class="cap"><span class="cap-glyph" aria-hidden="true">RF</span><div><strong>Sub-1&nbsp;GHz RF</strong><span class="d">Interact with common RF devices (CC1101)</span></div></div>
     <div class="cap"><span class="cap-glyph" aria-hidden="true">NFC</span><div><strong>NFC / RFID</strong><span class="d">Read, write &amp; emulate tags (PN532)</span></div></div>
-    <div class="cap"><span class="cap-glyph" aria-hidden="true">IR</span><div><strong>Infrared</strong><span class="d">Universal remote — clone &amp; broadcast</span></div></div>
+    <div class="cap"><span class="cap-glyph" aria-hidden="true">IR</span><div><strong>Infrared</strong><span class="d">A universal remote that learns and replays</span></div></div>
     <div class="cap"><span class="cap-glyph" aria-hidden="true">GPS</span><div><strong>LoRa &amp; GPS</strong><span class="d">Long-range radio + location / wardriving</span></div></div>
     <div class="cap"><span class="cap-glyph" aria-hidden="true">HID</span><div><strong>BadUSB / HID</strong><span class="d">Scripted keyboard payloads over USB</span></div></div>
     <div class="cap"><span class="cap-glyph" aria-hidden="true">SD</span><div><strong>MicroSD</strong><span class="d">Scripts, payloads &amp; OS packages</span></div></div>
     </div>
     <div class="chips"><span class="chip">from about $20</span><span class="chip">Raspberry Pi Pico 2 W</span><span class="chip">Powered by RPCortex v2</span><span class="chip">Est. Q1 2027</span></div>
-    <p class="note">Fully buildable from open parts and 3D-printed files: source the modules, print the case, flash RPCortex, install the Nova D1 package. Suggestions, hardware mods, and feature requests are welcome.</p>
+    <p class="note">To build one, buy the modules, wire them up, flash RPCortex and install the Nova D1 package. There is no case design yet, so for now the case is your own. Suggestions, hardware mods and feature requests are welcome.</p>
     <div class="actions" style="margin-top:4px">
       <a class="btn btn-primary" href="{{root}}d1.html">View build progress</a>
       <a class="btn btn-ghost" href="https://rpc.novalabs.app" target="_blank" rel="noopener">The OS it runs</a>
@@ -72,6 +72,6 @@ path: index.html
 <section class="wrap sec" id="stats"><div class="facts"><div class="fact"><b>3</b><span>Active projects</span></div><div class="fact"><b>v2</b><span>RPCortex · Vela II beta</span></div><div class="fact"><b>$20+</b><span>Nova D1 starter build</span></div><div class="fact"><b>Q1&nbsp;’27</b><span>Nova D1 launch</span></div></div></section>
 
 <section class="wrap sec" id="about">
-  <div class="about"><div><div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Who</div><h2>About NovaLabs</h2></div><div class="col"><p>NovaLabs is a hub for the projects I have started and finished. It is run by <strong>dash</strong>.</p><p>Some of them are software, some are hardware, and a few are both. The three listed above are the ones ready to share.</p><p class="foot">More projects under the NovaLabs roof are on the way.</p></div></div>
+  <div class="about"><div><div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Who</div><h2>About NovaLabs</h2></div><div class="col"><p>NovaLabs is a hub for the projects I have started and finished. It is run by <strong>dash</strong>.</p><p>Some of them are software, some are hardware, and a few are both. The three listed above are the ones ready to share.</p><p class="foot">More are on the way.</p></div></div>
 </section>
 </main>

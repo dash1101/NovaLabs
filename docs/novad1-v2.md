@@ -34,9 +34,11 @@ screens are checked without a panel attached.
 ## How it runs
 
 - **From a flash slot.** A package built position-independent executes from a reserved 256 KB slot in
-  flash instead of being copied into RAM. For Nova D1 that measured 62 KB resident against 174 KB
-  copied, and leaves the heap free for the radios and the network. The Pico 2 W and Pico 2 have the
-  slot; the RP2040 boards do not, so Nova D1 targets the RP2350 boards.
+  flash instead of being copied into RAM. For Nova D1 that is 62 KB resident against 174 KB copied,
+  which leaves the heap free for the radios and the network. The Pico 2 W and Pico 2 have the slot;
+  the RP2040 boards do not, so Nova D1 targets the RP2350 boards. The slot path is host-tested
+  against a model of the flash chip, and the OS source still marks running from it as not yet
+  confirmed on a board.
 - **In a sandbox.** On RP2350 a package runs unprivileged with the memory protection unit limiting
   what it can touch, so a bad screen costs a command and not the device.
 - **On both cores.** The OS schedules tasks on both cores; the GUI and the input reader are separate
@@ -53,8 +55,8 @@ text on the host and fails the test run if it draws nothing.
 
 ## What has run on a board
 
-The package has run on a bare Pico 2 W, loaded from its flash slot, drawing its screens into a
-framebuffer. That is the whole of the hardware confirmation so far.
+The package has run on a bare Pico 2 W, drawing its screens into a framebuffer. That is the whole of
+the hardware confirmation so far.
 
 The OLED, the encoder and buttons, and the radio and sensor modules have **not** been wired to a
 board running v2 yet. Every module therefore starts at "written and host-tested" and moves to
@@ -64,5 +66,5 @@ confirmed on the MicroPython build, which is the same hardware and the same scre
 ## Hardware
 
 The reference board is the Raspberry Pi Pico 2 W; the pin map, the parts and their prices are in
-[Wiring](novad1-wiring.md) and [Parts & prices](novad1-bom.md). The browser simulator runs the
-MicroPython modules; the C++ build draws the same screens.
+[Wiring](novad1-wiring.md) and [Parts & prices](novad1-bom.md). The browser simulator is this C++
+build compiled to WebAssembly, so it draws the same screens the device does.

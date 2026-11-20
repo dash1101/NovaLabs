@@ -1,4 +1,4 @@
-# Nova D2 — concept
+# Nova D2: concept
 
 **Status: concept / planning.** D2 follows D1. This doc collects the features deferred
 from D1 so D1 stays scoped. Nothing here is in D1's plan.
@@ -30,24 +30,24 @@ well-documented, so the C5 firmware is a contained C/C++ job.
 
 ## Features
 
-- **WiFi pcap / Wireshark** — ESP32-C5 co-processor. The `.pcap` writer (`novapcap`)
+- **WiFi pcap / Wireshark**: ESP32-C5 co-processor. The `.pcap` writer (`novapcap`)
   already exists.
-- **Dual-band WiFi** (2.4 + 5 GHz) — same co-processor.
-- **125 kHz LF RFID read and emulate** — a PIO coil front-end with the RAM and pins to
+- **Dual-band WiFi** (2.4 + 5 GHz): same co-processor.
+- **125 kHz LF RFID read and emulate**: a PIO coil front-end with the RAM and pins to
   host it. (D1 offers optional LF read only.) *Emulate approach (to revisit):* PIO
   generates the 125 kHz carrier; the coil couples to the reader's field, and emulation
-  works by **load modulation** — a FET across the coil switches the load in the card's
+  works by **load modulation**: a FET across the coil switches the load in the card's
   bit pattern (EM4100 = Manchester, ~64 bits) so the reader sees a tag. Read = envelope-
   detect the returned modulation on the same coil. Reference: the Flipper's LF analog
   front-end. Needs the coil + FET + detector tuned on real hardware.
-- **PSRAM / larger flash** — Pico Plus 2 W class; capture buffers, every module resident.
-- **Richer UI** — larger panel, more on-screen, more animation.
+- **PSRAM / larger flash**: Pico Plus 2 W class; capture buffers, every module resident.
+- **Richer UI**: larger panel, more on-screen, more animation.
 - **Built on RPCortex v2.** v2 has no interpreter, so the custom firmware D2 once needed
   (frozen modules, `@native`/`@viper`, a MicroPython fork, an architecture label on
   packages) is not needed: Nova D2 is a native C++ package that runs from a flash slot, as
   the D1 package does. D2 is a single known target, so the package can use PIO and both
   cores directly.
-- **Both cores** — RPCortex v2 already schedules tasks on both RP2350 cores, so PIO and
+- **Both cores**: RPCortex v2 already schedules tasks on both RP2350 cores, so PIO and
   radio work can live on core 1 while the UI owns core 0. The heavy sniffing is still
   offloaded to the C5.
 
@@ -55,9 +55,9 @@ well-documented, so the C5 firmware is a contained C/C++ job.
 
 | Feature | D1 | D2 |
 |---|---|---|
-| WiFi pcap / Wireshark | — | yes (ESP32-C5) |
-| Dual-band WiFi | — | yes |
-| LF RFID emulate | — | yes (PIO coil) |
+| WiFi pcap / Wireshark | no | yes (ESP32-C5) |
+| Dual-band WiFi | no | yes |
+| LF RFID emulate | no | yes (PIO coil) |
 | LF RFID read | optional (RDM6300) | yes |
 | Both cores | yes (RPCortex v2) | yes |
 | PSRAM / richer UI | tight | yes |
@@ -70,12 +70,12 @@ Nova devices share a compact LoRa mesh (`novamesh`): addressed packets, TTL hop-
 managed-flood relay, `(src,id)` dedup, with AES-128 payload encryption (`novacrypt`). Two
 explicit modes formalise it:
 
-- **Open broadcast** — unencrypted, plaintext to any nearby Nova device. (Works today as
+- **Open broadcast**: unencrypted, plaintext to any nearby Nova device. (Works today as
   the no-key path; needs to be an explicit choice.)
-- **Encrypted channels** — named channels with pre-shared keys, Meshtastic-style.
+- **Encrypted channels**: named channels with pre-shared keys, Meshtastic-style.
 
 True Meshtastic interop (real Meshtastic hardware) requires their LoRa PHY params, protobuf
-payloads, and AES-256-CTR channel PSKs — a D2-era stretch. The Nova
+payloads, and AES-256-CTR channel PSKs: a D2-era stretch. The Nova
 standard is compatible in spirit, not on the wire.
 
 ## Sequencing
