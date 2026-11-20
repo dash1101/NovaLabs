@@ -34,11 +34,9 @@ screens are checked without a panel attached.
 ## How it runs
 
 - **From a flash slot.** A package built position-independent executes from a reserved 256 KB slot in
-  flash instead of being copied into RAM. For Nova D1 that is 62 KB resident against 174 KB copied,
-  which leaves the heap free for the radios and the network. The Pico 2 W and Pico 2 have the slot;
-  the RP2040 boards do not, so Nova D1 targets the RP2350 boards. The slot path is host-tested
-  against a model of the flash chip, and the OS source still marks running from it as not yet
-  confirmed on a board.
+  flash instead of being copied into RAM. On a Pico 2 W, Nova D1 1.7.1 runs from it with about 80 KB
+  resident, which leaves the heap free for the radios and the network. The Pico 2 W and Pico 2 have
+  the slot; the RP2040 boards do not, so Nova D1 targets the RP2350 boards.
 - **In a sandbox.** On RP2350 a package runs unprivileged with the memory protection unit limiting
   what it can touch, so a bad screen costs a command and not the device.
 - **On both cores.** The OS schedules tasks on both cores; the GUI and the input reader are separate
