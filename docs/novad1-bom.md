@@ -59,7 +59,7 @@ brought up on real hardware it is marked, and the
 - **Multi-hop mesh routing.** Messages relay through other units to reach further than
   any single radio can, using managed flooding with a hop limit and duplicate
   suppression: the same approach Meshtastic uses.
-- Works with no WiFi, no cell service, no infrastructure at all.
+- It works without Wi-Fi, cell service or any other infrastructure.
 
 ### The rest
 - **GPS**: position, altitude, satellite count, live NMEA.
