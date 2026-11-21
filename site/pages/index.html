@@ -1,6 +1,6 @@
 ---
 title: NovaLabs
-description: NovaLabs is a hub for the projects dash has started and finished: RPCortex, an operating system for the Raspberry Pi Pico family, the Nova D1 handheld multi-tool, and ytdl-UI.
+description: NovaLabs is a hub for the projects dash has started and finished: RPCortex, an operating system for the Raspberry Pi Pico family, the Nova D1 handheld multi-tool, Orbit, Nova, YTM Starcast, ytdl-UI and xmas-tui.
 nav: home
 path: index.html
 ---
@@ -39,9 +39,13 @@ path: index.html
                             <circle cx="12" cy="14" r="3"/>
                             <line x1="12" y1="2" x2="12" y2="1"/>
                         </svg><div><div class="tag">Hardware · In development</div><h3>Nova D1</h3></div><p>A build-it-yourself alternative to the Flipper Zero for security and radio experiments, built around a Raspberry Pi Pico 2 W and running RPCortex. Off-the-shelf modules, no custom PCB.</p><a class="go" href="{{root}}d1.html">Learn more &rarr;</a></article>
+  <article class="proj"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"/></svg><div><div class="tag">Desktop app</div><h3>Orbit</h3></div><p>One place for the desktop apps I&rsquo;ve built over the years. It installs Nova and YTM Starcast, shows how they&rsquo;re doing, and has a settings panel and themes that give you more control over both. Written in Rust.</p><a class="go" href="https://github.com/dash1101/orbit" target="_blank" rel="noopener">dash1101/orbit &rarr;</a></article>
+  <article class="proj"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><line x1="7" y1="7.5" x2="7.01" y2="7.5"/><line x1="7" y1="16.5" x2="7.01" y2="16.5"/></svg><div><div class="tag">Homelab &middot; Android &amp; web</div><h3>Nova</h3></div><p>A remote for your home server: live status, containers, drives and RAID, backups, alerts and apps, from your phone, watch, computer or TV, or anything else with a browser. Every request is signed by your phone.</p><a class="go" href="https://dash1101.github.io/Nova/" target="_blank" rel="noopener">dash1101.github.io/Nova &rarr;</a></article>
+  <article class="proj"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><div><div class="tag">Desktop &amp; mobile</div><h3>YTM Starcast</h3></div><p>Everything YouTube Music: a remote for YouTube Music on your PC, what you&rsquo;re listening to as your Discord status, and a better YouTube Music page. Linux first, with a switch for every part.</p><a class="go" href="https://github.com/dash1101/ytm-starcast" target="_blank" rel="noopener">dash1101/ytm-starcast &rarr;</a></article>
   <article class="proj"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/>
                         </svg><div><div class="tag">Web app</div><h3>ytdl-UI</h3></div><p>A simple page for saving video or audio from almost anywhere. It has no ads or tracking, and needs no account.</p><a class="go" href="https://yt.novalabs.app" target="_blank" rel="noopener">yt.novalabs.app &rarr;</a></article>
+  <article class="proj"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 4 13 8 13 3 20 21 20 16 13 20 13 12 2"/><line x1="12" y1="20" x2="12" y2="23"/></svg><div><div class="tag">Terminal &middot; Wallpaper</div><h3>xmas-tui</h3></div><p>A cozy, glowing Christmas village drawn in the terminal, running as an interactive live wallpaper on Linux, Windows, Android and the web. Written in Rust.</p><a class="go" href="https://github.com/dash1101/xmas-tui" target="_blank" rel="noopener">dash1101/xmas-tui &rarr;</a></article>
   </div>
 </section>
 
@@ -50,7 +54,7 @@ path: index.html
     <div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Flagship hardware · <span class="status-dot"></span>In active development</div>
     <h2>The Nova D1</h2>
     <p class="lede">A pocket multi-tool for security research, radio tinkering and poking at hardware, built from off-the-shelf modules. It costs about <strong>$20 to start</strong>, and roughly <strong>$55 with the radios</strong>.</p>
-    <p class="body-copy">The Nova D1 is a package for <a href="https://rpc.novalabs.app/release-vela2" target="_blank" rel="noopener">RPCortex v2 &ldquo;Vela II&rdquo;</a>, the multitasking OS I write for the Pico, in C++. Put the OS on a Pico 2 W, run <code>pkg install novad1</code>, and it brings up the Nova GUI with its background services. Both the OS and the package update over Wi-Fi. The package is built to run from its own flash slot rather than from RAM, which has not been confirmed on a board yet. The MicroPython build for RPCortex v1 is still around, and the build progress page tracks it.</p>
+    <p class="body-copy">The Nova D1 is a package for <a href="https://rpc.novalabs.app/release-vela2" target="_blank" rel="noopener">RPCortex v2 &ldquo;Vela II&rdquo;</a>, the multitasking OS I write for the Pico, in C++. Put the OS on a Pico 2 W, run <code>pkg install novad1</code>, and it brings up the Nova GUI with its background services. Both the OS and the package update over Wi-Fi. The package runs from its own flash slot rather than from RAM, which keeps most of the Pico&rsquo;s memory free. The MicroPython build for RPCortex v1 is still around, and the build progress page tracks it.</p>
     <p class="cap-intro">What it does, for research, for learning, and on gear you own:</p>
     <div class="cap-grid">
     <div class="cap"><span class="cap-glyph" aria-hidden="true">RF</span><div><strong>Sub-1&nbsp;GHz RF</strong><span class="d">Interact with common RF devices (CC1101)</span></div></div>
@@ -69,9 +73,9 @@ path: index.html
   </div>
 </section>
 
-<section class="wrap sec" id="stats"><div class="facts"><div class="fact"><b>3</b><span>Active projects</span></div><div class="fact"><b>v2</b><span>RPCortex · Vela II beta</span></div><div class="fact"><b>$20+</b><span>Nova D1 starter build</span></div><div class="fact"><b>Q1&nbsp;’27</b><span>Nova D1 launch</span></div></div></section>
+<section class="wrap sec" id="stats"><div class="facts"><div class="fact"><b>7</b><span>Projects</span></div><div class="fact"><b>v2</b><span>RPCortex · Vela II beta</span></div><div class="fact"><b>$20+</b><span>Nova D1 starter build</span></div><div class="fact"><b>Q1&nbsp;’27</b><span>Nova D1 launch</span></div></div></section>
 
 <section class="wrap sec" id="about">
-  <div class="about"><div><div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Who</div><h2>About NovaLabs</h2></div><div class="col"><p>NovaLabs is a hub for the projects I have started and finished. It is run by <strong>dash</strong>.</p><p>Some of them are software, some are hardware, and a few are both. The three listed above are the ones ready to share.</p><p class="foot">More are on the way.</p></div></div>
+  <div class="about"><div><div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Who</div><h2>About NovaLabs</h2></div><div class="col"><p>NovaLabs is a hub for the projects I have started and finished. It is run by <strong>dash</strong>.</p><p>Some of them are software, some are hardware, and a few are both. The ones listed above are ready to share.</p><p class="foot">More are on the way.</p></div></div>
 </section>
 </main>
