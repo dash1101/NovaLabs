@@ -341,7 +341,7 @@
               "status": "part"
             },
             {
-              "text": "Bluetooth Classic and audio: written and tested on a computer, not yet on hardware",
+              "text": "Bluetooth Classic: inquiry works on a Pico 2 W; audio to a speaker is written and tested on a computer, not yet on hardware",
               "status": "part"
             },
             {
@@ -424,8 +424,8 @@
               "status": "part"
             },
             {
-              "text": "OLED, encoder and radio modules wired to a board running v2",
-              "status": "next"
+              "text": "On a board running v2: the screen and knob work (Nova D1 1.8.0); the radio modules are not wired yet",
+              "status": "part"
             },
             {
               "text": "IR: capture, decode, replay, and a universal remote",
