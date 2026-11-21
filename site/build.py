@@ -154,10 +154,11 @@ class Site:
             '<div class="shot"><figure><img src="%s%s" alt="%s"><figcaption>%s</figcaption></figure></div>'
             % (root, s["img"], html.escape(s["alt"], quote=True), s["caption"]) for s in d["shots"])
         prog = ""
+        lv1 = d.get("legend_v1", d["legend"])
         for c in d["categories"]:
             tag = '<span class="pct">%s</span>' % c["tag"] if c.get("tag") else ""
             items = "".join('<div class="feat">%s <span class="badge b-%s">%s</span></div>'
-                            % (i["text"], i["status"], d["legend"][i["status"]]) for i in c["items"])
+                            % (i["text"], i["status"], lv1[i["status"]]) for i in c["items"])
             note = '<p class="progress-note">%s</p>' % c["note"] if c.get("note") else ""
             prog += '<div class="panel cat"><h3>%s %s</h3>%s%s</div>' % (c["name"], tag, items, note)
         legend = " ".join('<span class="badge b-%s">%s</span>' % (k, v) for k, v in d["legend"].items())
@@ -166,7 +167,36 @@ class Site:
             ext = ' target="_blank" rel="noopener"' if r["href"].startswith("http") else ""
             res += ('<a class="link-card" href="%s"%s><h3>%s</h3><p>%s</p></a>'
                     % (resolve(r["href"], root), ext, r["title"], r["text"]))
-        return {"d1_shots": shots, "d1_progress": prog, "d1_legend": legend, "d1_resources": res}
+        # The two tracks: what is left on the OS, then on the Nova D1. The
+        # percentage is worked out here from the items, never typed by hand:
+        # done (and done-but-not-yet-on-a-board) count 1, partial a half.
+        weight = {"done": 1.0, "hw": 1.0, "part": 0.5}
+        tracks, pcts = "", {}
+        for t in d.get("tracks", []):
+            items = [i for g in t["groups"] for i in g["items"]]
+            score = sum(weight.get(i["status"], 0.0) for i in items)
+            pct = int(round(100.0 * score / len(items))) if items else 0
+            pcts[t["id"]] = pct
+            done = sum(1 for i in items if i["status"] in ("done", "hw"))
+            def rows(g):
+                return "".join('<div class="feat">%s <span class="badge b-%s">%s</span></div>'
+                               % (i["text"], i["status"], d["legend"][i["status"]]) for i in g["items"])
+            todo = [g for g in t["groups"] if g["name"] != "Done"]
+            fin = [g for g in t["groups"] if g["name"] == "Done"]
+            body = "".join('<h4 class="track-group">%s</h4>%s' % (g["name"], rows(g)) for g in todo)
+            body += "".join('<details class="track-done"><summary>Done (%d)</summary>%s</details>'
+                            % (len(g["items"]), rows(g)) for g in fin)
+            href = resolve(t["href"], root)
+            ext = ' target="_blank" rel="noopener"' if t["href"].startswith("http") else ""
+            tracks += ('<div class="panel track" id="track-%s"><div class="track-head"><h3>%s</h3>'
+                       '<b class="track-pct">%d%%</b></div><p class="track-sub">%s</p>'
+                       '<div class="bar" role="progressbar" aria-valuenow="%d" aria-valuemin="0" aria-valuemax="100"'
+                       ' aria-label="%s, %d%% complete"><i style="width:%d%%"></i></div>'
+                       '<p class="track-count">%d of %d done &middot; <a href="%s"%s>%s</a></p>%s</div>'
+                       % (t["id"], t["name"], pct, t["sub"], pct, html.escape(t["name"], quote=True), pct, pct,
+                          done, len(items), href, ext, t["link"], body))
+        return {"d1_shots": shots, "d1_progress": prog, "d1_legend": legend, "d1_resources": res,
+                "d1_tracks": tracks, "d1_pct_os": str(pcts.get("os", 0)), "d1_pct_d1": str(pcts.get("d1", 0))}
 
     def fill(self, body, root):
         blocks = self.d1_blocks(root)

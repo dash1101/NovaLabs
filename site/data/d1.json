@@ -1,5 +1,5 @@
 {
-  "progress_intro": "Developed in the open. This list tracks the MicroPython build (V1); the C++ build for RPCortex v2 is described above, and each module moves here as it is brought up on a board.",
+  "progress_intro": "What is left, on the operating system first and then on the Nova D1 itself. The percentage counts each item as done, half done or not started; &ldquo;board test next&rdquo; means it works and is tested on a computer, and is waiting to be tried on hardware.",
   "categories": [
     {
       "name": "Core platform",
@@ -270,6 +270,198 @@
   "runs_on": "Runs on <a href=\"https://rpc.novalabs.app\" target=\"_blank\" rel=\"noopener\">RPCortex</a> · packages: <a href=\"https://github.com/dash1101/RPCortex-repo\" target=\"_blank\" rel=\"noopener\">RPCortex-repo</a>",
   "resources_intro": "Everything Nova D1 in one place: the build guide, the Flipper compatibility map, the roadmap, and the design specs.",
   "legend": {
+    "done": "done",
+    "hw": "done · board test next",
+    "part": "partial",
+    "next": "next",
+    "late": "later"
+  },
+  "tracks": [
+    {
+      "id": "os",
+      "name": "RPCortex v2",
+      "sub": "The operating system the Nova D1 runs on, in C++ for the Pico family.",
+      "href": "https://rpc.novalabs.app/roadmap",
+      "link": "RPCortex roadmap",
+      "groups": [
+        {
+          "name": "Done",
+          "items": [
+            {
+              "text": "Runs natively on the Pico 2 W, with no interpreter underneath",
+              "status": "done"
+            },
+            {
+              "text": "Shell: pipes, <code>&amp;&amp;</code>, redirection, scripts, aliases, <code>~</code>, Tab and history",
+              "status": "done"
+            },
+            {
+              "text": "Packages loaded at runtime, run from flash, sandboxed on the RP2350",
+              "status": "done"
+            },
+            {
+              "text": "Accounts, and <code>sudo</code> with the admin&rsquo;s own password for system changes",
+              "status": "done"
+            },
+            {
+              "text": "Wi-Fi, HTTPS, the package repository, and updates over the air with rollback",
+              "status": "done"
+            },
+            {
+              "text": "SSH in and out, with Ed25519, ECDSA and RSA keys",
+              "status": "done"
+            },
+            {
+              "text": "Tools for the computer: the <code>rpc</code> command and a browser tool",
+              "status": "done"
+            },
+            {
+              "text": "A USB drive for dragging files on and off",
+              "status": "done"
+            },
+            {
+              "text": "Recovery: a device that fails to start repairs itself",
+              "status": "done"
+            },
+            {
+              "text": "Images built with only the features a board needs",
+              "status": "done"
+            },
+            {
+              "text": "Bluetooth LE scanning",
+              "status": "done"
+            }
+          ]
+        },
+        {
+          "name": "Still to do",
+          "items": [
+            {
+              "text": "Pico, Pico W and Pico 2 images: built and tested on a computer, not yet run on those boards",
+              "status": "part"
+            },
+            {
+              "text": "Bluetooth Classic and audio: written and tested on a computer, not yet on hardware",
+              "status": "part"
+            },
+            {
+              "text": "SD cards: written and tested on a computer, not yet with a real card",
+              "status": "part"
+            },
+            {
+              "text": "USB HID: the keyboard and BadUSB scripts work; U2F security keys are still to come",
+              "status": "part"
+            },
+            {
+              "text": "The rest of v1&rsquo;s packages in the v2 repository",
+              "status": "next"
+            },
+            {
+              "text": "A first stable (non-beta) v2 release",
+              "status": "late"
+            },
+            {
+              "text": "ESP32-S3 and the other ESP32 boards",
+              "status": "late"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "d1",
+      "name": "Nova D1 on RPCortex v2",
+      "sub": "The <code>novad1</code> package: the GUI, its apps and its radios.",
+      "href": "docs/novad1-v2.html",
+      "link": "Nova D1 on RPCortex v2",
+      "groups": [
+        {
+          "name": "Done",
+          "items": [
+            {
+              "text": "Installs with <code>pkg install novad1</code> and runs from a flash slot, about 80 KB resident",
+              "status": "done"
+            },
+            {
+              "text": "Runs on a bare Pico 2 W, drawing to a framebuffer",
+              "status": "done"
+            },
+            {
+              "text": "The browser simulator: the same C++, compiled to WebAssembly",
+              "status": "done"
+            },
+            {
+              "text": "Six built-in apps, TOTP included",
+              "status": "done"
+            },
+            {
+              "text": "Flipper <code>.sub</code>, <code>.ir</code> and <code>.nfc</code> files, read and written byte for byte",
+              "status": "done"
+            },
+            {
+              "text": "Sub-GHz library: capture, save, replay, frequency presets",
+              "status": "hw"
+            },
+            {
+              "text": "NFC: read, dump and save cards",
+              "status": "hw"
+            },
+            {
+              "text": "Wi-Fi scan of every network, and a WiGLE wardrive",
+              "status": "hw"
+            },
+            {
+              "text": "GPS: position, waypoints, and setting the clock from the satellites",
+              "status": "hw"
+            }
+          ]
+        },
+        {
+          "name": "Still to do",
+          "items": [
+            {
+              "text": "Vendor names beside the radios it lists (the table is done, the screens are not)",
+              "status": "part"
+            },
+            {
+              "text": "OLED, encoder and radio modules wired to a board running v2",
+              "status": "next"
+            },
+            {
+              "text": "IR: capture, decode, replay, and a universal remote",
+              "status": "next"
+            },
+            {
+              "text": "Bluetooth: advertisement details, tracker detection, presence in the background",
+              "status": "next"
+            },
+            {
+              "text": "A livelier simulator: scans, files, settings and the clock",
+              "status": "next"
+            },
+            {
+              "text": "LoRa mesh messaging with encrypted channels",
+              "status": "late"
+            },
+            {
+              "text": "Notification haptics and buzzer tunes",
+              "status": "late"
+            },
+            {
+              "text": "Stealth: a kill switch and MAC randomisation",
+              "status": "late"
+            },
+            {
+              "text": "A control panel on your phone",
+              "status": "late"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "v1_note": "The MicroPython build for RPCortex v1, confirmed module by module on hardware. The C++ build above is a port of the same screens.",
+  "legend_v1": {
     "done": "done",
     "part": "partial",
     "next": "next",

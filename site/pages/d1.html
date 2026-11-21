@@ -13,7 +13,7 @@ path: d1.html
     <div class="actions">
       <a class="btn btn-primary" href="{{root}}d1-sim.html">Try the simulator</a>
       <a class="btn btn-ghost" href="#interface">See the UI</a>
-      <a class="btn btn-ghost" href="#progress">Build progress</a>
+      <a class="btn btn-ghost" href="#progress">Build progress &middot; {{d1_pct_d1}}%</a>
     </div>
   </div>
   <div class="device">
@@ -29,28 +29,13 @@ path: d1.html
   <p class="progress-note"><a href="{{root}}d1-sim.html">▶ Open the live simulator</a></p>
 </section>
 
-<section class="wrap sec" id="now">
-  <div class="sec-head"><div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Where it is</div><h2>Where it stands</h2>
-    <p>Development is on the C++ build for RPCortex v2. The MicroPython build for v1 is the one that has been confirmed module by module on hardware.</p></div>
-  <div class="cats">
-    <div class="panel cat"><h3>On RPCortex v2 (C++) <span class="pct">current</span></h3>
-      <div class="feat">Installs with <code>pkg install novad1</code> <span class="badge b-done">done</span></div>
-      <div class="feat">Runs from a flash slot instead of RAM, about 80 KB resident on a Pico 2 W <span class="badge b-done">done</span></div>
-      <div class="feat">GUI, app system, app store, Wi-Fi, Bluetooth, radio, sensor, file, task and USB screens <span class="badge b-part">written</span></div>
-      <div class="feat">Runs on a bare Pico 2 W, drawing to a framebuffer <span class="badge b-done">done</span></div>
-      <div class="feat">Browser simulator: the same C++ compiled to WebAssembly <span class="badge b-done">done</span></div>
-      <div class="feat">OLED, encoder and radio modules on a board running v2 <span class="badge b-next">next</span></div>
-      <p class="progress-note"><a href="{{root}}docs/novad1-v2.html">Nova D1 on RPCortex v2</a> has the details.</p></div>
-    <div class="panel cat"><h3>On RPCortex v1 (MicroPython) <span class="pct">confirmed</span></h3>
-      <div class="feat">Every module listed below, confirmed on hardware <span class="badge b-done">done</span></div>
-      <p class="progress-note">The list below is this build&rsquo;s progress. The C++ build is a port of the same screens.</p></div>
-  </div>
-</section>
-
 <section class="wrap sec" id="progress">
   <div class="sec-head"><div class="eyebrow"><span class="stripes" aria-hidden="true"><i></i><i></i><i></i></span>Status</div><h2>Build progress</h2>
-    <p>{{d1.progress_intro}} Status:</p><div class="legend">{{d1_legend}}</div></div>
-  <div class="cats">{{d1_progress}}</div>
+    <p>{{d1.progress_intro}}</p><div class="legend">{{d1_legend}}</div></div>
+  <div class="tracks">{{d1_tracks}}</div>
+  <details class="v1-progress"><summary>The earlier build: Nova D1 on RPCortex v1 (MicroPython)</summary>
+    <p class="progress-note">{{d1.v1_note}}</p>
+    <div class="cats">{{d1_progress}}</div></details>
   <p class="progress-note">{{d1.built_on}}</p>
 </section>
 

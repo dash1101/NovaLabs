@@ -30,3 +30,21 @@
 .device.drag { outline: 2px dashed var(--accent); outline-offset: 8px; }
 .simhint { color: var(--dim); font-size: .88rem; line-height: 1.7; margin-top: 22px; text-align: center; max-width: 62ch; margin-inline: auto; }
 #err { color: var(--hw); font: 400 13px/1.6 var(--mono); white-space: pre-wrap; text-align: left; background: rgba(251,154,125,.07); border: 1px solid rgba(251,154,125,.4); border-radius: 12px; padding: 16px; margin-top: 20px; display: none; }
+
+/* Build progress: one panel per track, the percentage worked out by site/build.py */
+.tracks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 18px; }
+.track-head { display: flex; align-items: baseline; gap: 12px; }
+.track-head h3 { margin: 0; }
+.track-pct { margin-left: auto; font: 600 1.9rem/1 var(--display); color: var(--accent); }
+.track-sub { color: var(--dim); margin: 8px 0 14px; font-size: .95rem; }
+.bar { height: 8px; border-radius: 999px; background: var(--ink-3); border: 1px solid var(--line); overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+.track-count { margin: 10px 0 6px; font: 500 12px/1.4 var(--mono); color: var(--faint); }
+.track-count a { color: var(--accent); }
+.track-group { margin: 18px 0 2px; font: 500 11.5px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+.track-done { margin-top: 16px; }
+.track-done summary, .v1-progress summary { cursor: pointer; font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--dim); padding: 8px 0; }
+.track-done summary:hover, .v1-progress summary:hover { color: var(--text); }
+.v1-progress { margin-top: 22px; }
+.v1-progress .cats { margin-top: 12px; }
+.feat { min-width: 0; }
